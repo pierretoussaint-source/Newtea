@@ -1,6 +1,9 @@
-const CACHE_NAME = 'newtea-cache-v1';
+const CACHE_NAME = 'newtea-cache-v2';
+
+// Ajout du dossier racine './' et de 'index.html' en minuscules
 const urlsToCache = [
-  './Index.html',
+  './',
+  './index.html',
   './manifest.json',
   './icon-192x192.png',
   './icon-512x512.png'
@@ -15,6 +18,8 @@ self.addEventListener('install', event => {
         return cache.addAll(urlsToCache);
       })
   );
+  // Force le nouveau service worker à s'activer immédiatement
+  self.skipWaiting();
 });
 
 // Interception des requêtes réseau
@@ -26,7 +31,14 @@ self.addEventListener('fetch', event => {
         if (response) {
           return response;
         }
-        // Sinon, fait la requête réseau
+        
+        // Comportement de repli : si on navigue vers une URL introuvable mais qu'on est hors-ligne
+        // on renvoie l'index.html
+        if (event.request.mode === 'navigate') {
+          return caches.match('./index.html');
+        }
+
+        // Sinon, fait la requête réseau normale
         return fetch(event.request);
       })
   );
@@ -46,4 +58,5 @@ self.addEventListener('activate', event => {
       );
     })
   );
+  self.clients.claim();
 });
