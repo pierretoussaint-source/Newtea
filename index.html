@@ -791,6 +791,18 @@ uk: {
 }
 };
 
+const rawCsvData = `Code_Essai_Parcelle,variete,Essai,Espece,Gps,Plan_X,Plan_Y,Type
+1,LID 5053L SU,Test,Tournesol,"43.69,1.27",1,1,H
+2,MYLADY,Test,Mais,"43.47,-0.34",2,1,F
+3,LID PANDORE,Test,Sorgho,"41.75,-0.79",3,1,M
+4,ISIDOR,Test,Soja,"43.65,1.65",1,2,F
+5,LID TRETO,Test,Colza,"44.39,1.39",2,2,H
+6,LID 5053L SU,Test,Tournesol,"0.0,0.0",3,2,M
+7,ISIDOR,Test,Soja,"0.0,0.0",1,3,M
+8,MYLADY,Test,Mais,"0.0,0.0",2,3,F
+9,LID TRETO,Test,Colza,"0.0,0.0",3,3,H
+10,LID PANDORE,Test,Sorgho,"41.75,-0.79",5,6,M`;
+
 let varieteData = [], appObservations = [], currentEssai = null, currentDigitCount = 3, currentParcelleArray = ['0','0','0'], selectedPlotCodeForNavigation = null, currentEspece = null, currentGps = null, parcelleValideeCode = null, currentPlotOrder = [], simpleNotationsConfig = [];
 let externalData = []; 
 
@@ -823,8 +835,16 @@ function parseCSVToObjects(csvString, delimiter = ';') {
 
 function loadVarieteDataLocal() {
     const saved = localStorage.getItem('newtea_trials');
-    if (saved) varieteData = JSON.parse(saved);
-    else varieteData = [];
+    const defaultTestTrial = parseCSVToObjects(rawCsvData, ',');
+    
+    if (saved) {
+        varieteData = JSON.parse(saved);
+        if (!varieteData.some(p => p.Essai === 'Test')) {
+            varieteData = defaultTestTrial.concat(varieteData);
+        }
+    } else {
+        varieteData = defaultTestTrial;
+    }
 }
 function saveVarieteDataLocal() {
     localStorage.setItem('newtea_trials', JSON.stringify(varieteData));
