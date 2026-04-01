@@ -257,9 +257,8 @@ html {
 
                 <div class="selector-group"> 
                     <h4 data-i18n="num-parcelle">Numéro de parcelle</h4>
-                    <div id="d1-buttons" class="square-btn-group"></div>
-                    <div id="d2-buttons" class="square-btn-group"></div>
-                    <div id="d3-buttons" class="square-btn-group"></div>
+                    <!-- CONTENEUR DES BOUTONS DE CHIFFRES DYNAMIQUE -->
+                    <div id="dynamic-digit-buttons"></div>
                 </div>
 
                <div class="mode-selection-line" style="display: flex; align-items: center; gap: 5px; margin-top:10px;">
@@ -792,7 +791,7 @@ uk: {
 }
 };
 
-let varieteData = [], appObservations = [], currentEssai = null, currentParcelleDigits = { d1: '0', d2: '0', d3: '0' }, selectedPlotCodeForNavigation = null, currentEspece = null, currentGps = null, parcelleValideeCode = null, currentPlotOrder = [], simpleNotationsConfig = [];
+let varieteData = [], appObservations = [], currentEssai = null, currentDigitCount = 3, currentParcelleArray = ['0','0','0'], selectedPlotCodeForNavigation = null, currentEspece = null, currentGps = null, parcelleValideeCode = null, currentPlotOrder = [], simpleNotationsConfig = [];
 let externalData = []; 
 
 function parseCSVToObjects(csvString, delimiter = ';') {
@@ -857,7 +856,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-choice-photo').onclick = () => addSimpleLine('photo');
     document.getElementById('custom-time').value = now.toTimeString().substring(0,5);
 
-    // Import Overlay interactif
     document.getElementById('import-external-csv').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -875,7 +873,6 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.readAsText(file);
     });
 
-    // Import Base de données
     document.getElementById('import-new-trial-csv').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -887,7 +884,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (content.split('\n')[0].indexOf(';') === -1 && content.split('\n')[0].indexOf(',') > -1) sep = ',';
                 const newData = parseCSVToObjects(content, sep);
                 if (newData.length > 0) {
-                    // Ajout à la base locale
                     varieteData = varieteData.concat(newData);
                     saveVarieteDataLocal();
                     initEssaiSelector();
@@ -898,7 +894,6 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.readAsText(file);
     });
 
-    // Bouton de Création d'Essai
     document.getElementById('creer-essai').addEventListener('click', () => {
         let name = document.getElementById('new-trial-name').value.trim();
         let esp = document.getElementById('new-trial-espece').value;
@@ -930,7 +925,6 @@ document.addEventListener('DOMContentLoaded', () => {
         saveVarieteDataLocal();
         initEssaiSelector();
         
-        // Démarrer directement
         document.getElementById('choix-essai').value = name;
         document.getElementById('confirmer-essai').click();
     });
@@ -957,6 +951,32 @@ function initEssaiSelector() {
     });
 }
 
+function buildDigitButtons(count) {
+    const container = document.getElementById('dynamic-digit-buttons');
+    container.innerHTML = '';
+    currentParcelleArray = new Array(count).fill('0');
+    
+    for(let row = 0; row < count; row++) {
+        const rowDiv = document.createElement('div');
+        rowDiv.className = 'square-btn-group';
+        rowDiv.id = 'digit-row-' + row;
+        for(let i=0; i<=9; i++) {
+            const b = document.createElement('div');
+            b.className = 'square-btn';
+            b.textContent = i;
+            b.onclick = () => {
+                rowDiv.querySelectorAll('.selected').forEach(s=>s.classList.remove('selected'));
+                b.classList.add('selected');
+                currentParcelleArray[row] = String(i);
+                selectedPlotCodeForNavigation = currentParcelleArray.join('');
+                updateUIForSelectedPlot(selectedPlotCodeForNavigation);
+            };
+            rowDiv.appendChild(b);
+        }
+        container.appendChild(rowDiv);
+    }
+}
+
 function generatePlotOrder() {
     currentPlotOrder = [];
     if (!currentEssai) return;
@@ -971,9 +991,9 @@ function generatePlotOrder() {
             case 'U': plots.sort((a,b) => { if (a.x !== b.x) return a.x - b.x; return (a.x % 2 !== 0) ? (a.y - b.y) : (b.y - a.y); }); break;
             case 'N': plots.sort((a,b) => (a.x - b.x) || (a.y - b.y)); break;
         }
-        currentPlotOrder = plots.map(p => String(p.Code_Essai_Parcelle).padStart(3,'0'));
+        currentPlotOrder = plots.map(p => String(p.Code_Essai_Parcelle).padStart(currentDigitCount,'0'));
     } else {
-        currentPlotOrder = plots.map(p => String(p.Code_Essai_Parcelle).padStart(3,'0')).sort();
+        currentPlotOrder = plots.map(p => String(p.Code_Essai_Parcelle).padStart(currentDigitCount,'0')).sort();
     }
     updateProgressBar();
 }
@@ -984,7 +1004,7 @@ function updateProgressBar() {
         document.getElementById('trial-progress-text').innerText = '0 / 0 (0%)';
         return;
     }
-    const donePlots = new Set(appObservations.filter(o => o.ESSAI === currentEssai).map(o => String(o.Parcelle).padStart(3,'0')));
+    const donePlots = new Set(appObservations.filter(o => o.ESSAI === currentEssai).map(o => String(o.Parcelle).padStart(currentDigitCount,'0')));
     let validDoneCount = 0;
     currentPlotOrder.forEach(code => { if(donePlots.has(code)) validDoneCount++; });
     const total = currentPlotOrder.length;
@@ -1001,7 +1021,7 @@ function getT(key) {
 function handleNavigate(direction) {
     if (!currentEssai) return alert(getT("alert-choix-essai"));
     if (currentPlotOrder.length === 0) generatePlotOrder();
-    const currentCode = String(selectedPlotCodeForNavigation).padStart(3,'0');
+    const currentCode = String(selectedPlotCodeForNavigation).padStart(currentDigitCount,'0');
     let idx = currentPlotOrder.indexOf(currentCode);
     if (idx === -1) idx = 0; else idx = (idx + direction + currentPlotOrder.length) % currentPlotOrder.length;
     selectedPlotCodeForNavigation = currentPlotOrder[idx];
@@ -1022,20 +1042,31 @@ function setupEventListeners() {
         applyTranslations(e.target.value);
         if(document.getElementById('bbchModal').style.display === 'block') document.getElementById('bbch-info-button').click(); 
     };
+    
     document.getElementById('confirmer-essai').onclick = () => {
         currentEssai = document.getElementById('choix-essai').value;
         if (currentEssai) {
             document.getElementById('session-setup').style.display = 'none';
             document.getElementById('app-container').style.display = 'block';
+            
+            // Calcul du nombre de chiffres nécessaires
+            const plotsInTrial = varieteData.filter(p => p.Essai === currentEssai);
+            const maxPlotNum = Math.max(0, ...plotsInTrial.map(p => parseInt(p.Code_Essai_Parcelle) || 0));
+            if (maxPlotNum <= 99) currentDigitCount = 2;
+            else if (maxPlotNum <= 999) currentDigitCount = 3;
+            else currentDigitCount = 4;
+            
+            buildDigitButtons(currentDigitCount);
             generatePlotOrder();
-            selectedPlotCodeForNavigation = currentPlotOrder[0] || "001";
+            selectedPlotCodeForNavigation = currentPlotOrder[0] || "0".repeat(currentDigitCount);
             updateUIForSelectedPlot(selectedPlotCodeForNavigation);
         } else {
             alert(getT("alert-choix-essai"));
         }
     };
+    
     document.getElementById('valider-parcelle').onclick = () => {
-        parcelleValideeCode = String(selectedPlotCodeForNavigation).padStart(3,'0');
+        parcelleValideeCode = String(selectedPlotCodeForNavigation).padStart(currentDigitCount,'0');
         document.getElementById('valider-parcelle').style.display = 'none';
         document.getElementById('rep').value = 'A';
         
@@ -1048,21 +1079,6 @@ function setupEventListeners() {
     };
     document.getElementById('parcelle-suivante').onclick = () => handleNavigate(1);
     document.getElementById('parcelle-precedente').onclick = () => handleNavigate(-1);
-    
-    ['d1','d2','d3'].forEach(k => {
-        const div = document.getElementById(k+'-buttons');
-        for(let i=0; i<=9; i++) {
-            const b = document.createElement('div'); b.className = 'square-btn'; b.textContent = i;
-            b.onclick = () => {
-                div.querySelectorAll('.selected').forEach(s=>s.classList.remove('selected'));
-                b.classList.add('selected');
-                currentParcelleDigits[k] = i;
-                selectedPlotCodeForNavigation = `${currentParcelleDigits.d1}${currentParcelleDigits.d2}${currentParcelleDigits.d3}`;
-                updateUIForSelectedPlot(selectedPlotCodeForNavigation);
-            };
-            div.appendChild(b);
-        }
-    });
 
     document.getElementById('voir-sur-carte').onclick = () => {
         document.getElementById('gpsChoiceModal').style.display = 'block';
@@ -1184,18 +1200,28 @@ initSimpleNotationsUI();
 }
 
 function updateUIForSelectedPlot(code) {
-    const padded = String(code).padStart(3,'0');
-    ['d1','d2','d3'].forEach((k, idx) => {
-        currentParcelleDigits[k] = padded[idx];
-        const div = document.getElementById(k+'-buttons');
-        div.querySelectorAll('.selected').forEach(s=>s.classList.remove('selected'));
-        for(let b of div.children) if(b.textContent === padded[idx]) b.classList.add('selected');
-    });
-
-    const plot = varieteData.find(i => String(i.Code_Essai_Parcelle).padStart(3,'0') === padded && i.Essai === currentEssai);
-    document.getElementById('variete-text').innerHTML = `<span data-i18n="lignee">${getT("lignee")}</span> ` + (plot ? plot.variete : getT("unknown-variety"));
+    const padded = String(code).padStart(currentDigitCount,'0');
+    currentParcelleArray = padded.split('');
     
-    // Remplir la section paramètres avec les données existantes
+    for(let row = 0; row < currentDigitCount; row++) {
+        const div = document.getElementById('digit-row-' + row);
+        if(div) {
+            div.querySelectorAll('.selected').forEach(s=>s.classList.remove('selected'));
+            for(let b of div.children) if(b.textContent === padded[row]) b.classList.add('selected');
+        }
+    }
+
+    const plot = varieteData.find(i => String(i.Code_Essai_Parcelle).padStart(currentDigitCount,'0') === padded && i.Essai === currentEssai);
+    
+    let coordsSuffix = "";
+    if (plot && plot.Plan_Y && plot.Plan_X) {
+        const sy = String(plot.Plan_Y).padStart(3, '0');
+        const sx = String(plot.Plan_X).padStart(3, '0');
+        coordsSuffix = ` <span style="font-size:0.85em; color:#7f8c8d;">(${sy},${sx})</span>`;
+    }
+    
+    document.getElementById('variete-text').innerHTML = `<span data-i18n="lignee">${getT("lignee")}</span> ` + (plot ? plot.variete : getT("unknown-variety")) + coordsSuffix;
+    
     document.getElementById('param-variete').value = plot ? plot.variete : "";
     document.getElementById('param-type').value = plot && plot.Type ? plot.Type : "";
 
@@ -1204,9 +1230,7 @@ function updateUIForSelectedPlot(code) {
     document.getElementById('espece-text').textContent = currentEspece ? (translations[localStorage.getItem('selected_lang') || 'fr'][currentEspece] || currentEspece).toUpperCase() : "";
     document.body.className = currentEspece ? `theme-${currentEspece.toLowerCase()}` : '';
     
-    // Rendre le bouton GPS toujours visible 
     document.getElementById('voir-sur-carte').style.display = 'inline-block';
-    // Style si le GPS est vide
     if(currentGps && currentGps.length > 3) {
         document.getElementById('voir-sur-carte').style.opacity = '1';
     } else {
@@ -1269,8 +1293,8 @@ function openSowingPlan() {
     const selectedDataKey = dataSelect.value;
     const maxDays = parseInt(daysInput.value) || 0;
     const today = new Date(); today.setHours(0,0,0,0);
-    const selectedPadded = String(selectedPlotCodeForNavigation).padStart(3,'0');
-    const currentPlot = plots.find(p => String(p.Code_Essai_Parcelle).padStart(3,'0') === selectedPadded);
+    const selectedPadded = String(selectedPlotCodeForNavigation).padStart(currentDigitCount,'0');
+    const currentPlot = plots.find(p => String(p.Code_Essai_Parcelle).padStart(currentDigitCount,'0') === selectedPadded);
     const highlightVariete = currentPlot ? currentPlot.variete : null;
     
     let minX = Math.min(...plots.map(p => parseInt(p.Plan_X))), minY = Math.min(...plots.map(p => parseInt(p.Plan_Y)));
@@ -1306,7 +1330,7 @@ function openSowingPlan() {
         for(let c=minX; c<=maxX; c++) {
             const p = plots.find(plot => parseInt(plot.Plan_X) === c && parseInt(plot.Plan_Y) === r);
             
-            let codeOriginal = p ? String(p.Code_Essai_Parcelle).padStart(3,'0') : "";
+            let codeOriginal = p ? String(p.Code_Essai_Parcelle).padStart(currentDigitCount,'0') : "";
             let codeAffiche = p ? parseInt(p.Code_Essai_Parcelle) : ""; 
             let displayContent = (p && p.Type) ? p.Type : '';
             let isSelected = (codeOriginal === selectedPadded);
@@ -1316,13 +1340,13 @@ function openSowingPlan() {
 
             if(p && todoToggle.checked) {
                 const isDone = appObservations.some(obs => 
-                    String(obs.Parcelle).padStart(3,'0') === codeOriginal && obs.ESSAI === currentEssai
+                    String(obs.Parcelle).padStart(currentDigitCount,'0') === codeOriginal && obs.ESSAI === currentEssai
                 );
                 if(isDone) classes.push('hatched-pattern');
             }
 
             if (p && isInteractive && selectedDataKey) {
-                let matches = externalData.filter(d => d.ESSAI === currentEssai && String(d.Parcelle).padStart(3,'0') === codeOriginal);
+                let matches = externalData.filter(d => d.ESSAI === currentEssai && String(d.Parcelle).padStart(currentDigitCount,'0') === codeOriginal);
                 if (notatorSelect.value !== "") matches = matches.filter(d => d.Notateur === notatorSelect.value);
                 const recentMatches = matches.filter(d => {
                     if(!d.Date) return false;
@@ -1453,7 +1477,7 @@ window.selectFromPlan = (code) => { selectedPlotCodeForNavigation = code; update
 
 window.zenNextAndValidate = () => {
     handleNavigate(1);
-    parcelleValideeCode = String(selectedPlotCodeForNavigation).padStart(3,'0');
+    parcelleValideeCode = String(selectedPlotCodeForNavigation).padStart(currentDigitCount,'0');
     document.getElementById('valider-parcelle').style.display = 'none';
     document.getElementById('rep').value = 'A';
     
@@ -1472,24 +1496,30 @@ if (!parcelleValideeCode && currentZenTarget) {
 }
 if (!parcelleValideeCode) return alert(getT("alert-valider-parcelle"));
 
-// Enregistrement des Paramètres de parcelle si modifiés
 let paramVariete = document.getElementById('param-variete').value.trim();
 let paramType = document.getElementById('param-type').value;
 
-let currentPlot = varieteData.find(p => String(p.Code_Essai_Parcelle).padStart(3,'0') === parcelleValideeCode && p.Essai === currentEssai);
+let currentPlot = varieteData.find(p => String(p.Code_Essai_Parcelle).padStart(currentDigitCount,'0') === parcelleValideeCode && p.Essai === currentEssai);
 if(currentPlot) {
     let updated = false;
     if(paramVariete && paramVariete !== currentPlot.variete) { currentPlot.variete = paramVariete; updated = true; }
     if(paramType !== currentPlot.Type) { currentPlot.Type = paramType; updated = true; }
     if(updated) {
         saveVarieteDataLocal();
-        document.getElementById('variete-text').innerHTML = `<span data-i18n="lignee">${getT("lignee")}</span> ${currentPlot.variete}`;
+        
+        let coordsSuffix = "";
+        if (currentPlot.Plan_Y && currentPlot.Plan_X) {
+            const sy = String(currentPlot.Plan_Y).padStart(3, '0');
+            const sx = String(currentPlot.Plan_X).padStart(3, '0');
+            coordsSuffix = ` <span style="font-size:0.85em; color:#7f8c8d;">(${sy},${sx})</span>`;
+        }
+        document.getElementById('variete-text').innerHTML = `<span data-i18n="lignee">${getT("lignee")}</span> ${currentPlot.variete}${coordsSuffix}`;
     }
 }
 
 let obs = {
     id: Date.now(), Notateur: document.getElementById('type-notation-session').value, ESSAI: currentEssai, Parcelle: parcelleValideeCode,
-    Variete: paramVariete || document.getElementById('variete-text').textContent.split(':').pop().trim(),
+    Variete: paramVariete || document.getElementById('variete-text').textContent.split(':')[1].split('(')[0].trim(),
     Date: document.getElementById('custom-date').value, Heure: document.getElementById('custom-time').value,
     Meteo: document.getElementById('meteo-select').value, Rep: document.getElementById('rep').value, Observations: document.getElementById('obs').value,
 };
@@ -1503,7 +1533,7 @@ if (document.getElementById('lettres-analyse').value !== "") {
 simpleNotationsConfig.forEach(s => { const el = document.getElementById('not-simple-'+s.code); if(el && el.value) obs['Not_' + s.label] = el.value; });
 appObservations.unshift(obs); localStorage.setItem('observations_v12', JSON.stringify(appObservations)); renderRecapTable();
 if(moveDir !== 0) {
-    handleNavigate(moveDir); parcelleValideeCode = String(selectedPlotCodeForNavigation).padStart(3,'0'); updateUIForSelectedPlot(selectedPlotCodeForNavigation); document.getElementById('rep').value = 'A';
+    handleNavigate(moveDir); parcelleValideeCode = String(selectedPlotCodeForNavigation).padStart(currentDigitCount,'0'); updateUIForSelectedPlot(selectedPlotCodeForNavigation); document.getElementById('rep').value = 'A';
 } else { let r = document.getElementById('rep'); r.value = String.fromCharCode(r.value.toUpperCase().charCodeAt(0)+1); }
 updateProgressBar();
 updateZenHeader();
@@ -1650,7 +1680,7 @@ const prefix = document.getElementById('photo-prefix-' + code).value || "IMG";
 const numInput = document.getElementById('photo-num-' + code);
 const num = String(numInput.value).padStart(3, '0'); 
 
-const varieteRaw = document.getElementById('variete-text').textContent.split(':').pop().trim() || "Inconnue";
+const varieteRaw = document.getElementById('variete-text').textContent.split(':')[1].split('(')[0].trim() || "Inconnue";
 const essaiRaw = currentEssai || "Essai";
 const sanitize = (s) => s.replace(/[^a-z0-9]/gi, '_');
 
@@ -1721,12 +1751,17 @@ if (wakeLock !== null) {
 
 function updateZenHeader() {
 if (document.getElementById('zen-overlay').style.display === 'flex') {
-    const num = parcelleValideeCode || String(selectedPlotCodeForNavigation).padStart(3,'0');
-    const variete = document.getElementById('variete-text').textContent.split(':').pop().trim();
+    const num = parcelleValideeCode || String(selectedPlotCodeForNavigation).padStart(currentDigitCount,'0');
     const rep = document.getElementById('rep').value;
     
     document.getElementById('zen-title').textContent = `Parcelle ${num}`;
-    document.getElementById('zen-subtitle').textContent = variete;
+    
+    // Ajout YYY,XXX dans le Mode Zen
+    const plot = varieteData.find(p => String(p.Code_Essai_Parcelle).padStart(currentDigitCount,'0') === String(num).padStart(currentDigitCount,'0') && p.Essai === currentEssai);
+    let varieteName = plot ? plot.variete : document.getElementById('variete-text').textContent.split(':')[1].split('(')[0].trim();
+    let coordsSuffix = (plot && plot.Plan_Y && plot.Plan_X) ? ` (${String(plot.Plan_Y).padStart(3, '0')},${String(plot.Plan_X).padStart(3, '0')})` : "";
+    document.getElementById('zen-subtitle').textContent = varieteName + coordsSuffix;
+
     document.getElementById('zen-rep').textContent = `${getT('rep')} ${rep}`;
 
     const previewEl = document.getElementById('zen-interactive-preview');
@@ -1738,7 +1773,7 @@ if (document.getElementById('zen-overlay').style.display === 'flex') {
         const notatorSelect = document.getElementById('interactive-notator-select').value;
         const today = new Date(); today.setHours(0,0,0,0);
         
-        let matches = externalData.filter(d => d.ESSAI === currentEssai && String(d.Parcelle).padStart(3,'0') === String(num).padStart(3,'0'));
+        let matches = externalData.filter(d => d.ESSAI === currentEssai && String(d.Parcelle).padStart(currentDigitCount,'0') === String(num).padStart(currentDigitCount,'0'));
         if (notatorSelect !== "") matches = matches.filter(d => d.Notateur === notatorSelect);
         
         const recentMatches = matches.filter(d => {
