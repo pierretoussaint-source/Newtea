@@ -31,12 +31,6 @@
     }
     body {
         overflow-x: hidden;
-        font-family: var(--theme-font-family); 
-        margin: 0; 
-        padding: 15px; 
-        background-color: var(--theme-background-color); 
-        color: var(--theme-text-color); 
-        transition: background-color 0.5s ease, color 0.5s ease; 
     }
     
     :root {
@@ -85,8 +79,8 @@
     .theme-colza { --theme-primary-color: #f4d03f; --theme-secondary-color: #2ecc71; --theme-text-on-primary: #333; --theme-heading-color: #27ae60; --theme-button-hover-bg: #e1be32; --theme-tab-active-bg: #f4d03f; --theme-tab-active-text: #333; --theme-gps-button-bg: #2ecc71; }
     .theme-soja { --theme-primary-color: #a2d9ce; --theme-secondary-color: #50623a; --theme-text-on-primary: #333; --theme-heading-color: #50623a; --theme-button-hover-bg: #8bc0b3; --theme-tab-active-bg: #a2d9ce; --theme-tab-active-text: #333; --theme-gps-button-bg: #50623a; }
     .theme-sorgho { --theme-primary-color: #c0392b; --theme-secondary-color: #795548; --theme-text-on-primary: white; --theme-heading-color: #c0392b; --theme-button-hover-bg: #a93226; --theme-tab-active-bg: #c0392b; --theme-tab-active-text: white; --theme-gps-button-bg: #795548; }
-    .theme-fictive { --theme-primary-color: #9b59b6; --theme-secondary-color: #8e44ad; --theme-heading-color: #8e44ad; --theme-button-hover-bg: #732d91; --theme-tab-active-bg: #9b59b6; --theme-tab-active-text: white; --theme-gps-button-bg: #8e44ad; }
 
+    body { font-family: var(--theme-font-family); margin: 0; padding: 15px; background-color: var(--theme-background-color); color: var(--theme-text-color); transition: background-color 0.5s ease, color 0.5s ease; }
     h1, h2, h3, h4 { color: var(--theme-heading-color); margin-top: 0; }
     
     .tabs { overflow: hidden; border-bottom: 1px solid #ddd; margin-bottom: 20px; }
@@ -118,15 +112,15 @@
     
     /* SPECIFIQUE POUR LE BLOC NUMERO PARCELLE (HAUT) */
     #dynamic-digit-buttons .square-btn-group {
-        flex-wrap: nowrap !important;
-        overflow: hidden;
+        flex-wrap: nowrap !important; /* Interdit absolument de passer à la ligne */
+        overflow: hidden; /* Interdit la barre de défilement */
         width: 100%;
-        gap: 2px;
+        gap: 2px; /* Espace minimal entre les chiffres */
     }
     #dynamic-digit-buttons .square-btn {
-        flex: 1 1 0; 
+        flex: 1 1 0; /* Les 10 boutons se partagent l'espace et rétrécissent à part égale */
         width: auto !important;
-        min-width: 0 !important;
+        min-width: 0 !important; /* Autorise à rétrécir au maximum pour tenir sur l'écran */
         padding: 0 !important;
     }
 
@@ -156,32 +150,25 @@
     /* SPECIFIQUE POUR LE CHOIX DES NOTATIONS SUR UNE LIGNE */
     .not-buttons-row { 
         display: flex; 
-        gap: 2px; 
+        gap: 5px; 
         margin-bottom: 10px; 
-        flex-wrap: nowrap !important; 
-        width: 100%;
-        overflow: hidden;
+        flex-wrap: nowrap; 
+        overflow-x: auto; 
+        padding-bottom: 5px; 
+        scrollbar-width: none; /* Cache scrollbar Firefox */
+        -ms-overflow-style: none; /* Cache scrollbar IE/Edge */
     }
+    .not-buttons-row::-webkit-scrollbar { display: none; } /* Cache scrollbar Webkit */
     
     .not-btn-choix { 
-        flex: 1 1 0; 
-        min-width: 0; 
-        height: 45px;
-        padding: 2px; 
-        font-size: 0.75em; 
+        flex: 0 0 auto; 
+        padding: 8px 15px; 
+        font-size: 0.9em; 
         background-color: #e9ecef; 
         color: #333; 
         border: 1px solid #ccc; 
-        border-radius: 4px;
         cursor: pointer; 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        line-height: 1.1;
-        font-weight: 500;
-        white-space: normal;
-        word-break: break-word;
+        white-space: nowrap; 
     }
     .not-btn-choix.active { background-color: var(--theme-secondary-color); color: white; border-color: var(--theme-secondary-color); box-shadow: inset 0 3px 5px rgba(0,0,0,0.2); }
     
@@ -1029,6 +1016,18 @@ uk: {
 }
 };
 
+const rawCsvData = `Code_Essai_Parcelle,variete,Essai,Espece,Gps,Plan_X,Plan_Y,Type
+1,LID 5053L SU,Test,Tournesol,"43.69,1.27",1,1,H
+2,MYLADY,Test,Mais,"43.47,-0.34",2,1,F
+3,LID PANDORE,Test,Sorgho,"41.75,-0.79",3,1,M
+4,ISIDOR,Test,Soja,"43.65,1.65",1,2,F
+5,LID TRETO,Test,Colza,"44.39,1.39",2,2,H
+6,LID 5053L SU,Test,Tournesol,"0.0,0.0",3,2,M
+7,ISIDOR,Test,Soja,"0.0,0.0",1,3,M
+8,MYLADY,Test,Mais,"0.0,0.0",2,3,F
+9,LID TRETO,Test,Colza,"0.0,0.0",3,3,H
+10,LID PANDORE,Test,Sorgho,"41.75,-0.79",5,6,M`;
+
 let varieteData = [], appObservations = [], currentEssai = null, currentDigitCount = 3, currentParcelleArray = ['0','0','0'], selectedPlotCodeForNavigation = null, currentEspece = null, currentGps = null, parcelleValideeCode = null, currentPlotOrder = [], simpleNotationsConfig = [];
 let externalData = []; 
 
@@ -1141,7 +1140,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-choice-photo').onclick = () => addSimpleLine('photo');
     document.getElementById('custom-time').value = now.toTimeString().substring(0,5);
 
-    // Import Overlay interactif
     document.getElementById('import-external-csv').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -1159,7 +1157,6 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.readAsText(file);
     });
 
-    // Import Base de données
     document.getElementById('import-new-trial-csv').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -1171,7 +1168,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (content.split('\n')[0].indexOf(';') === -1 && content.split('\n')[0].indexOf(',') > -1) sep = ',';
                 const newData = parseCSVToObjects(content, sep);
                 if (newData.length > 0) {
-                    // Ajout à la base locale
                     varieteData = varieteData.concat(newData);
                     saveVarieteDataLocal();
                     initEssaiSelector();
@@ -1182,7 +1178,6 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.readAsText(file);
     });
 
-    // Bouton de Création d'Essai
     document.getElementById('creer-essai').addEventListener('click', () => {
         let name = document.getElementById('new-trial-name').value.trim();
         let esp = document.getElementById('new-trial-espece').value;
@@ -1214,7 +1209,6 @@ document.addEventListener('DOMContentLoaded', () => {
         saveVarieteDataLocal();
         initEssaiSelector();
         
-        // Démarrer directement
         document.getElementById('choix-essai').value = name;
         document.getElementById('confirmer-essai').click();
     });
@@ -1342,19 +1336,6 @@ function setupEventListeners() {
             document.getElementById('app-container').style.display = 'block';
             
             const plotsInTrial = varieteData.filter(p => p.Essai === currentEssai);
-            
-            // --- GÉNÉRATION AUTO DU PLAN SI MANQUANT ---
-            const needsPlan = plotsInTrial.some(p => !p.Plan_X || !p.Plan_Y || p.Plan_X === "" || p.Plan_Y === "");
-            if (needsPlan && plotsInTrial.length > 0) {
-                const cols = Math.ceil(Math.sqrt(plotsInTrial.length));
-                plotsInTrial.forEach((p, idx) => {
-                    p.Plan_X = (idx % cols) + 1;
-                    p.Plan_Y = Math.floor(idx / cols) + 1;
-                });
-                saveVarieteDataLocal();
-            }
-            // -------------------------------------------
-
             const maxPlotNum = Math.max(0, ...plotsInTrial.map(p => parseInt(p.Code_Essai_Parcelle) || 0));
             if (maxPlotNum <= 99) currentDigitCount = 2;
             else if (maxPlotNum <= 999) currentDigitCount = 3;
@@ -1533,7 +1514,6 @@ function updateUIForSelectedPlot(code) {
         coordsSuffix = ` <span style="font-size:0.85em; color:#7f8c8d;">(${sy},${sx})</span>`;
     }
     
-    // CORRECTION ICI: Reprise de la bonne logique pour ne pas écraser la variété
     document.getElementById('variete-text').innerHTML = `<span data-i18n="lignee">${getT("lignee")}</span> ` + (plot ? plot.variete : getT("unknown-variety")) + coordsSuffix;
     
     document.getElementById('param-variete').value = plot ? plot.variete : "";
@@ -1982,7 +1962,6 @@ if (!parcelleValideeCode && currentZenTarget) {
 }
 if (!parcelleValideeCode) return alert(getT("alert-valider-parcelle"));
 
-// Enregistrement des Paramètres de parcelle si modifiés
 let paramVariete = document.getElementById('param-variete').value.trim();
 let paramType = document.getElementById('param-type').value;
 
@@ -2000,7 +1979,6 @@ if(currentPlot) {
             const sx = String(currentPlot.Plan_X).padStart(3, '0');
             coordsSuffix = ` <span style="font-size:0.85em; color:#7f8c8d;">(${sy},${sx})</span>`;
         }
-        // CORRECTION : utilisation de document.getElementById('variete-text').innerHTML pour garder la bonne logique
         document.getElementById('variete-text').innerHTML = `<span data-i18n="lignee">${getT("lignee")}</span> ${currentPlot.variete}${coordsSuffix}`;
     }
 }
@@ -2008,14 +1986,9 @@ if(currentPlot) {
 const obsText = document.getElementById('obs').value;
 if(obsText) addCommentToMemory(obsText);
 
-// CORRECTION : On récupère la variété correctement sans la couper au mauvais endroit
-let fallbackVariete = document.getElementById('variete-text').textContent.split(':')[1];
-if (fallbackVariete) { fallbackVariete = fallbackVariete.split('(')[0].trim(); } 
-else { fallbackVariete = "Inconnue"; }
-
 let obs = {
     id: Date.now(), Notateur: document.getElementById('type-notation-session').value, ESSAI: currentEssai, Parcelle: parcelleValideeCode,
-    Variete: paramVariete || fallbackVariete,
+    Variete: paramVariete || document.getElementById('variete-text').textContent.split(':')[1].split('(')[0].trim(),
     Date: document.getElementById('custom-date').value, Heure: document.getElementById('custom-time').value,
     Meteo: document.getElementById('meteo-select').value, Rep: document.getElementById('rep').value, Observations: obsText,
 };
@@ -2293,10 +2266,7 @@ window.handlePhotoUpload = (event, code) => {
     const numInput = document.getElementById('photo-num-' + code);
     const num = String(numInput.value).padStart(3, '0'); 
 
-    let varieteRaw = document.getElementById('variete-text').textContent.split(':')[1];
-    if (varieteRaw) { varieteRaw = varieteRaw.split('(')[0].trim(); } 
-    else { varieteRaw = "Inconnue"; }
-    
+    const varieteRaw = document.getElementById('variete-text').textContent.split(':')[1].split('(')[0].trim() || "Inconnue";
     const essaiRaw = currentEssai || "Essai";
     const sanitize = (s) => s.replace(/[^a-z0-9]/gi, '_');
 
