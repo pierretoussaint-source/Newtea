@@ -315,6 +315,7 @@
 
 <h1 style="text-align:center; margin-top:0;">Newtea</h1>
 
+<!-- ÉCRAN D'ACCUEIL : SÉLECTION / CRÉATION / IMPORT -->
 <div id="session-setup">
     <label for="type-notation-session" data-i18n="notateur">Votre Nom / Notateur :</label>
     <input type="text" id="type-notation-session" data-i18n-placeholder="notateur-placeholder" placeholder="Nom du notateur...">
@@ -360,6 +361,7 @@
     </div>
 </div>
 
+<!-- APPLICATION PRINCIPALE -->
 <div id="app-container" style="display:none;">
     <div class="tabs">
         <button class="tablink active" onclick="openTab(event, 'Note')" id="defaultOpen" data-i18n="tab-Note">Note</button>
@@ -367,6 +369,7 @@
         <button class="tablink" onclick="openTab(event, 'Configuration')" data-i18n="tab-Configuration">Config</button>
     </div>
 
+    <!-- ONGLET NOTE -->
     <div id="Note" class="tabcontent" style="display:block;">
         <div id="app-content">
             <div class="sidebar">
@@ -378,6 +381,7 @@
 
                 <div class="selector-group"> 
                     <h4 data-i18n="num-parcelle">Numéro de parcelle</h4>
+                    <!-- CONTENEUR DES BOUTONS DE CHIFFRES DYNAMIQUE -->
                     <div id="dynamic-digit-buttons"></div>
                 </div>
 
@@ -425,6 +429,7 @@
                         <button type="button" class="not-btn-choix" data-target="not-prlvmt" data-i18n="not-prlvmt">Prlvmt</button>
                     </div>
 
+                    <!-- MENU : PARAMETRES PARCELLE -->
                     <div id="not-param" class="notation-group-container hidden-section" style="border-left: 4px solid #d35400;">
                         <div class="zen-title-wrapper">
                             <h4 data-i18n="h4-param-parc">Paramètres de la Parcelle</h4>
@@ -528,6 +533,7 @@
                     <span id="clear-obs" style="position: absolute; right: 10px; top: 35px; cursor: pointer; color: #e74c3c; font-weight: bold; font-size: 1.2em; display: none;">×</span>
                     <div id="mic-btn" class="mic-btn" style="bottom: auto; top:35px;" onclick="toggleDictation()">🎤</div>
                     
+                    <!-- FRÉQUENTS COMMENTAIRES -->
                     <div id="freq-comments-container" class="chip-container"></div>
                 </div>
 
@@ -553,6 +559,7 @@
         </div>
     </div>
 
+    <!-- ONGLET STATS -->
     <div id="Stats" class="tabcontent">
         <div class="setup-section">
             <h3 data-i18n="h3-statistiques">Statistiques Rapides</h3>
@@ -577,6 +584,7 @@
         </div>
     </div>
 
+    <!-- ONGLET CONFIGURATION -->
     <div id="Configuration" class="tabcontent">
         <label data-i18n="choix-langue">Langue :</label>
         <select id="lang-select">
@@ -619,8 +627,8 @@
         
         <hr>
         <h3 data-i18n="h3-gestion-donnees" style="color:#c0392b;">Gestion des données</h3>
-        <button id="telecharger-csv" class="btn-primary btn-block" style="margin-bottom:10px;" data-i18n="telecharger-donnees">📥 Télécharger CSV Données (Notes)</button>
-        <button id="partager-csv" class="btn-primary btn-block" style="margin-bottom:10px; background-color: #2980b9;" data-i18n="partager-donnees">📤 Partager CSV (Email, Drive...)</button>
+        <!-- Bouton global de Sauvegarde, Partage & Purge -->
+        <button id="partager-csv" class="btn-primary btn-block" style="margin-bottom:10px; background-color: #2980b9;">📥/📤 Sauvegarder CSV, Partager & Purger</button>
         <button id="telecharger-plan-csv" class="btn-accent btn-block" style="margin-bottom:10px;" data-i18n="telecharger-plan">📥 Télécharger Plan Essai CSV</button>
         
         <button id="reset-data-local" class="btn-danger btn-block" style="margin-bottom:10px;" data-i18n="reset-donnees">⚠️ Reset Données (Purger les Notes)</button>
@@ -628,6 +636,7 @@
     </div>
 </div>
 
+<!-- MODAL GPS -->
 <div id="gpsChoiceModal" class="modal">
     <div class="modal-content" style="max-width: 400px; text-align: center;">
         <h3 data-i18n="h3-gps-options">Options GPS</h3>
@@ -638,6 +647,7 @@
     </div>
 </div>
 
+<!-- MODAL TYPE SIMPLE -->
 <div id="choiceSimpleNotModal" class="modal">
 <div class="modal-content" style="max-width: 400px; text-align: center;">
     <h3 data-i18n="prompt-title-simple">Type de notation</h3>
@@ -656,6 +666,7 @@
 
 <div id="bbchModal" class="modal"><div class="modal-content"><span class="close-button" id="closeBbchModal" style="float:right; font-size:24px; cursor:pointer;">×</span><h2 data-i18n="h2-bbch">Stades BBCH</h2><div id="bbch-modal-body"></div></div></div>
 
+<!-- SOWING PLAN MODAL -->
 <div id="sowingPlanModal" class="modal" style="z-index: 100000;">
     <div class="modal-content"> 
         <span class="close-button" id="closeSowingPlanModal" style="float:right; font-size:24px; cursor:pointer;">×</span>
@@ -710,6 +721,7 @@
         <hr>
         <div id="sowing-plan-grid-container"></div>
         
+        <!-- Action Bar Multi-Select -->
         <div id="multi-select-action-bar" style="display:none; padding:15px; margin-top:15px; background:var(--theme-secondary-color); border-radius:8px; text-align:center;">
             <p id="multi-select-status" style="color:white; font-weight:bold; margin-top:0;">0 parcelle(s) sélectionnée(s)</p>
             <button onclick="applyMultiSelect()" style="background-color:white; color:var(--theme-secondary-color); padding:10px 20px; font-weight:bold; width:100%; border-radius:5px;" data-i18n="btn-appliquer-groupe">Appliquer à la sélection</button>
@@ -717,6 +729,7 @@
     </div>
 </div>
 
+<!-- ZEN MODE / FOCUS OVERLAY -->
 <div id="zen-overlay" style="display:none; position:fixed; z-index:99999; top:0; left:0; width:100%; height:100%; background:var(--theme-background-color); flex-direction:column; padding:15px; box-sizing:border-box;">
     <div style="display:flex; justify-content:space-between; align-items:flex-start;">
         <div>
@@ -736,6 +749,7 @@
     <div id="zen-save-buttons-container" style="padding-bottom: 20px;"></div>
 </div>
 
+<!-- Script de traductions externe -->
 <script src="translations.js"></script>
 
 <script>
@@ -752,24 +766,33 @@ function applyTranslations(lang) {
     localStorage.setItem('selected_lang', lang);
 }
 
-const rawCsvData = `Code_Essai_Parcelle,variete,Essai,Espece,Gps,Plan_X,Plan_Y,Type
-1,LID 5053L SU,Test,Tournesol,"43.69,1.27",1,1,H
-2,MYLADY,Test,Mais,"43.47,-0.34",2,1,F
-3,LID PANDORE,Test,Sorgho,"41.75,-0.79",3,1,M
-4,ISIDOR,Test,Soja,"43.65,1.65",1,2,F
-5,LID TRETO,Test,Colza,"44.39,1.39",2,2,H
-6,LID 5053L SU,Test,Tournesol,"0.0,0.0",3,2,M
-7,ISIDOR,Test,Soja,"0.0,0.0",1,3,M
-8,MYLADY,Test,Mais,"0.0,0.0",2,3,F
-9,LID TRETO,Test,Colza,"0.0,0.0",3,3,H
-10,LID PANDORE,Test,Sorgho,"41.75,-0.79",5,6,M`;
-
 let varieteData = [], appObservations = [], currentEssai = null, currentDigitCount = 3, currentParcelleArray = ['0','0','0'], selectedPlotCodeForNavigation = null, currentEspece = null, currentGps = null, parcelleValideeCode = null, currentPlotOrder = [], simpleNotationsConfig = [];
 let externalData = []; 
 let isMultiSelectMode = false;
 let multiSelectTargetKey = null;
 let multiSelectTargetValue = null;
 let multiSelectedPlots = new Set();
+let isSaving = false; // Variable pour éviter les doubles clics
+
+function playSuccessSound() {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(1000, ctx.currentTime); // Fréquence aigue
+        gain.gain.setValueAtTime(0.1, ctx.currentTime); // Volume bas
+        gain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 0.1); // Son très court (100ms)
+        osc.start();
+        osc.stop(ctx.currentTime + 0.1);
+    } catch(e) {
+        console.log("L'audio n'est pas supporté par ce navigateur", e);
+    }
+}
 
 function parseCSVToObjects(csvString, delimiter = ';') {
     const lines = csvString.trim().split(/\r?\n/);
@@ -800,17 +823,8 @@ function parseCSVToObjects(csvString, delimiter = ';') {
 
 function loadVarieteDataLocal() {
     const saved = localStorage.getItem('newtea_trials');
-    const defaultTestTrial = parseCSVToObjects(rawCsvData, ',');
-    
     if (saved) {
         varieteData = JSON.parse(saved);
-        if (!varieteData.some(p => p.Essai === 'Test')) {
-            varieteData = defaultTestTrial.concat(varieteData);
-            saveVarieteDataLocal();
-        }
-    } else {
-        varieteData = defaultTestTrial;
-        saveVarieteDataLocal();
     }
 }
 function saveVarieteDataLocal() {
@@ -1177,7 +1191,6 @@ function setupEventListeners() {
     document.getElementById('enregistrer-suivant').onclick = () => enregistrerObservation(1);
     document.getElementById('enregistrer-prec').onclick = () => enregistrerObservation(-1);
     
-    document.getElementById('telecharger-csv').onclick = telechargerCSV;
     document.getElementById('partager-csv').onclick = partagerCSV;
     document.getElementById('telecharger-plan-csv').onclick = telechargerPlanCSV;
     document.getElementById('changer-essai').onclick = () => location.reload();
@@ -1268,7 +1281,11 @@ function updateUIForSelectedPlot(code) {
     currentEspece = plot ? plot.Espece : null;
     currentGps = plot ? plot.Gps : null;
     document.getElementById('espece-text').textContent = currentEspece ? (translations[localStorage.getItem('selected_lang') || 'fr'][currentEspece] || currentEspece).toUpperCase() : "";
-    document.body.className = currentEspece ? `theme-${currentEspece.toLowerCase()}` : '';
+    
+    // Maintien du mode sombre et application du thème des couleurs
+    const themes = ['theme-mais', 'theme-tournesol', 'theme-colza', 'theme-soja', 'theme-sorgho'];
+    document.body.classList.remove(...themes);
+    if (currentEspece) document.body.classList.add(`theme-${currentEspece.toLowerCase()}`);
     
     document.getElementById('voir-sur-carte').style.display = 'inline-block';
     if(currentGps && currentGps.length > 3) {
@@ -1675,60 +1692,72 @@ window.insertFreqComment = (txt) => {
 };
 
 function enregistrerObservation(moveDir) {
-if (!parcelleValideeCode && currentZenTarget) {
-    document.getElementById('valider-parcelle').click();
-}
-if (!parcelleValideeCode) return alert(getT("alert-valider-parcelle"));
+    // ANTI-DOUBLON (Debounce)
+    if (isSaving) return;
+    isSaving = true;
+    setTimeout(() => { isSaving = false; }, 500);
 
-let paramVariete = document.getElementById('param-variete').value.trim();
-let paramType = document.getElementById('param-type').value;
-
-let currentPlot = varieteData.find(p => String(p.Code_Essai_Parcelle).padStart(currentDigitCount,'0') === parcelleValideeCode && p.Essai === currentEssai);
-if(currentPlot) {
-    let updated = false;
-    if(paramVariete && paramVariete !== currentPlot.variete) { currentPlot.variete = paramVariete; updated = true; }
-    if(paramType !== currentPlot.Type) { currentPlot.Type = paramType; updated = true; }
-    if(updated) {
-        saveVarieteDataLocal();
-        
-        let coordsSuffix = "";
-        if (currentPlot.Plan_Y && currentPlot.Plan_X) {
-            const sy = String(currentPlot.Plan_Y).padStart(3, '0');
-            const sx = String(currentPlot.Plan_X).padStart(3, '0');
-            coordsSuffix = ` <span style="font-size:0.85em; color:#7f8c8d;">(${sy},${sx})</span>`;
-        }
-        document.getElementById('variete-text').innerHTML = `<span data-i18n="lignee">${getT("lignee")}</span> ${currentPlot.variete}${coordsSuffix}`;
+    if (!parcelleValideeCode && currentZenTarget) {
+        document.getElementById('valider-parcelle').click();
     }
-}
+    if (!parcelleValideeCode) return alert(getT("alert-valider-parcelle"));
 
-const obsText = document.getElementById('obs').value;
-if(obsText) addCommentToMemory(obsText);
+    // JOUE LE SON DE VALIDATION
+    playSuccessSound();
 
-let fallbackVariete = document.getElementById('variete-text').textContent.split(':')[1];
-if (fallbackVariete) { fallbackVariete = fallbackVariete.split('(')[0].trim(); } 
-else { fallbackVariete = "Inconnue"; }
+    let paramVariete = document.getElementById('param-variete').value.trim();
+    let paramType = document.getElementById('param-type').value;
 
-let obs = {
-    id: Date.now(), Notateur: document.getElementById('type-notation-session').value, ESSAI: currentEssai, Parcelle: parcelleValideeCode,
-    Variete: paramVariete || fallbackVariete,
-    Date: document.getElementById('custom-date').value, Heure: document.getElementById('custom-time').value,
-    Meteo: document.getElementById('meteo-select').value, Rep: document.getElementById('rep').value, Observations: obsText,
-};
-if(document.getElementById('stade').value) obs.Stade = document.getElementById('stade').value;
-const floSel = document.querySelector('#flo-buttons .selected'); if(floSel) obs.Floraison = floSel.textContent + "%";
-if(document.getElementById('receptivite').value) obs.Receptivite = document.getElementById('receptivite').value;
-if (document.getElementById('lettres-analyse').value !== "") {
-    obs.Code_Ech = (document.getElementById('lettres-analyse').value + document.getElementById('numero-analyse').value).toUpperCase();
-    document.getElementById('numero-analyse').value++;
-}
-simpleNotationsConfig.forEach(s => { const el = document.getElementById('not-simple-'+s.code); if(el && el.value) obs['Not_' + s.label] = el.value; });
-appObservations.unshift(obs); localStorage.setItem('observations_v12', JSON.stringify(appObservations)); renderRecapTable();
-if(moveDir !== 0) {
-    handleNavigate(moveDir); parcelleValideeCode = String(selectedPlotCodeForNavigation).padStart(currentDigitCount,'0'); updateUIForSelectedPlot(selectedPlotCodeForNavigation); document.getElementById('rep').value = 'A';
-} else { let r = document.getElementById('rep'); r.value = String.fromCharCode(r.value.toUpperCase().charCodeAt(0)+1); }
-updateProgressBar();
-updateZenHeader();
-renderStats();
+    let currentPlot = varieteData.find(p => String(p.Code_Essai_Parcelle).padStart(currentDigitCount,'0') === parcelleValideeCode && p.Essai === currentEssai);
+    if(currentPlot) {
+        let updated = false;
+        if(paramVariete && paramVariete !== currentPlot.variete) { currentPlot.variete = paramVariete; updated = true; }
+        if(paramType !== currentPlot.Type) { currentPlot.Type = paramType; updated = true; }
+        if(updated) {
+            saveVarieteDataLocal();
+            
+            let coordsSuffix = "";
+            if (currentPlot.Plan_Y && currentPlot.Plan_X) {
+                const sy = String(currentPlot.Plan_Y).padStart(3, '0');
+                const sx = String(currentPlot.Plan_X).padStart(3, '0');
+                coordsSuffix = ` <span style="font-size:0.85em; color:#7f8c8d;">(${sy},${sx})</span>`;
+            }
+            document.getElementById('variete-text').innerHTML = `<span data-i18n="lignee">${getT("lignee")}</span> ${currentPlot.variete}${coordsSuffix}`;
+        }
+    }
+
+    const obsText = document.getElementById('obs').value;
+    if(obsText) addCommentToMemory(obsText);
+
+    let fallbackVariete = document.getElementById('variete-text').textContent.split(':')[1];
+    if (fallbackVariete) { fallbackVariete = fallbackVariete.split('(')[0].trim(); } 
+    else { fallbackVariete = "Inconnue"; }
+
+    let obs = {
+        id: Date.now(), Notateur: document.getElementById('type-notation-session').value, ESSAI: currentEssai, Parcelle: parcelleValideeCode,
+        Variete: paramVariete || fallbackVariete,
+        Date: document.getElementById('custom-date').value, Heure: document.getElementById('custom-time').value,
+        Meteo: document.getElementById('meteo-select').value, Rep: document.getElementById('rep').value, Observations: obsText,
+    };
+    if(document.getElementById('stade').value) obs.Stade = document.getElementById('stade').value;
+    const floSel = document.querySelector('#flo-buttons .selected'); if(floSel) obs.Floraison = floSel.textContent + "%";
+    if(document.getElementById('receptivite').value) obs.Receptivite = document.getElementById('receptivite').value;
+    if (document.getElementById('lettres-analyse').value !== "") {
+        obs.Code_Ech = (document.getElementById('lettres-analyse').value + document.getElementById('numero-analyse').value).toUpperCase();
+        document.getElementById('numero-analyse').value++;
+    }
+    simpleNotationsConfig.forEach(s => { const el = document.getElementById('not-simple-'+s.code); if(el && el.value) obs['Not_' + s.label] = el.value; });
+    
+    appObservations.unshift(obs); 
+    localStorage.setItem('observations_v12', JSON.stringify(appObservations)); 
+    renderRecapTable();
+    
+    if(moveDir !== 0) {
+        handleNavigate(moveDir); parcelleValideeCode = String(selectedPlotCodeForNavigation).padStart(currentDigitCount,'0'); updateUIForSelectedPlot(selectedPlotCodeForNavigation); document.getElementById('rep').value = 'A';
+    } else { let r = document.getElementById('rep'); r.value = String.fromCharCode(r.value.toUpperCase().charCodeAt(0)+1); }
+    updateProgressBar();
+    updateZenHeader();
+    renderStats();
 }
 
 function renderRecapTable() {
@@ -1885,6 +1914,9 @@ async function partagerCSV() {
     const csv = generateNotesCSVString();
     if(!csv) return alert(getT("alert-rien"));
 
+    // 1. Sauvegarde automatique par téléchargement direct (par sécurité)
+    telechargerCSV();
+
     const essai = currentEssai || "Essai"; 
     const date = document.getElementById('custom-date').value || new Date().toISOString().split('T')[0]; 
     const notateur = document.getElementById('type-notation-session').value || "Notateur"; 
@@ -1893,6 +1925,7 @@ async function partagerCSV() {
 
     const file = new File([new Blob([csv], {type: 'text/csv;charset=utf-8'})], filename, { type: 'text/csv' });
 
+    // 2. Partage natif (si le téléphone le supporte)
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
         try {
             await navigator.share({
@@ -1902,11 +1935,21 @@ async function partagerCSV() {
             });
         } catch (error) {
             console.error('Erreur partage', error);
+            // L'utilisateur peut avoir annulé le partage, on continue quand même.
         }
-    } else {
-        alert(getT("alert-share-notsupported"));
-        telechargerCSV();
     }
+
+    // 3. Purge des données après confirmation
+    setTimeout(() => {
+        if (confirm("Le fichier CSV a été sauvegardé. Voulez-vous maintenant purger (effacer) toutes les notes de l'appareil ?")) {
+            appObservations = [];
+            localStorage.removeItem('observations_v12');
+            renderRecapTable();
+            updateProgressBar();
+            renderStats();
+            alert("Les données ont été purgées avec succès.");
+        }
+    }, 1000); // Petit délai pour laisser le temps au téléchargement/partage de s'exécuter
 }
 
 function telechargerPlanCSV() {
