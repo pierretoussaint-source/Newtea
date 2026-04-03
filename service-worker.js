@@ -7,6 +7,7 @@ const urlsToCache = [
   './manifest.json',
   './icon-192x192.png',
   './icon-512x512.png'
+  './tuto.html'
 ];
 
 // Installation du service worker et mise en cache des fichiers
