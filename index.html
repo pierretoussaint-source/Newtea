@@ -6,302 +6,301 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
        <link rel="icon" href="data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cstyle%3E.plant-stem-icon { stroke: var(--theme-secondary-color, %234CAF50); stroke-width: 1.5; stroke-linecap: round; }.plant-leaf-icon { fill: var(--theme-secondary-color, %2366BB6A); }.n-stylized-icon { fill: var(--theme-heading-color, %23227A49); }.icon-background { fill: var(--theme-card-background-color, white); stroke: var(--theme-secondary-color, %23DDD); stroke-width:1; }%3C/style%3E%3Ccircle class='icon-background' cx='40' cy='40' r='38'/%3E%3Cpath d='M30 55 L30 25 M30 25 L50 55 M50 55 L50 25' stroke='var(--theme-heading-color, %23227A49)' stroke-width='7' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cg transform='translate(40, 15) scale(0.45)'%3E%3Cline class='plant-stem-icon' x1='0' y1='10' x2='0' y2='-3'/%3E%3Cellipse cx='0' cy='-8' rx='5' ry='7' fill='var(--theme-sorgho-primary-color, %23C0392B)'/%3E%3C/g%3E%3Cg transform='translate(18, 38) scale(0.45)'%3E%3Cline class='plant-stem-icon' x1='0' y1='12' x2='0' y2='-3'/%3E%3Ccircle cx='0' cy='-8' r='5' fill='var(--theme-primary-color, %23FFD700)'/%3E%3Ccircle cx='0' cy='-8' r='2' fill='var(--theme-secondary-color, %23A0522D)'/%3E%3C/g%3E%3Cg transform='translate(62, 38) scale(0.45)'%3E%3Crect class='plant-leaf-icon' x='-2' y='-10' width='4' height='18' rx='1'/%3E%3Cpath stroke='var(--theme-primary-color, %23E6B800)' stroke-width='1.5' fill='none' d='M-1.5,-10 Q0,-14 1.5,-10 M0,-10 Q-2.5,-13 -3,-9 M0,-10 Q2.5,-13 3,-9'/%3E%3C/g%3E%3Cg transform='translate(25, 60) scale(0.4)'%3E%3Cline class='plant-stem-icon' x1='0' y1='10' x2='0' y2='-1'/%3E%3Ccircle cx='0' cy='-3' r='2' fill='var(--theme-colza-primary-color, %23FFEB3B)'/%3E%3Ccircle cx='-3' cy='-5' r='2' fill='var(--theme-colza-primary-color, %23FFEB3B)'/%3E%3Ccircle cx='3' cy='-5' r='2' fill='var(--theme-colza-primary-color, %23FFEB3B)'/%3E%3C/g%3E%3Cg transform='translate(55, 60) scale(0.4)'%3E%3Cpath class='plant-leaf-icon' d='M0,12 Q-8,3 -4,-4 Q0,-8 4,-4 Q8,3 0,12 Z'/%3E%3Ccircle cx='-2' cy='-1' r='1' fill='var(--theme-soja-primary-color, %23E1BEE7)'/%3E%3Ccircle cx='2' cy='-1' r='1' fill='var(--theme-soja-primary-color, %23E1BEE7)'/%3E%3C/g%3E%3C/svg%3E">
     <title>Newtea</title>
-<link rel="manifest" href="./manifest.json">
-<link rel="apple-touch-icon" href="./icon-192x192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#227A49">
-<script>
-  if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.protocol === 'http:')) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./service-worker.js')
-        .then(() => console.log('Service Worker Enregistré avec succès.'))
-        .catch(err => console.error('Erreur Service Worker', err));
-    });
-  } else {
-    console.log('Service Worker désactivé (protocole non supporté sur cet environnement).');
-  }
-</script>
+    <link rel="manifest" href="./manifest.json">
+    <link rel="apple-touch-icon" href="./icon-192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#227A49">
+    <script>
+    if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.protocol === 'http:')) {
+        window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+            .then(() => console.log('Service Worker Enregistré avec succès.'))
+            .catch(err => console.error('Erreur Service Worker', err));
+        });
+    } else {
+        console.log('Service Worker désactivé (protocole non supporté sur cet environnement).');
+    }
+    </script>
+    <style>
+        /* Remplacement du zoom par une taille de police racine réduite pour iOS */
+        html { font-size: 13px; overflow-x: hidden; }
+        body { overflow-x: hidden; font-family: var(--theme-font-family); margin: 0; padding: 15px; background-color: var(--theme-background-color); color: var(--theme-text-color); transition: background-color 0.5s ease, color 0.5s ease; }
+        
+        :root {
+            --theme-primary-color: #33A532; --theme-secondary-color: #227A49; 
+            --theme-text-on-primary: white; --theme-text-on-secondary: white;
+            --theme-heading-color: #227A49; --theme-button-hover-bg: #227A49;
+            --theme-tab-active-bg: #33A532; --theme-tab-active-text: white;
+            --theme-gps-button-bg: #007bff; --theme-gps-button-text: white;
+            --theme-gps-button-hover-bg: #0056b3;
+            --theme-input-border-color: #ced4da; --theme-input-focus-border-color: #80bdff;
+            --theme-input-focus-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            --theme-text-color: #495057; --theme-background-color: #f8f9fa;
+            --theme-card-background-color: #ffffff; --theme-card-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            --theme-font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        /* DARK MODE VARIABLES */
+        body.dark-mode {
+            --theme-primary-color: #44b543; --theme-secondary-color: #2b9159; 
+            --theme-heading-color: #44b543; --theme-button-hover-bg: #2b9159;
+            --theme-text-color: #e0e0e0; --theme-background-color: #121212;
+            --theme-card-background-color: #1e1e1e; --theme-card-shadow: 0 3px 8px rgba(0,0,0,0.4);
+            --theme-input-border-color: #444; 
+        }
+        body.dark-mode input, body.dark-mode select, body.dark-mode textarea { background-color: #2c2c2c; color: #fff; border-color: #555; }
+        body.dark-mode .setup-section { background: #2c2c2c; border-color:#444; }
+        body.dark-mode .tablink { background-color: #333; color: #aaa; }
+        body.dark-mode .tablink.active { background-color: var(--theme-tab-active-bg); color: var(--theme-tab-active-text); }
+        body.dark-mode .square-btn { background-color: #2c2c2c; border-color: #555; color:#ddd; }
+        body.dark-mode .square-btn.selected { background-color: var(--theme-secondary-color); color:white; }
+        body.dark-mode th { background-color: #333; color:#fff;}
+        body.dark-mode td { border-color: #444; }
+        body.dark-mode #recap-table thead tr { background-color: #333 !important; color:#fff;}
+        body.dark-mode .modal-content { background-color: #1e1e1e; color: #e0e0e0; }
+        body.dark-mode .interactive-controls { background-color: #2c3e2c; border-color: #3d5a3d;}
+        body.dark-mode .interactive-val { background: rgba(0,0,0,0.6); color: #fff; text-shadow:none; border-color:#555;}
+        body.dark-mode .sticky-x, body.dark-mode .sticky-y, body.dark-mode .sticky-corner { background-color: #333 !important; color:#fff;}
+        body.dark-mode .notation-group-container { background-color: #242424; border-color:#444;}
+        body.dark-mode .not-btn-choix { background-color: #333; color: #ddd; border-color: #555;}
+        body.dark-mode .not-btn-choix.active { background-color: var(--theme-secondary-color); color: white; }
+
+        .theme-mais { --theme-primary-color: #f1c40f; --theme-secondary-color: #27ae60; --theme-text-on-primary: #333; --theme-heading-color: #27ae60; --theme-button-hover-bg: #e6b800; --theme-tab-active-bg: #f1c40f; --theme-tab-active-text: #333; --theme-gps-button-bg: #27ae60; }
+        .theme-tournesol { --theme-primary-color: #e67e22; --theme-secondary-color: #2c3e50; --theme-text-on-primary: white; --theme-heading-color: #e67e22; --theme-button-hover-bg: #d35400; --theme-tab-active-bg: #e67e22; --theme-tab-active-text: white; --theme-gps-button-bg: #2c3e50; }
+        .theme-colza { --theme-primary-color: #f4d03f; --theme-secondary-color: #2ecc71; --theme-text-on-primary: #333; --theme-heading-color: #27ae60; --theme-button-hover-bg: #e1be32; --theme-tab-active-bg: #f4d03f; --theme-tab-active-text: #333; --theme-gps-button-bg: #2ecc71; }
+        .theme-soja { --theme-primary-color: #a2d9ce; --theme-secondary-color: #50623a; --theme-text-on-primary: #333; --theme-heading-color: #50623a; --theme-button-hover-bg: #8bc0b3; --theme-tab-active-bg: #a2d9ce; --theme-tab-active-text: #333; --theme-gps-button-bg: #50623a; }
+        .theme-sorgho { --theme-primary-color: #c0392b; --theme-secondary-color: #795548; --theme-text-on-primary: white; --theme-heading-color: #c0392b; --theme-button-hover-bg: #a93226; --theme-tab-active-bg: #c0392b; --theme-tab-active-text: white; --theme-gps-button-bg: #795548; }
+        
+        h1, h2, h3, h4 { color: var(--theme-heading-color); margin-top: 0; }
+        
+        .tabs { overflow: hidden; border-bottom: 1px solid #ddd; margin-bottom: 20px; }
+        .tablink { background-color: #e9ecef; float: left; border: none; outline: none; cursor: pointer; padding: 12px 18px; transition: background-color 0.3s, color 0.3s; font-size: 1em; border-radius: 6px 6px 0 0; margin-right: 3px; color: #495057; }
+        .tablink.active { background-color: var(--theme-tab-active-bg); color: var(--theme-tab-active-text); font-weight: 500; }
+        .tabcontent { display: none; padding: 15px 0; }
+        
+        #session-setup, .sidebar, .main-panel, #Configuration div { padding: 20px; background-color: var(--theme-card-background-color); border-radius: 10px; box-shadow: var(--theme-card-shadow); margin-bottom:25px; }
+        #app-container { max-width: 1400px; margin: 0 auto; }
+        #app-content { display: flex; flex-wrap: wrap; gap: 25px; }
+        
+        .sidebar { flex: 1.3; min-width: 480px; box-sizing: border-box; } 
+        .main-panel { flex: 2; min-width: 450px; box-sizing: border-box; }
+        
+        label { display: block; margin-bottom: 6px; width: 100%; font-weight: 500; font-size: 0.95em; color: #343a40; }
+        input, select, textarea { padding: 10px; border: 1px solid var(--theme-input-border-color); border-radius: 5px; font-size: 1em; width: 100%; margin-bottom: 12px; box-sizing: border-box; }
+        .date-input-field { height: 45px; }
+
+        button { background-color: var(--theme-primary-color); color: var(--theme-text-on-primary); border: none; padding: 12px 18px; font-size: 1em; font-weight: 500; cursor: pointer; border-radius: 6px; margin-top:15px; transition: 0.2s; }
+        button:hover { background-color: var(--theme-button-hover-bg); transform: translateY(-1px); }
+        .btn-secondary { background-color: #6c757d; color: white; }
+        .btn-danger { background-color: #e74c3c; color: white; }
+        .btn-accent { background-color: var(--theme-secondary-color); color: var(--theme-text-on-secondary); }
+        .btn-block { width: 100%; display: block; }
+
+        .square-btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; margin-bottom: 5px; }
+        .square-btn { width: 38px; height: 38px; line-height: 36px;font-size: 1.1em; border: 1px solid #adb5bd; background-color: #f8f9fa; text-align: center; cursor: pointer; border-radius: 4px; vertical-align: middle; font-size: 0.85em; font-weight: 500; }
+        .square-btn.selected { background-color: var(--theme-secondary-color); color: var(--theme-text-on-secondary); font-weight: bold; border-color: var(--theme-secondary-color); }
+        
+        /* SPECIFIQUE POUR LE BLOC NUMERO PARCELLE (HAUT) */
+        #dynamic-digit-buttons .square-btn-group {
+            flex-wrap: nowrap !important;
+            overflow: hidden;
+            width: 100%;
+            gap: 2px;
+        }
+        #dynamic-digit-buttons .square-btn {
+            flex: 1 1 0; 
+            width: auto !important;
+            min-width: 0 !important;
+            padding: 0 !important;
+        }
+
+        .cube-btn { width: 45px !important; height: 45px !important; padding: 0 !important; margin: 0 !important; display: inline-flex !important; align-items: center; justify-content: center; font-size: 1.8em !important; font-weight: bold !important; border-radius: 10px !important; flex-shrink: 0; line-height: 1; }
+
+        .espece-gps-line { display: flex; align-items: center; justify-content: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
+        #voir-sur-carte, #voir-plan-semis { margin: 0; padding: 4px 8px; font-size: 0.85em; width: auto; border-radius: 4px; display:inline-block; }
+        #voir-sur-carte { background-color: var(--theme-gps-button-bg); color: var(--theme-gps-button-text); }
+        
+        .modal { display: none; position: fixed; z-index: 100000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
+        .modal-content { background-color: var(--theme-card-background-color); margin: 5% auto; padding: 20px; border: 1px solid #888; width: 90%; max-width: 800px; border-radius: 8px; max-height: 90vh; overflow-y: auto; }
+        
+        .input-inc-dec { display: flex; align-items: center; justify-content: center; margin-bottom: 12px; gap: 10px; }
+        .input-inc-dec input { width: 90px !important; height: 45px !important; margin: 0; text-align: center; font-size: 1.2em; font-weight: bold; box-sizing: border-box; }
+
+        .input-group-big { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-bottom: 15px; }
+        .input-wrapper-relative { position: relative; width: 90px; }
+        .input-big-text { width: 100% !important; height: 45px !important; text-align: center; padding-right: 25px; font-size: 1.2em; font-weight: bold; margin:0 !important; box-sizing: border-box; }
+        .clear-icon-inside { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #e74c3c; font-weight: bold; font-size: 1.4em; display: none; z-index: 5; }
+
+        .save-buttons-container { display: flex; gap: 5px; margin-top: 15px; }
+        .save-buttons-container button { flex: 1; padding: 15px 2px; font-size: 0.9em; line-height: 1.2; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        .hidden-section { display: none !important; }
+        .notation-group-container { border: 1px solid var(--theme-input-border-color); padding: 10px; border-radius: 5px; margin-bottom: 15px; background-color: var(--theme-card-background-color); transition: all 0.3s ease; }
+        
+        /* SPECIFIQUE POUR LE CHOIX DES NOTATIONS SUR UNE LIGNE (CARRÉS ÉLASTIQUES) */
+        .not-buttons-row { 
+            display: flex; 
+            gap: 2px; 
+            margin-bottom: 10px; 
+            flex-wrap: nowrap !important; 
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .not-btn-choix { 
+            flex: 1 1 0; 
+            min-width: 0; 
+            height: 45px;
+            padding: 2px; 
+            font-size: 0.75em; 
+            background-color: #e9ecef; 
+            color: #333; 
+            border: 1px solid #ccc; 
+            border-radius: 4px;
+            cursor: pointer; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            line-height: 1.1;
+            font-weight: 500;
+            white-space: normal;
+            word-break: break-word;
+        }
+        .not-btn-choix.active { background-color: var(--theme-secondary-color); color: white; border-color: var(--theme-secondary-color); box-shadow: inset 0 3px 5px rgba(0,0,0,0.2); }
+        
+        .simple-notation-line { display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px; border-bottom: 1px solid var(--theme-input-border-color); padding-bottom: 10px; transition: all 0.3s ease;}
+        .simple-not-header { display: flex; justify-content: space-between; align-items: center; font-weight: bold; font-size: 0.9em;}
+        #bbch-table { width: 100%; margin-top: 15px; border-collapse: collapse; }
+        #bbch-table th, #bbch-table td { border: 1px solid var(--theme-input-border-color); padding: 8px; text-align: left; font-size: 0.9em; }
+        #bbch-table th { background-color: var(--theme-secondary-color); color:white; font-weight: bold; }
+
+        #sowing-plan-grid-container { max-height: 60vh; overflow: auto; border: 1px solid var(--theme-input-border-color); position: relative; }
+        #sowing-plan-grid-container table { border-collapse: separate; border-spacing: 0; }
+        .sticky-x { position: sticky; top: 0; background: #eee; z-index: 10; font-weight: bold; border-bottom: 2px solid #999 !important; }
+        .sticky-y { position: sticky; left: 0; background: #eee; z-index: 9; font-weight: bold; border-right: 2px solid #999 !important; }
+        .sticky-corner { position: sticky; top: 0; left: 0; z-index: 11; background: #ddd; }
+        
+        .type-M { background-color: #e3f2fd; color:#333; } 
+        .type-F { background-color: #e8f5e9; color:#333; } 
+        .type-H { background-color: #fff9c4; color:#333; } 
+        .variete-highlight { font-weight: 900; box-shadow: inset 0 0 0 3px #333; border-radius: 4px; }
+        .hatched-pattern { background-image: linear-gradient(45deg, rgba(0,0,0,0.15) 25%, transparent 25%, transparent 50%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.15) 75%, transparent 75%, transparent); background-size: 8px 8px; }
+
+        .multi-selected { background-color: #e74c3c !important; color: white !important; box-shadow: inset 0 0 0 2px #c0392b !important; }
+
+        .interactive-controls { background-color: #f1f8e9; border: 1px solid #c8e6c9; padding: 10px; margin-bottom: 10px; border-radius: 6px; display: none; gap: 10px; flex-wrap: wrap; align-items: center; }
+        .interactive-controls.active { display: flex; }
+        .interactive-label { font-weight: bold; color: var(--theme-secondary-color); font-size: 0.9em; margin-right:5px;}
+        .interactive-val { font-weight: bold; color: #333; background: rgba(255,255,255,0.8); padding: 1px 4px; border-radius: 3px; font-size: 1.1em; display:block; margin-top:2px; border: 1px solid rgba(0,0,0,0.1); text-shadow: 0 0 2px white; }
+        
+        .switch { position: relative; display: inline-block; width: 40px; height: 20px; margin-right: 10px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 20px; }
+        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--theme-secondary-color); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .progress-container { width: 100%; background-color: #e0e0e0; border-radius: 5px; margin-bottom: 15px; height: 20px; overflow: hidden; position: relative; }
+        .progress-bar { height: 100%; background-color: var(--theme-secondary-color); width: 0%; transition: width 0.5s ease; }
+        .progress-text { position: absolute; width: 100%; text-align: center; top: 0; line-height: 20px; font-size: 0.8em; color: #333; font-weight: bold; text-shadow: 0 0 2px white; }
+        
+        .mic-btn { position: absolute; right: 10px; bottom: 50px; background-color: white; border: 1px solid #ccc; border-radius: 50%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); font-size: 1.2em; }
+        .mic-btn.listening { background-color: #e74c3c; color: white; animation: pulse 1.5s infinite; border-color: #c0392b; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+        .btn-star, .btn-multi { background: transparent; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; font-size: 1.1em; padding: 2px 8px; color: #f1c40f; transition: 0.2s; background-color: #fff; }
+        .btn-multi { color: #3498db; }
+        .btn-star:hover, .btn-multi:hover { background-color: #f8f9fa; transform: scale(1.05); }
+        .zen-next-val-btn { display: none; }
+
+        .chip-container { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+        .chip { background-color: var(--theme-input-border-color); padding: 4px 10px; border-radius: 15px; font-size: 0.85em; cursor: pointer; transition: 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
+        .chip:hover { background-color: var(--theme-secondary-color); color: white; }
+
+        .stat-bar-wrapper { display: flex; align-items: center; margin-bottom: 8px; }
+        .stat-bar-label { width: 80px; font-size: 0.85em; font-weight: bold; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .stat-bar-bg { flex-grow: 1; background-color: #eee; height: 20px; border-radius: 4px; overflow: hidden; position: relative; margin: 0 10px; }
+        .stat-bar-fill { background-color: var(--theme-secondary-color); height: 100%; width: 0%; transition: width 0.5s ease; }
+        .stat-bar-val { width: 30px; font-size: 0.85em; text-align: right; }
+
+        .setup-section { border: 1px solid var(--theme-input-border-color); padding: 15px; border-radius: 8px; margin-bottom: 20px; background: var(--theme-card-background-color);}
+
+        /* =======================================================
+           ZEN MODE (FOCUS) ADAPTIVE STYLES
+           ======================================================= */
+        #zen-content { width: 100%; max-width: 100vw; box-sizing: border-box; padding: 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; overflow-y: auto; overflow-x: hidden; }
+        #zen-content .hidden-section { display: flex !important; flex-direction: column; width: 100%; flex-grow: 1; justify-content: flex-start; align-items: stretch; }
+        #zen-content .notation-group-container { border: none; background: transparent; box-shadow: none; margin-bottom: 0; width: 100%; padding: 0; flex-grow: 1; display: flex; flex-direction: column; }
+        #zen-content .simple-notation-line { border-bottom: none; width: 100%; display: flex; flex-direction: column; flex-grow: 1; }
+        #zen-content .btn-star { display: none !important; }
+        #zen-content .btn-danger { display: none !important; }
+
+        #zen-content .zen-title-wrapper { display: flex !important; flex-direction: row; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 15px !important; flex-wrap: nowrap; }
+        #zen-content h4, #zen-content .simple-not-header span, #zen-content label[for="stade"] { font-size: clamp(1.2em, 4.5vw, 2em) !important; text-align: left; margin-bottom: 0 !important; color: var(--theme-heading-color); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1 1 auto; min-width: 0; padding-right: 10px; }
+        #zen-content #bbch-info-button { display: none !important; }
+        #zen-content .zen-next-val-btn { display: inline-flex !important; font-size: 1.6em !important; padding: 10px 25px !important; border-radius: 20px !important; margin: 0 0 0 10px; min-height: 80px; align-items: center; box-shadow: 0 4px 8px rgba(0,0,0,0.2); flex-shrink: 0; }
+
+        /* Remplacement des grilles rigides par des flexbox fluides pour éviter la superposition */
+        #zen-content .input-inc-dec, #zen-content .input-group-big, #zen-content .date-grid-wrapper { display: flex !important; flex-direction: row; flex-wrap: nowrap; align-items: center; justify-content: space-between; gap: 10px; width: 100%; }
+        #zen-content .prlvmt-grid-wrapper, #zen-content .param-grid-wrapper, #zen-content .photo-grid-wrapper { display: flex !important; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; width: 100%; }
+        
+        #zen-content .input-inc-dec button, #zen-content .input-group-big button, #zen-content .date-grid-wrapper button { width: 80px !important; height: 80px !important; flex-shrink: 0; font-size: 4em !important; border-radius: 20px !important; margin: 0 !important; }
+        #zen-content .input-inc-dec input, #zen-content .input-wrapper-relative, #zen-content .date-input-field { flex-grow: 1; width: 100% !important; height: 80px !important; font-size: 3em !important; margin: 0 !important; }
+
+        #zen-content .prlvmt-grid-wrapper label, #zen-content .param-grid-wrapper label { width: 100%; font-size: 1.5em; text-align: center; }
+        #zen-content #lettres-analyse, #zen-content .photo-prefix, #zen-content #param-variete { flex: 1; min-width: 40%; height: 60px !important; font-size: 1.5em !important; }
+        #zen-content #numero-analyse, #zen-content .photo-num, #zen-content #param-type { flex: 1; min-width: 40%; height: 60px !important; font-size: 1.5em !important; }
+        #zen-content .photo-cam { width: 100% !important; height: 60px !important; font-size: 2em !important; border-radius: 15px; }
+
+        #zen-content input[type="text"], #zen-content input[type="number"], #zen-content input[type="date"], #zen-content select { border-radius: 15px !important; text-align: center; box-shadow: inset 0 4px 8px rgba(0,0,0,0.1); font-weight: bold; }
+        #zen-content .cube-btn { display: flex !important; align-items: center; justify-content: center; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        
+        #zen-content .square-btn-group { display: flex !important; flex-wrap: wrap !important; gap: 8px !important; width: 100%; justify-content: center; }
+        #zen-content .square-btn { flex: 1 1 calc(25% - 8px); min-width: 60px; height: 55px !important; display: flex; align-items: center; justify-content: center; font-size: 1.5em !important; border-radius: 12px !important; box-shadow: 0 2px 4px rgba(0,0,0,0.1); line-height: 1 !important; margin: 0 !important; }
+        #zen-content .clear-icon-inside { font-size: 2em; right: 20px; }
+
+        #zen-save-buttons-container .save-buttons-container { gap: 10px; margin-top: 15px; flex-wrap: nowrap; }
+        #zen-save-buttons-container .save-buttons-container button { font-size: 1.2em !important; padding: 15px 5px !important; border-radius: 15px !important; height: auto !important; flex: 1; min-width: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+
+        /* =======================================================
+           RESPONSIVE DESIGN (Smartphones / iPhone SE)
+           ======================================================= */
+        @media (max-width: 768px) {
+            html { font-size: 11px; }
+            body { padding: 10px; }
+            .sidebar, .main-panel { min-width: 100% !important; box-sizing: border-box; }
+            
+            #zen-title { font-size: 2em !important; }
+            #zen-subtitle { font-size: 1.2em !important; }
+            
+            /* Ajustement fluide pour que les gros boutons rétrécissent sans casser */
+            #zen-content .input-inc-dec button, #zen-content .input-group-big button, #zen-content .date-grid-wrapper button { width: 60px !important; height: 60px !important; font-size: 2.5em !important; }
+            #zen-content .input-inc-dec input, #zen-content .input-wrapper-relative, #zen-content .date-input-field { height: 60px !important; font-size: 2em !important; }
+            
+            #zen-content .prlvmt-grid-wrapper label, #zen-content .param-grid-wrapper label { font-size: 1.2em !important; }
+            #zen-content .square-btn { min-width: 45px; height: 45px !important; font-size: 1.2em !important; }
+            
+            .cube-btn { width: 40px !important; height: 40px !important; font-size: 1.5em !important; }
+        }
+
+        @media (max-width: 380px) {
+            /* Ajustement très ciblé pour les tout petits écrans (iPhone SE = 375px ou 320px) */
+            html { font-size: 10px; } 
+            #app-content { gap: 10px; }
+            
+            /* Pour les notations du bas qui peuvent passer à la ligne */
+            .square-btn { width: 32px; height: 32px; line-height: 30px; font-size: 0.9em; }
+            .cube-btn { width: 35px !important; height: 35px !important; font-size: 1.2em !important; }
+            
+            #zen-content .input-inc-dec button, #zen-content .input-group-big button, #zen-content .date-grid-wrapper button { width: 50px !important; height: 50px !important; font-size: 2em !important; }
+            #zen-content .input-inc-dec input, #zen-content .input-wrapper-relative, #zen-content .date-input-field { height: 50px !important; font-size: 1.5em !important; }
+            #zen-content .square-btn { min-width: 35px; height: 40px !important; font-size: 1em !important; }
+            #zen-save-buttons-container .save-buttons-container button { font-size: 1em !important; padding: 10px 2px !important; }
+        }
+    </style>
 </head>
-<style>
-    /* Remplacement du zoom:0.7 par une taille de police racine réduite pour iOS */
-    html {
-        font-size: 13px; 
-        overflow-x: hidden;
-    }
-    body {
-        overflow-x: hidden;
-    }
-    
-    :root {
-        --theme-primary-color: #33A532; --theme-secondary-color: #227A49; 
-        --theme-text-on-primary: white; --theme-text-on-secondary: white;
-        --theme-heading-color: #227A49; --theme-button-hover-bg: #227A49;
-        --theme-tab-active-bg: #33A532; --theme-tab-active-text: white;
-        --theme-gps-button-bg: #007bff; --theme-gps-button-text: white;
-        --theme-gps-button-hover-bg: #0056b3;
-        --theme-input-border-color: #ced4da; --theme-input-focus-border-color: #80bdff;
-        --theme-input-focus-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-        --theme-text-color: #495057; --theme-background-color: #f8f9fa;
-        --theme-card-background-color: #ffffff; --theme-card-shadow: 0 3px 8px rgba(0,0,0,0.1);
-        --theme-font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-    }
-    
-    /* DARK MODE VARIABLES */
-    body.dark-mode {
-        --theme-primary-color: #44b543; --theme-secondary-color: #2b9159; 
-        --theme-heading-color: #44b543; --theme-button-hover-bg: #2b9159;
-        --theme-text-color: #e0e0e0; --theme-background-color: #121212;
-        --theme-card-background-color: #1e1e1e; --theme-card-shadow: 0 3px 8px rgba(0,0,0,0.4);
-        --theme-input-border-color: #444; 
-    }
-    body.dark-mode input, body.dark-mode select, body.dark-mode textarea {
-        background-color: #2c2c2c; color: #fff; border-color: #555;
-    }
-    body.dark-mode .setup-section { background: #2c2c2c; border-color:#444; }
-    body.dark-mode .tablink { background-color: #333; color: #aaa; }
-    body.dark-mode .tablink.active { background-color: var(--theme-tab-active-bg); color: var(--theme-tab-active-text); }
-    body.dark-mode .square-btn { background-color: #2c2c2c; border-color: #555; color:#ddd; }
-    body.dark-mode .square-btn.selected { background-color: var(--theme-secondary-color); color:white; }
-    body.dark-mode th { background-color: #333; color:#fff;}
-    body.dark-mode td { border-color: #444; }
-    body.dark-mode #recap-table thead tr { background-color: #333 !important; color:#fff;}
-    body.dark-mode .modal-content { background-color: #1e1e1e; color: #e0e0e0; }
-    body.dark-mode .interactive-controls { background-color: #2c3e2c; border-color: #3d5a3d;}
-    body.dark-mode .interactive-val { background: rgba(0,0,0,0.6); color: #fff; text-shadow:none; border-color:#555;}
-    body.dark-mode .sticky-x, body.dark-mode .sticky-y, body.dark-mode .sticky-corner { background-color: #333 !important; color:#fff;}
-    body.dark-mode .notation-group-container { background-color: #242424; border-color:#444;}
-    body.dark-mode .not-btn-choix { background-color: #333; color: #ddd; border-color: #555;}
-    body.dark-mode .not-btn-choix.active { background-color: var(--theme-secondary-color); color: white; }
-
-    .theme-mais { --theme-primary-color: #f1c40f; --theme-secondary-color: #27ae60; --theme-text-on-primary: #333; --theme-heading-color: #27ae60; --theme-button-hover-bg: #e6b800; --theme-tab-active-bg: #f1c40f; --theme-tab-active-text: #333; --theme-gps-button-bg: #27ae60; }
-    .theme-tournesol { --theme-primary-color: #e67e22; --theme-secondary-color: #2c3e50; --theme-text-on-primary: white; --theme-heading-color: #e67e22; --theme-button-hover-bg: #d35400; --theme-tab-active-bg: #e67e22; --theme-tab-active-text: white; --theme-gps-button-bg: #2c3e50; }
-    .theme-colza { --theme-primary-color: #f4d03f; --theme-secondary-color: #2ecc71; --theme-text-on-primary: #333; --theme-heading-color: #27ae60; --theme-button-hover-bg: #e1be32; --theme-tab-active-bg: #f4d03f; --theme-tab-active-text: #333; --theme-gps-button-bg: #2ecc71; }
-    .theme-soja { --theme-primary-color: #a2d9ce; --theme-secondary-color: #50623a; --theme-text-on-primary: #333; --theme-heading-color: #50623a; --theme-button-hover-bg: #8bc0b3; --theme-tab-active-bg: #a2d9ce; --theme-tab-active-text: #333; --theme-gps-button-bg: #50623a; }
-    .theme-sorgho { --theme-primary-color: #c0392b; --theme-secondary-color: #795548; --theme-text-on-primary: white; --theme-heading-color: #c0392b; --theme-button-hover-bg: #a93226; --theme-tab-active-bg: #c0392b; --theme-tab-active-text: white; --theme-gps-button-bg: #795548; }
-
-    body { font-family: var(--theme-font-family); margin: 0; padding: 15px; background-color: var(--theme-background-color); color: var(--theme-text-color); transition: background-color 0.5s ease, color 0.5s ease; }
-    h1, h2, h3, h4 { color: var(--theme-heading-color); margin-top: 0; }
-    
-    .tabs { overflow: hidden; border-bottom: 1px solid #ddd; margin-bottom: 20px; }
-    .tablink { background-color: #e9ecef; float: left; border: none; outline: none; cursor: pointer; padding: 12px 18px; transition: background-color 0.3s, color 0.3s; font-size: 1em; border-radius: 6px 6px 0 0; margin-right: 3px; color: #495057; }
-    .tablink.active { background-color: var(--theme-tab-active-bg); color: var(--theme-tab-active-text); font-weight: 500; }
-    .tabcontent { display: none; padding: 15px 0; }
-    
-    #session-setup, .sidebar, .main-panel, #Configuration div { padding: 20px; background-color: var(--theme-card-background-color); border-radius: 10px; box-shadow: var(--theme-card-shadow); margin-bottom:25px; }
-    #app-container { max-width: 1400px; margin: 0 auto; }
-    #app-content { display: flex; flex-wrap: wrap; gap: 25px; }
-    
-    .sidebar { flex: 1.3; min-width: 480px; box-sizing: border-box; } 
-    .main-panel { flex: 2; min-width: 450px; box-sizing: border-box; }
-    
-    label { display: block; margin-bottom: 6px; width: 100%; font-weight: 500; font-size: 0.95em; color: #343a40; }
-    input, select, textarea { padding: 10px; border: 1px solid var(--theme-input-border-color); border-radius: 5px; font-size: 1em; width: 100%; margin-bottom: 12px; box-sizing: border-box; }
-    .date-input-field { height: 45px; }
-
-    button { background-color: var(--theme-primary-color); color: var(--theme-text-on-primary); border: none; padding: 12px 18px; font-size: 1em; font-weight: 500; cursor: pointer; border-radius: 6px; margin-top:15px; transition: 0.2s; }
-    button:hover { background-color: var(--theme-button-hover-bg); transform: translateY(-1px); }
-    .btn-secondary { background-color: #6c757d; color: white; }
-    .btn-danger { background-color: #e74c3c; color: white; }
-    .btn-accent { background-color: var(--theme-secondary-color); color: var(--theme-text-on-secondary); }
-    .btn-block { width: 100%; display: block; }
-
-    .square-btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; margin-bottom: 5px; }
-    .square-btn { width: 38px; height: 38px; line-height: 36px;font-size: 1.1em; border: 1px solid #adb5bd; background-color: #f8f9fa; text-align: center; cursor: pointer; border-radius: 4px; vertical-align: middle; font-size: 0.85em; font-weight: 500; }
-    .square-btn.selected { background-color: var(--theme-secondary-color); color: var(--theme-text-on-secondary); font-weight: bold; border-color: var(--theme-secondary-color); }
-    
-    /* SPECIFIQUE POUR LE BLOC NUMERO PARCELLE (HAUT) */
-    #dynamic-digit-buttons .square-btn-group {
-        flex-wrap: nowrap !important; /* Interdit absolument de passer à la ligne */
-        overflow: hidden; /* Interdit la barre de défilement */
-        width: 100%;
-        gap: 2px; /* Espace minimal entre les chiffres */
-    }
-    #dynamic-digit-buttons .square-btn {
-        flex: 1 1 0; /* Les 10 boutons se partagent l'espace et rétrécissent à part égale */
-        width: auto !important;
-        min-width: 0 !important; /* Autorise à rétrécir au maximum pour tenir sur l'écran */
-        padding: 0 !important;
-    }
-
-    .cube-btn { width: 45px !important; height: 45px !important; padding: 0 !important; margin: 0 !important; display: inline-flex !important; align-items: center; justify-content: center; font-size: 1.8em !important; font-weight: bold !important; border-radius: 10px !important; flex-shrink: 0; line-height: 1; }
-
-    .espece-gps-line { display: flex; align-items: center; justify-content: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
-    #voir-sur-carte, #voir-plan-semis { margin: 0; padding: 4px 8px; font-size: 0.85em; width: auto; border-radius: 4px; display:inline-block; }
-    #voir-sur-carte { background-color: var(--theme-gps-button-bg); color: var(--theme-gps-button-text); }
-    
-    .modal { display: none; position: fixed; z-index: 100000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
-    .modal-content { background-color: var(--theme-card-background-color); margin: 5% auto; padding: 20px; border: 1px solid #888; width: 90%; max-width: 800px; border-radius: 8px; max-height: 90vh; overflow-y: auto; }
-    
-    .input-inc-dec { display: flex; align-items: center; justify-content: center; margin-bottom: 12px; gap: 10px; }
-    .input-inc-dec input { width: 90px !important; height: 45px !important; margin: 0; text-align: center; font-size: 1.2em; font-weight: bold; box-sizing: border-box; }
-
-    .input-group-big { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-bottom: 15px; }
-    .input-wrapper-relative { position: relative; width: 90px; }
-    .input-big-text { width: 100% !important; height: 45px !important; text-align: center; padding-right: 25px; font-size: 1.2em; font-weight: bold; margin:0 !important; box-sizing: border-box; }
-    .clear-icon-inside { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #e74c3c; font-weight: bold; font-size: 1.4em; display: none; z-index: 5; }
-
-    .save-buttons-container { display: flex; gap: 5px; margin-top: 15px; }
-    .save-buttons-container button { flex: 1; padding: 15px 2px; font-size: 0.9em; line-height: 1.2; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-    .hidden-section { display: none !important; }
-    .notation-group-container { border: 1px solid var(--theme-input-border-color); padding: 10px; border-radius: 5px; margin-bottom: 15px; background-color: var(--theme-card-background-color); transition: all 0.3s ease; }
-    
-    /* SPECIFIQUE POUR LE CHOIX DES NOTATIONS SUR UNE LIGNE */
-    .not-buttons-row { 
-        display: flex; 
-        gap: 5px; 
-        margin-bottom: 10px; 
-        flex-wrap: nowrap; 
-        overflow-x: auto; 
-        padding-bottom: 5px; 
-        scrollbar-width: none; /* Cache scrollbar Firefox */
-        -ms-overflow-style: none; /* Cache scrollbar IE/Edge */
-    }
-    .not-buttons-row::-webkit-scrollbar { display: none; } /* Cache scrollbar Webkit */
-    
-    .not-btn-choix { 
-        flex: 0 0 auto; 
-        padding: 8px 15px; 
-        font-size: 0.9em; 
-        background-color: #e9ecef; 
-        color: #333; 
-        border: 1px solid #ccc; 
-        cursor: pointer; 
-        white-space: nowrap; 
-    }
-    .not-btn-choix.active { background-color: var(--theme-secondary-color); color: white; border-color: var(--theme-secondary-color); box-shadow: inset 0 3px 5px rgba(0,0,0,0.2); }
-    
-    .simple-notation-line { display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px; border-bottom: 1px solid var(--theme-input-border-color); padding-bottom: 10px; transition: all 0.3s ease;}
-    .simple-not-header { display: flex; justify-content: space-between; align-items: center; font-weight: bold; font-size: 0.9em;}
-    #bbch-table { width: 100%; margin-top: 15px; border-collapse: collapse; }
-    #bbch-table th, #bbch-table td { border: 1px solid var(--theme-input-border-color); padding: 8px; text-align: left; font-size: 0.9em; }
-    #bbch-table th { background-color: var(--theme-secondary-color); color:white; font-weight: bold; }
-
-    #sowing-plan-grid-container { max-height: 60vh; overflow: auto; border: 1px solid var(--theme-input-border-color); position: relative; }
-    #sowing-plan-grid-container table { border-collapse: separate; border-spacing: 0; }
-    .sticky-x { position: sticky; top: 0; background: #eee; z-index: 10; font-weight: bold; border-bottom: 2px solid #999 !important; }
-    .sticky-y { position: sticky; left: 0; background: #eee; z-index: 9; font-weight: bold; border-right: 2px solid #999 !important; }
-    .sticky-corner { position: sticky; top: 0; left: 0; z-index: 11; background: #ddd; }
-    
-    .type-M { background-color: #e3f2fd; color:#333; } 
-    .type-F { background-color: #e8f5e9; color:#333; } 
-    .type-H { background-color: #fff9c4; color:#333; } 
-    .variete-highlight { font-weight: 900; box-shadow: inset 0 0 0 3px #333; border-radius: 4px; }
-    .hatched-pattern { background-image: linear-gradient(45deg, rgba(0,0,0,0.15) 25%, transparent 25%, transparent 50%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.15) 75%, transparent 75%, transparent); background-size: 8px 8px; }
-
-    .multi-selected { background-color: #e74c3c !important; color: white !important; box-shadow: inset 0 0 0 2px #c0392b !important; }
-
-    .interactive-controls { background-color: #f1f8e9; border: 1px solid #c8e6c9; padding: 10px; margin-bottom: 10px; border-radius: 6px; display: none; gap: 10px; flex-wrap: wrap; align-items: center; }
-    .interactive-controls.active { display: flex; }
-    .interactive-label { font-weight: bold; color: var(--theme-secondary-color); font-size: 0.9em; margin-right:5px;}
-    .interactive-val { font-weight: bold; color: #333; background: rgba(255,255,255,0.8); padding: 1px 4px; border-radius: 3px; font-size: 1.1em; display:block; margin-top:2px; border: 1px solid rgba(0,0,0,0.1); text-shadow: 0 0 2px white; }
-    
-    .switch { position: relative; display: inline-block; width: 40px; height: 20px; margin-right: 10px; }
-    .switch input { opacity: 0; width: 0; height: 0; }
-    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 20px; }
-    .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-    input:checked + .slider { background-color: var(--theme-secondary-color); }
-    input:checked + .slider:before { transform: translateX(20px); }
-
-    .progress-container { width: 100%; background-color: #e0e0e0; border-radius: 5px; margin-bottom: 15px; height: 20px; overflow: hidden; position: relative; }
-    .progress-bar { height: 100%; background-color: var(--theme-secondary-color); width: 0%; transition: width 0.5s ease; }
-    .progress-text { position: absolute; width: 100%; text-align: center; top: 0; line-height: 20px; font-size: 0.8em; color: #333; font-weight: bold; text-shadow: 0 0 2px white; }
-    
-    .mic-btn { position: absolute; right: 10px; bottom: 50px; background-color: white; border: 1px solid #ccc; border-radius: 50%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); font-size: 1.2em; }
-    .mic-btn.listening { background-color: #e74c3c; color: white; animation: pulse 1.5s infinite; border-color: #c0392b; }
-    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-
-    .btn-star, .btn-multi { background: transparent; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; font-size: 1.1em; padding: 2px 8px; color: #f1c40f; transition: 0.2s; background-color: #fff; }
-    .btn-multi { color: #3498db; }
-    .btn-star:hover, .btn-multi:hover { background-color: #f8f9fa; transform: scale(1.05); }
-    .zen-next-val-btn { display: none; }
-
-    .chip-container { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
-    .chip { background-color: var(--theme-input-border-color); padding: 4px 10px; border-radius: 15px; font-size: 0.85em; cursor: pointer; transition: 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
-    .chip:hover { background-color: var(--theme-secondary-color); color: white; }
-
-    .stat-bar-wrapper { display: flex; align-items: center; margin-bottom: 8px; }
-    .stat-bar-label { width: 80px; font-size: 0.85em; font-weight: bold; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .stat-bar-bg { flex-grow: 1; background-color: #eee; height: 20px; border-radius: 4px; overflow: hidden; position: relative; margin: 0 10px; }
-    .stat-bar-fill { background-color: var(--theme-secondary-color); height: 100%; width: 0%; transition: width 0.5s ease; }
-    .stat-bar-val { width: 30px; font-size: 0.85em; text-align: right; }
-
-    .setup-section { border: 1px solid var(--theme-input-border-color); padding: 15px; border-radius: 8px; margin-bottom: 20px; background: var(--theme-card-background-color);}
-
-    /* =======================================================
-       ZEN MODE (FOCUS) ADAPTIVE STYLES
-       ======================================================= */
-    #zen-content { width: 100%; max-width: 100vw; box-sizing: border-box; padding: 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; overflow-y: auto; overflow-x: hidden; }
-    #zen-content .hidden-section { display: flex !important; flex-direction: column; width: 100%; flex-grow: 1; justify-content: flex-start; align-items: stretch; }
-    #zen-content .notation-group-container { border: none; background: transparent; box-shadow: none; margin-bottom: 0; width: 100%; padding: 0; flex-grow: 1; display: flex; flex-direction: column; }
-    #zen-content .simple-notation-line { border-bottom: none; width: 100%; display: flex; flex-direction: column; flex-grow: 1; }
-    #zen-content .btn-star { display: none !important; }
-    #zen-content .btn-danger { display: none !important; }
-
-    #zen-content .zen-title-wrapper { display: flex !important; flex-direction: row; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 15px !important; flex-wrap: nowrap; }
-    #zen-content h4, #zen-content .simple-not-header span, #zen-content label[for="stade"] { font-size: clamp(1.2em, 4.5vw, 2em) !important; text-align: left; margin-bottom: 0 !important; color: var(--theme-heading-color); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1 1 auto; min-width: 0; padding-right: 10px; }
-    #zen-content #bbch-info-button { display: none !important; }
-    #zen-content .zen-next-val-btn { display: inline-flex !important; font-size: 1.6em !important; padding: 10px 25px !important; border-radius: 20px !important; margin: 0 0 0 10px; min-height: 80px; align-items: center; box-shadow: 0 4px 8px rgba(0,0,0,0.2); flex-shrink: 0; }
-
-    /* Remplacement des grilles rigides par des flexbox fluides pour éviter la superposition */
-    #zen-content .input-inc-dec, #zen-content .input-group-big, #zen-content .date-grid-wrapper { display: flex !important; flex-direction: row; flex-wrap: nowrap; align-items: center; justify-content: space-between; gap: 10px; width: 100%; }
-    #zen-content .prlvmt-grid-wrapper, #zen-content .param-grid-wrapper, #zen-content .photo-grid-wrapper { display: flex !important; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; width: 100%; }
-    
-    #zen-content .input-inc-dec button, #zen-content .input-group-big button, #zen-content .date-grid-wrapper button { width: 80px !important; height: 80px !important; flex-shrink: 0; font-size: 4em !important; border-radius: 20px !important; margin: 0 !important; }
-    #zen-content .input-inc-dec input, #zen-content .input-wrapper-relative, #zen-content .date-input-field { flex-grow: 1; width: 100% !important; height: 80px !important; font-size: 3em !important; margin: 0 !important; }
-
-    #zen-content .prlvmt-grid-wrapper label, #zen-content .param-grid-wrapper label { width: 100%; font-size: 1.5em; text-align: center; }
-    #zen-content #lettres-analyse, #zen-content .photo-prefix, #zen-content #param-variete { flex: 1; min-width: 40%; height: 60px !important; font-size: 1.5em !important; }
-    #zen-content #numero-analyse, #zen-content .photo-num, #zen-content #param-type { flex: 1; min-width: 40%; height: 60px !important; font-size: 1.5em !important; }
-    #zen-content .photo-cam { width: 100% !important; height: 60px !important; font-size: 2em !important; border-radius: 15px; }
-
-    #zen-content input[type="text"], #zen-content input[type="number"], #zen-content input[type="date"], #zen-content select { border-radius: 15px !important; text-align: center; box-shadow: inset 0 4px 8px rgba(0,0,0,0.1); font-weight: bold; }
-    #zen-content .cube-btn { display: flex !important; align-items: center; justify-content: center; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
-    
-    #zen-content .square-btn-group { display: flex !important; flex-wrap: wrap !important; gap: 8px !important; width: 100%; justify-content: center; }
-    #zen-content .square-btn { flex: 1 1 calc(25% - 8px); min-width: 60px; height: 55px !important; display: flex; align-items: center; justify-content: center; font-size: 1.5em !important; border-radius: 12px !important; box-shadow: 0 2px 4px rgba(0,0,0,0.1); line-height: 1 !important; margin: 0 !important; }
-    #zen-content .clear-icon-inside { font-size: 2em; right: 20px; }
-
-    #zen-save-buttons-container .save-buttons-container { gap: 10px; margin-top: 15px; flex-wrap: nowrap; }
-    #zen-save-buttons-container .save-buttons-container button { font-size: 1.2em !important; padding: 15px 5px !important; border-radius: 15px !important; height: auto !important; flex: 1; min-width: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
-
-    /* =======================================================
-       RESPONSIVE DESIGN (Smartphones / iPhone SE)
-       ======================================================= */
-    @media (max-width: 768px) {
-        html { font-size: 11px; }
-        body { padding: 10px; }
-        .sidebar, .main-panel { min-width: 100% !important; box-sizing: border-box; }
-        
-        #zen-title { font-size: 2em !important; }
-        #zen-subtitle { font-size: 1.2em !important; }
-        
-        /* Ajustement fluide pour que les gros boutons rétrécissent sans casser */
-        #zen-content .input-inc-dec button, #zen-content .input-group-big button, #zen-content .date-grid-wrapper button { width: 60px !important; height: 60px !important; font-size: 2.5em !important; }
-        #zen-content .input-inc-dec input, #zen-content .input-wrapper-relative, #zen-content .date-input-field { height: 60px !important; font-size: 2em !important; }
-        
-        #zen-content .prlvmt-grid-wrapper label, #zen-content .param-grid-wrapper label { font-size: 1.2em !important; }
-        #zen-content .square-btn { min-width: 45px; height: 45px !important; font-size: 1.2em !important; }
-        
-        .cube-btn { width: 40px !important; height: 40px !important; font-size: 1.5em !important; }
-    }
-
-    @media (max-width: 380px) {
-        /* Ajustement très ciblé pour les tout petits écrans (iPhone SE = 375px ou 320px) */
-        html { font-size: 10px; } 
-        #app-content { gap: 10px; }
-        
-        /* Pour les notations du bas qui peuvent passer à la ligne */
-        .square-btn { width: 32px; height: 32px; line-height: 30px; font-size: 0.9em; }
-        .cube-btn { width: 35px !important; height: 35px !important; font-size: 1.2em !important; }
-        
-        #zen-content .input-inc-dec button, #zen-content .input-group-big button, #zen-content .date-grid-wrapper button { width: 50px !important; height: 50px !important; font-size: 2em !important; }
-        #zen-content .input-inc-dec input, #zen-content .input-wrapper-relative, #zen-content .date-input-field { height: 50px !important; font-size: 1.5em !important; }
-        #zen-content .square-btn { min-width: 35px; height: 40px !important; font-size: 1em !important; }
-        #zen-save-buttons-container .save-buttons-container button { font-size: 1em !important; padding: 10px 2px !important; }
-    }
-</style>
 <body>
 
 <div style="text-align: center; margin-bottom: 15px;">
@@ -316,7 +315,6 @@
 
 <h1 style="text-align:center; margin-top:0;">Newtea</h1>
 
-<!-- ÉCRAN D'ACCUEIL : SÉLECTION / CRÉATION / IMPORT -->
 <div id="session-setup">
     <label for="type-notation-session" data-i18n="notateur">Votre Nom / Notateur :</label>
     <input type="text" id="type-notation-session" data-i18n-placeholder="notateur-placeholder" placeholder="Nom du notateur...">
@@ -362,7 +360,6 @@
     </div>
 </div>
 
-<!-- APPLICATION PRINCIPALE -->
 <div id="app-container" style="display:none;">
     <div class="tabs">
         <button class="tablink active" onclick="openTab(event, 'Note')" id="defaultOpen" data-i18n="tab-Note">Note</button>
@@ -370,7 +367,6 @@
         <button class="tablink" onclick="openTab(event, 'Configuration')" data-i18n="tab-Configuration">Config</button>
     </div>
 
-    <!-- ONGLET NOTE -->
     <div id="Note" class="tabcontent" style="display:block;">
         <div id="app-content">
             <div class="sidebar">
@@ -382,7 +378,6 @@
 
                 <div class="selector-group"> 
                     <h4 data-i18n="num-parcelle">Numéro de parcelle</h4>
-                    <!-- CONTENEUR DES BOUTONS DE CHIFFRES DYNAMIQUE -->
                     <div id="dynamic-digit-buttons"></div>
                 </div>
 
@@ -430,7 +425,6 @@
                         <button type="button" class="not-btn-choix" data-target="not-prlvmt" data-i18n="not-prlvmt">Prlvmt</button>
                     </div>
 
-                    <!-- MENU : PARAMETRES PARCELLE -->
                     <div id="not-param" class="notation-group-container hidden-section" style="border-left: 4px solid #d35400;">
                         <div class="zen-title-wrapper">
                             <h4 data-i18n="h4-param-parc">Paramètres de la Parcelle</h4>
@@ -498,7 +492,7 @@
                              <button type="button" id="minus-receptivite" class="btn-secondary cube-btn">-</button>
                              <div class="input-wrapper-relative">
                                  <input type="number" id="receptivite" class="input-big-text" placeholder="0">
-                                 <span id="clear-receptivite" class="clear-icon-inside">&times;</span>
+                                 <span id="clear-receptivite" class="clear-icon-inside">×</span>
                              </div>
                              <button type="button" id="plus-receptivite" class="btn-secondary cube-btn">+</button>
                          </div>
@@ -531,10 +525,9 @@
                 <div style="position: relative; margin-top: 15px;">
                     <label for="obs" data-i18n="observations">Observations:</label>
                     <textarea id="obs" rows="2" style="padding-right: 40px;"></textarea>
-                    <span id="clear-obs" style="position: absolute; right: 10px; top: 35px; cursor: pointer; color: #e74c3c; font-weight: bold; font-size: 1.2em; display: none;">&times;</span>
+                    <span id="clear-obs" style="position: absolute; right: 10px; top: 35px; cursor: pointer; color: #e74c3c; font-weight: bold; font-size: 1.2em; display: none;">×</span>
                     <div id="mic-btn" class="mic-btn" style="bottom: auto; top:35px;" onclick="toggleDictation()">🎤</div>
                     
-                    <!-- FRÉQUENTS COMMENTAIRES -->
                     <div id="freq-comments-container" class="chip-container"></div>
                 </div>
 
@@ -560,7 +553,6 @@
         </div>
     </div>
 
-    <!-- ONGLET STATS -->
     <div id="Stats" class="tabcontent">
         <div class="setup-section">
             <h3 data-i18n="h3-statistiques">Statistiques Rapides</h3>
@@ -585,7 +577,6 @@
         </div>
     </div>
 
-    <!-- ONGLET CONFIGURATION -->
     <div id="Configuration" class="tabcontent">
         <label data-i18n="choix-langue">Langue :</label>
         <select id="lang-select">
@@ -637,7 +628,6 @@
     </div>
 </div>
 
-<!-- MODAL GPS -->
 <div id="gpsChoiceModal" class="modal">
     <div class="modal-content" style="max-width: 400px; text-align: center;">
         <h3 data-i18n="h3-gps-options">Options GPS</h3>
@@ -648,7 +638,6 @@
     </div>
 </div>
 
-<!-- MODAL TYPE SIMPLE -->
 <div id="choiceSimpleNotModal" class="modal">
 <div class="modal-content" style="max-width: 400px; text-align: center;">
     <h3 data-i18n="prompt-title-simple">Type de notation</h3>
@@ -667,7 +656,6 @@
 
 <div id="bbchModal" class="modal"><div class="modal-content"><span class="close-button" id="closeBbchModal" style="float:right; font-size:24px; cursor:pointer;">×</span><h2 data-i18n="h2-bbch">Stades BBCH</h2><div id="bbch-modal-body"></div></div></div>
 
-<!-- SOWING PLAN MODAL -->
 <div id="sowingPlanModal" class="modal" style="z-index: 100000;">
     <div class="modal-content"> 
         <span class="close-button" id="closeSowingPlanModal" style="float:right; font-size:24px; cursor:pointer;">×</span>
@@ -722,7 +710,6 @@
         <hr>
         <div id="sowing-plan-grid-container"></div>
         
-        <!-- Action Bar Multi-Select -->
         <div id="multi-select-action-bar" style="display:none; padding:15px; margin-top:15px; background:var(--theme-secondary-color); border-radius:8px; text-align:center;">
             <p id="multi-select-status" style="color:white; font-weight:bold; margin-top:0;">0 parcelle(s) sélectionnée(s)</p>
             <button onclick="applyMultiSelect()" style="background-color:white; color:var(--theme-secondary-color); padding:10px 20px; font-weight:bold; width:100%; border-radius:5px;" data-i18n="btn-appliquer-groupe">Appliquer à la sélection</button>
@@ -730,7 +717,6 @@
     </div>
 </div>
 
-<!-- ZEN MODE / FOCUS OVERLAY -->
 <div id="zen-overlay" style="display:none; position:fixed; z-index:99999; top:0; left:0; width:100%; height:100%; background:var(--theme-background-color); flex-direction:column; padding:15px; box-sizing:border-box;">
     <div style="display:flex; justify-content:space-between; align-items:flex-start;">
         <div>
@@ -750,214 +736,9 @@
     <div id="zen-save-buttons-container" style="padding-bottom: 20px;"></div>
 </div>
 
-<script>
-const translations = {
-fr: {
-    "title": "Notations", "choix-essai": "Choix de l'essai :", "notateur": "Votre Nom / Notateur :", "notateur-placeholder": "Nom...", "confirmer": "Confirmer",
-    "tab-Note": "Note", "tab-Stats": "Statistiques", "tab-Configuration": "Configuration", "num-parcelle": "Numéro de parcelle", "mode": "Mode :", "prec": "← Préc.", "valider": "Valider Parcelle",
-    "suiv": "Suiv. →", "lignee": "Nom / Variété :", "plan-semis": "Plan de Semis", "rep": "Répétition :", "menus": "► MENUS (Ouvrir/Fermer)", "menus-close": "▼ MENUS (Fermer)", "menus-open": "► MENUS (Ouvrir)",
-    "not-stade": "Stade", "not-flo": "Floraison", "not-receptivite": "Récept.", "receptivite-label": "Réceptivité (Nb) :", "not-prlvmt": "Prélèvement", "not-visuelle": "Visuelle", "not-phyto": "Phyto", "not-diverses": "Diverses",
-    "stade-bbch": "Stade (BBCH) :", "taux-flo": "Taux de floraison (%) ", "prelevements": "Prélèvements / Échantillons", "code": "Code :", "impact-phyto": "Impact Phyto (1-9) ",
-    "ajouter-ligne": "+ Ajouter ligne", "observations": "Observations :", "enregistrer": "Enregistrer", "enregistrer-suivant": "Enr. Suiv. →", "enregistrer-prec": "← Enr. Préc.",
-    "derniers-enregistrements": "Derniers enregistrements", "th-essai": "Essai", "th-parc": "Parc.", "th-rep": "Rép.", "th-code": "Code Éch.", "th-stade": "Stade", "th-flo": "Flo%", "th-phyto": "Phyto", "th-act": "Act.",
-    "choix-langue": "Langue :", "changer-essai": "Retour Menu / Changer d'essai", "reset-donnees": "⚠️ Reset Données (Purger les Notes)", "date-obs": "Date Obs :", "heure-obs": "Heure :",
-    "meteo": "Météo (Condition) :", "meteo-soleil": "Soleil", "meteo-eclaircies": "Éclaircies", "meteo-nuageux": "Nuageux", "meteo-couvert": "Couvert", "meteo-vent": "Vent", "meteo-pluie": "Pluie",
-    "telecharger-donnees": "📥 Télécharger CSV Données (Notes)", "partager-donnees": "📤 Partager CSV (Email, Drive...)", "alert-share-notsupported": "Le partage direct n'est pas supporté sur cet appareil. Le fichier va être téléchargé.",
-    "h2-bbch": "Stades BBCH", "h2-plan": "Plan de Semis", "valider-parcelle-plan": "Valider la parcelle", "prompt-title-simple": "Titre de la notation :",
-    "alert-choix-essai": "Veuillez choisir un essai", "alert-valider-parcelle": "Veuillez d'abord valider la parcelle", "alert-select-parcelle": "Sélectionnez une parcelle",
-    "alert-reset": "SÉCURITÉ : Un export CSV va être téléchargé. Effacer ensuite toutes les observations ?", 
-    "alert-reset-notes-safe": "SÉCURITÉ : Un export de vos notes va être généré. Confirmer la suppression de toutes les notes sur l'appareil ?",
-    "alert-no-data": "Aucune donnée à effacer.", "alert-no-plan": "Pas de plan défini pour cet essai",
-    "alert-delete-line": "Supprimer cette ligne ?", "alert-suppr-config": "Supprimer ce type de notation ?", "alert-rien": "Aucune donnée à exporter", "btn-info": "Info", "btn-cancel": "Annuler", "label-trial-select": "-- Choisir --", "placeholder-aaa": "ABC", "unknown-variety": "INCONNUE",
-    "Mais": "Maïs", "Tournesol": "Tournesol", "Colza": "Colza", "Soja": "Soja", "Sorgho": "Sorgho",
-    "label-import": "Overlay Interactif (Session uniquement) :", "desc-import": "Superpose les données sur le plan. Ne modifie pas la base des essais.",
-    "avancement-hachure": "Avancement (Hachuré) :", "deplacement-fleches": "Déplacement (Flèches) :", "interactif": "INTERACTIF", "donnee": "Donnée :", "filter-notateur": "Notateur :", "jours-max": "Jours max (Hier: 1) :", "option-tous": "Tous",
-    "alert-import-success": "Données chargées avec succès ! ({n} lignes).", "alert-import-empty": "Erreur: Aucune donnée trouvée.", "alert-import-error": "Erreur lecture CSV.", "alert-voice-error": "La reconnaissance vocale n'est pas supportée par ce navigateur.",
-    "btn-choice-num": "123 (Num)", "btn-choice-text": "ABC (Txt)", "btn-choice-percent": "% (5-100)", "btn-choice-date": "📅 Date (JJ/MM)", "btn-choice-scale": "1-9 (Échelle)", "btn-choice-photo": "📷 Photo",
-    "btn-quitter": "❌ Quitter", "suiv-valider": "⏭ Suivant",
-    "not-param": "Param. Parc.", "h4-param-parc": "Paramètres de la Parcelle", "param-nom-var": "Nom / Variété :", "param-type": "Type de parcelle :",
-    "h3-noter-existant": "Noter un essai existant", "confirmer-noter": "Confirmer et Noter", "h3-importer-essai": "Importer un essai (CSV Base)", "desc-import-base": "Charge un CSV contenant la structure d'un essai (Code_Essai_Parcelle, variete, Essai, Espece, etc.) pour l'ajouter à la base locale.",
-    "h3-creer-essai": "Créer un nouvel essai", "nom-essai": "Nom de l'essai :", "ph-nom-essai": "Ex: Essai_Rendement_2026", "espece": "Espèce :", "colonnes-x": "Colonnes (X) :", "lignes-y": "Lignes (Y) :", "btn-creer-essai": "Créer le plan et commencer",
-    "telecharger-plan": "📥 Télécharger Plan Essai CSV", "reset-base": "⚠️ Reset Base Essais (Purger tous les plans)", 
-    "alert-reset-base": "Êtes-vous sûr de vouloir supprimer tous les essais enregistrés en base locale ?",
-    "alert-reset-base-safe": "SÉCURITÉ : Une sauvegarde globale de vos plans va être générée. Confirmer la suppression de TOUS les essais sur l'appareil ?",
-    "h3-gps-options": "Options GPS", "btn-gps-aller": "🗺️ Aller vers cet essai", "btn-gps-definir": "📍 Définir la position ici", "gps-status-none": "Aucune position GPS enregistrée.", "gps-status-ok": "Position enregistrée : ", "alert-gps-updated": "La position GPS a été mise à jour pour cet essai !",
-    "mode-sombre": "Mode Sombre :", "btn-multi-select": "🔲 Saisie Groupée", "alert-multi-empty": "Veuillez saisir une valeur avant d'ouvrir la saisie groupée.", "h2-multi-plan": "Saisie Groupée : ",
-    "btn-appliquer-groupe": "Appliquer à la sélection", "alert-multi-success": "Notation appliquée à {n} parcelle(s) !", "h3-statistiques": "Statistiques Rapides", "stat-source": "Source de données :",
-    "stat-source-local": "Session (Notes en attente)", "stat-source-histo": "Historique (Overlay CSV)", "stat-donnee": "Donnée à analyser :", "stat-no-data": "Aucune donnée à afficher pour cette sélection."
-},
-en: {
-    "title": "Notes", "choix-essai": "Trial Choice:", "notateur": "Your Name / Scorer:", "notateur-placeholder": "Name...", "confirmer": "Confirm",
-    "tab-Note": "Note", "tab-Stats": "Statistics", "tab-Configuration": "Setup", "num-parcelle": "Plot Number", "mode": "Mode:", "prec": "← Prev.", "valider": "Validate Plot",
-    "suiv": "Next →", "lignee": "Name / Variety:", "plan-semis": "Planting Plan", "rep": "Repetition:", "menus": "► MENUS (Open/Close)", "menus-close": "▼ MENUS (Close)", "menus-open": "► MENUS (Open)",
-    "not-stade": "Stage", "not-flo": "Bloom", "not-receptivite": "Recept.", "receptivite-label": "Receptivity (Nb):", "not-prlvmt": "Sampling", "not-visuelle": "Visual", "not-phyto": "Phyto", "not-diverses": "Misc.",
-    "stade-bbch": "Stage (BBCH):", "taux-flo": "Bloom Rate (%) ", "prelevements": "Sampling / Samples", "code": "Code:", "impact-phyto": "Phyto Impact (1-9) ",
-    "ajouter-ligne": "+ Add line", "observations": "Observations:", "enregistrer": "Save", "enregistrer-suivant": "Save Next →", "enregistrer-prec": "← Save Prev.",
-    "derniers-enregistrements": "Recent Records", "th-essai": "Trial", "th-parc": "Plot", "th-rep": "Rep.", "th-code": "Sample Code", "th-stade": "Stage", "th-flo": "Bloom%", "th-phyto": "Phyto", "th-act": "Act.",
-    "choix-langue": "Language:", "changer-essai": "Back to Menu / Change Trial", "reset-donnees": "⚠️ Reset Local Data (Clear Notes)", "date-obs": "Date:", "heure-obs": "Time:",
-    "meteo": "Weather:", "meteo-soleil": "Sunny", "meteo-eclaircies": "Partly Cloudy", "meteo-nuageux": "Cloudy", "meteo-couvert": "Overcast", "meteo-vent": "Windy", "meteo-pluie": "Rainy",
-    "telecharger-donnees": "📥 Download CSV Data (Notes)", "partager-donnees": "📤 Share CSV (Email, Drive...)", "alert-share-notsupported": "Sharing is not supported on this device. Download started instead.",
-    "h2-bbch": "BBCH Stages", "h2-plan": "Planting Plan", "valider-parcelle-plan": "Validate Plot", "prompt-title-simple": "Notation Title:",
-    "alert-choix-essai": "Please choose a trial", "alert-valider-parcelle": "Please validate the plot first", "alert-select-parcelle": "Select a plot",
-    "alert-reset": "SECURITY: CSV will be downloaded. Clear all local score data?", 
-    "alert-reset-notes-safe": "SECURITY: An export of your notes will be generated. Confirm deletion of all notes on the device?",
-    "alert-no-data": "No data to clear.", "alert-no-plan": "No plan defined for this trial",
-    "alert-delete-line": "Delete this record?", "alert-suppr-config": "Delete this notation type?", "alert-rien": "No data to export", "btn-info": "Info", "btn-cancel": "Cancel", "label-trial-select": "-- Select --", "placeholder-aaa": "ABC", "unknown-variety": "UNKNOWN",
-    "Mais": "Corn", "Tournesol": "Sunflower", "Colza": "Rapeseed", "Soja": "Soybean", "Sorgho": "Sorghum",
-    "label-import": "Interactive Overlay (Session only):", "desc-import": "Overlays data on the map. Does not modify the trial database.",
-    "avancement-hachure": "Progress (Hatched):", "deplacement-fleches": "Movement (Arrows):", "interactif": "INTERACTIVE", "donnee": "Data:", "filter-notateur": "Scorer:", "jours-max": "Max Days (Yest: 1):", "option-tous": "All",
-    "alert-import-success": "Data loaded successfully! ({n} lines).", "alert-import-empty": "Error: No data found.", "alert-import-error": "Error reading CSV.", "alert-voice-error": "Voice recognition not supported by this browser.",
-    "btn-choice-num": "123 (Num)", "btn-choice-text": "ABC (Txt)", "btn-choice-percent": "% (5-100)", "btn-choice-date": "📅 Date (DD/MM)", "btn-choice-scale": "1-9 (Scale)", "btn-choice-photo": "📷 Photo",
-    "btn-quitter": "❌ Exit", "suiv-valider": "⏭ Next",
-    "not-param": "Plot Params", "h4-param-parc": "Plot Parameters", "param-nom-var": "Name / Variety:", "param-type": "Plot Type:",
-    "h3-noter-existant": "Score an existing trial", "confirmer-noter": "Confirm & Score", "h3-importer-essai": "Import Trial (Base CSV)", "desc-import-base": "Loads a CSV containing trial structure to add it to the local database.",
-    "h3-creer-essai": "Create a new trial", "nom-essai": "Trial Name:", "ph-nom-essai": "Ex: Yield_Trial_2026", "espece": "Species:", "colonnes-x": "Columns (X):", "lignes-y": "Rows (Y):", "btn-creer-essai": "Create Plan and Start",
-    "telecharger-plan": "📥 Download Trial Plan CSV", "reset-base": "⚠️ Reset Trial Base (Clear all plans)", 
-    "alert-reset-base": "Are you sure you want to delete all saved trials in the local database?",
-    "alert-reset-base-safe": "SECURITY: A global backup of your plans will be generated. Confirm deletion of ALL trials on the device?",
-    "h3-gps-options": "GPS Options", "btn-gps-aller": "🗺️ Go to this trial", "btn-gps-definir": "📍 Set position here", "gps-status-none": "No GPS position saved.", "gps-status-ok": "Saved position: ", "alert-gps-updated": "GPS position updated for this trial!",
-    "mode-sombre": "Dark Mode:", "btn-multi-select": "🔲 Group Input", "alert-multi-empty": "Please enter a value before opening group input.", "h2-multi-plan": "Group Input: ",
-    "btn-appliquer-groupe": "Apply to selection", "alert-multi-success": "Notation applied to {n} plot(s)!", "h3-statistiques": "Quick Stats", "stat-source": "Data Source:",
-    "stat-source-local": "Session (Pending Notes)", "stat-source-histo": "History (CSV Overlay)", "stat-donnee": "Data to Analyze:", "stat-no-data": "No data to display for this selection."
-},
-es: {
-    "title": "Notas", "choix-essai": "Elegir Ensayo:", "notateur": "Su Nombre / Anotador:", "notateur-placeholder": "Nombre...", "confirmer": "Confirmar",
-    "tab-Note": "Nota", "tab-Stats": "Estadísticas", "tab-Configuration": "Configuración", "num-parcelle": "Número Parcela", "mode": "Modo:", "prec": "← Ant.", "valider": "Validar Parcela",
-    "suiv": "Sig. →", "lignee": "Nombre / Variedad:", "plan-semis": "Plan de Siembra", "rep": "Repetición:", "menus": "► MENÚS (Abrir/Cerrar)", "menus-close": "▼ MENÚS (Cerrar)", "menus-open": "► MENÚS (Abrir)",
-    "not-stade": "Estadio", "not-flo": "Floración", "not-receptivite": "Recept.", "receptivite-label": "Receptividad (Nb):", "not-prlvmt": "Muestreo", "not-visuelle": "Visual", "not-phyto": "Fito", "not-diverses": "Diversas",
-    "stade-bbch": "Estadio (BBCH):", "taux-flo": "Floración (%) ", "prelevements": "Muestreo / Muestras", "code": "Cód:", "impact-phyto": "Impacto Fito (1-9) ",
-    "ajouter-ligne": "+ Añadir línea", "observations": "Observaciones:", "enregistrer": "Guardar", "enregistrer-suivant": "Guardar Sig →", "enregistrer-prec": "← Guardar Ant",
-    "derniers-enregistrements": "Registros", "th-essai": "Ensayo", "th-parc": "Parc.", "th-rep": "Rep.", "th-code": "Cód. Muest.", "th-stade": "Estadio", "th-flo": "Flor%", "th-phyto": "Fito", "th-act": "Act.",
-    "choix-langue": "Idioma:", "changer-essai": "Volver al Menú", "reset-donnees": "⚠️ Borrar Notas (Datos Locales)", "date-obs": "Fecha:", "heure-obs": "Hora:",
-    "meteo": "Clima:", "meteo-soleil": "Sol", "meteo-eclaircies": "Nubes y Claros", "meteo-nuageux": "Nublado", "meteo-couvert": "Cubierto", "meteo-vent": "Viento", "meteo-pluie": "Lluvia",
-    "telecharger-donnees": "📥 Descargar CSV Notas", "partager-donnees": "📤 Compartir CSV (Email, Drive...)", "alert-share-notsupported": "Compartir no es compatible en este dispositivo. Descarga iniciada en su lugar.",
-    "h2-bbch": "Estadios BBCH", "h2-plan": "Plan de Siembra", "valider-parcelle-plan": "Validar parcela", "prompt-title-simple": "Título de nota:",
-    "alert-choix-essai": "Por favor elija un ensayo", "alert-valider-parcelle": "Primero valide la parcela", "alert-select-parcelle": "Seleccione una parcela",
-    "alert-reset": "SEGURIDAD: Se descargará un CSV. ¿Borrar todos los datos locales?",
-    "alert-reset-notes-safe": "SEGURIDAD: Se generará una exportación de sus notas. ¿Confirmar eliminación de todas las notas en el dispositivo?",
-    "alert-no-data": "Sin datos para borrar.", "alert-no-plan": "Sin plan para este ensayo",
-    "alert-delete-line": "¿Eliminar este registro?", "alert-suppr-config": "¿Eliminar este tipo de nota?", "alert-rien": "Sin datos para exportar", "btn-info": "Info", "btn-cancel": "Cancelar", "label-trial-select": "-- Elegir --", "placeholder-aaa": "ABC", "unknown-variety": "DESCONOCIDA",
-    "Mais": "Maíz", "Tournesol": "Girasol", "Colza": "Colza", "Soja": "Soja", "Sorgho": "Sorgo",
-    "label-import": "Capa Interactiva (Sesión):", "desc-import": "Superpone datos. No modifica la base de ensayos.",
-    "avancement-hachure": "Progreso (Rayado):", "deplacement-fleches": "Movimiento (Flechas):", "interactif": "INTERACTIVO", "donnee": "Dato:", "filter-notateur": "Anotador:", "jours-max": "Días máx (Ayer: 1):", "option-tous": "Todos",
-    "alert-import-success": "¡Datos cargados con éxito! ({n} líneas).", "alert-import-empty": "Error: No se encontraron datos.", "alert-import-error": "Error al leer CSV.", "alert-voice-error": "Reconocimiento de voz no soportado.",
-    "btn-choice-num": "123 (Num)", "btn-choice-text": "ABC (Txt)", "btn-choice-percent": "% (5-100)", "btn-choice-date": "📅 Fecha (DD/MM)", "btn-choice-scale": "1-9 (Escala)", "btn-choice-photo": "📷 Foto",
-    "btn-quitter": "❌ Salir", "suiv-valider": "⏭ Siguiente",
-    "not-param": "Param. Parc.", "h4-param-parc": "Parámetros de Parcela", "param-nom-var": "Nombre / Variedad:", "param-type": "Tipo de parcela:",
-    "h3-noter-existant": "Anotar ensayo existente", "confirmer-noter": "Confirmar y Anotar", "h3-importer-essai": "Importar Ensayo (CSV Base)", "desc-import-base": "Carga un CSV con estructura de ensayo para la base local.",
-    "h3-creer-essai": "Crear nuevo ensayo", "nom-essai": "Nombre del ensayo:", "ph-nom-essai": "Ej: Ensayo_2026", "espece": "Especie:", "colonnes-x": "Columnas (X):", "lignes-y": "Filas (Y):", "btn-creer-essai": "Crear Plan y Empezar",
-    "telecharger-plan": "📥 Descargar Plan CSV", "reset-base": "⚠️ Borrar Base de Ensayos", 
-    "alert-reset-base": "¿Seguro que quieres borrar TODOS los ensayos de la base local?",
-    "alert-reset-base-safe": "SEGURIDAD: Se generará una copia de seguridad de TODOS los planes. ¿Confirmar eliminación total en el dispositivo?",
-    "h3-gps-options": "Opciones GPS", "btn-gps-aller": "🗺️ Ir a este ensayo", "btn-gps-definir": "📍 Definir posición aquí", "gps-status-none": "Sin posición GPS.", "gps-status-ok": "Posición guardada: ", "alert-gps-updated": "¡Posición GPS actualizada!",
-    "mode-sombre": "Modo Oscuro:", "btn-multi-select": "🔲 Entrada de Grupo", "alert-multi-empty": "Ingrese un valor antes de abrir la entrada de grupo.", "h2-multi-plan": "Entrada de Grupo: ",
-    "btn-appliquer-groupe": "Aplicar a selección", "alert-multi-success": "¡Anotación aplicada a {n} parcela(s)!", "h3-statistiques": "Estadísticas Rápidas", "stat-source": "Fuente de datos:",
-    "stat-source-local": "Sesión (Notas Pendientes)", "stat-source-histo": "Historial (Overlay CSV)", "stat-donnee": "Datos a analizar:", "stat-no-data": "No hay datos para mostrar en esta selección."
-},
-pl: {
-    "title": "Notatki", "choix-essai": "Wybór próby:", "notateur": "Twoje Imię:", "notateur-placeholder": "Imię...", "confirmer": "Potwierdź",
-    "tab-Note": "Notatka", "tab-Stats": "Statystyki", "tab-Configuration": "Konfiguracja", "num-parcelle": "Numer poletka", "mode": "Tryb:", "prec": "← Poprz.", "valider": "Zatwierdź poletko",
-    "suiv": "Nast. →", "lignee": "Nazwa / Odmiana:", "plan-semis": "Plan siewu", "rep": "Powtórzenie:", "menus": "► MENU (Otwórz/Zamknij)", "menus-close": "▼ MENU (Zamknij)", "menus-open": "► MENU (Otwórz)",
-    "not-stade": "Faza", "not-flo": "Kwitnienie", "not-receptivite": "Recept.", "receptivite-label": "Receptywność (Nb):", "not-prlvmt": "Próba", "not-visuelle": "Wizualna", "not-phyto": "Fito", "not-diverses": "Różne",
-    "stade-bbch": "Faza (BBCH):", "taux-flo": "Stopień kwitnienia (%)", "prelevements": "Pobieranie próbek", "code": "Kod:", "impact-phyto": "Wpływ fito (1-9)",
-    "ajouter-ligne": "+ Dodaj linię", "observations": "Obserwacje:", "enregistrer": "Zapisz", "enregistrer-suivant": "Zap. Nast. →", "enregistrer-prec": "← Zap. Poprz.",
-    "derniers-enregistrements": "Ostatnie rekordy", "th-essai": "Próba", "th-parc": "Pol.", "th-rep": "Powt.", "th-code": "Kod prób.", "th-stade": "Faza", "th-flo": "Kwit%", "th-phyto": "Fito", "th-act": "Akcja",
-    "choix-langue": "Język:", "changer-essai": "Powrót do menu", "reset-donnees": "⚠️ Resetuj Notatki (Dane lokalne)", "date-obs": "Data:", "heure-obs": "Godzina:",
-    "meteo": "Pogoda:", "meteo-soleil": "Słońce", "meteo-eclaircies": "Przejaśnienia", "meteo-nuageux": "Zachmurzenie", "meteo-couvert": "Pochmurno", "meteo-vent": "Wiatr", "meteo-pluie": "Deszcz",
-    "telecharger-donnees": "📥 Pobierz dane CSV (Notatki)", "partager-donnees": "📤 Udostępnij CSV (Email, Drive...)", "alert-share-notsupported": "Udostępnianie nie jest obsługiwane. Rozpoczęto pobieranie.",
-    "h2-bbch": "Fazy BBCH", "h2-plan": "Plan siewu", "valider-parcelle-plan": "Zatwierdź", "prompt-title-simple": "Tytuł oceny:",
-    "alert-choix-essai": "Wybierz próbę", "alert-valider-parcelle": "Najpierw zatwierdź poletko", "alert-select-parcelle": "Wybierz poletko",
-    "alert-reset": "BEZPIECZEŃSTWO: Plik CSV zostanie pobrany. Czy usunąć wszystkie dane lokalne?",
-    "alert-reset-notes-safe": "BEZPIECZEŃSTWO: Zostanie wygenerowany eksport twoich notatek. Potwierdź usunięcie notatek z urządzenia?",
-    "alert-no-data": "Brak danych do usunięcia.", "alert-no-plan": "Brak planu dla tej próby",
-    "alert-delete-line": "Usunąć ten rekord?", "alert-suppr-config": "Usunąć ten typ?", "alert-rien": "Brak danych do eksportu", "btn-info": "Info", "btn-cancel": "Anuluj", "label-trial-select": "-- Wybierz --", "placeholder-aaa": "ABC", "unknown-variety": "NIEZNANA",
-    "Mais": "Kukurydza", "Tournesol": "Słonecznik", "Colza": "Rzepak", "Soja": "Soja", "Sorgho": "Sorgo",
-    "label-import": "Warstwa interaktywna (tylko sesja):", "desc-import": "Nakłada dane na plan. Nie modyfikuje bazy prób.",
-    "avancement-hachure": "Postęp (Zakreskowane):", "deplacement-fleches": "Ruch (Strzałki):", "interactif": "INTERAKTYWNY", "donnee": "Dane:", "filter-notateur": "Oceniający:", "jours-max": "Max dni (Wczoraj: 1):", "option-tous": "Wszyscy",
-    "alert-import-success": "Dane załadowane! ({n} linii).", "alert-import-empty": "Błąd: Brak danych.", "alert-import-error": "Błąd odczytu CSV.", "alert-voice-error": "Rozpoznawanie mowy nieobsługiwane.",
-    "btn-choice-num": "123 (Liczba)", "btn-choice-text": "ABC (Tekst)", "btn-choice-percent": "% (5-100)", "btn-choice-date": "📅 Data (DD/MM)", "btn-choice-scale": "1-9 (Skala)", "btn-choice-photo": "📷 Zdjęcie",
-    "btn-quitter": "❌ Zamknij", "suiv-valider": "⏭ Następny",
-    "not-param": "Param. Pol.", "h4-param-parc": "Parametry poletka", "param-nom-var": "Nazwa / Odmiana:", "param-type": "Typ poletka:",
-    "h3-noter-existant": "Oceń istniejącą próbę", "confirmer-noter": "Potwierdź i oceń", "h3-importer-essai": "Importuj próbę (Baza CSV)", "desc-import-base": "Wgrywa plik CSV ze strukturą próby do bazy lokalnej.",
-    "h3-creer-essai": "Utwórz nową próbę", "nom-essai": "Nazwa próby:", "ph-nom-essai": "Np. Próba_2026", "espece": "Gatunek:", "colonnes-x": "Kolumny (X):", "lignes-y": "Wiersze (Y):", "btn-creer-essai": "Utwórz plan i rozpocznij",
-    "telecharger-plan": "📥 Pobierz plan CSV", "reset-base": "⚠️ Resetuj Bazę Prób", 
-    "alert-reset-base": "Czy na pewno chcesz usunąć WSZYSTKIE próby z bazy lokalnej?",
-    "alert-reset-base-safe": "BEZPIECZEŃSTWO: Zostanie pobrana kopia zapasowa WSZYSTKICH planów. Potwierdź usunięcie WSZYSTKICH prób w bazie?",
-    "h3-gps-options": "Opcje GPS", "btn-gps-aller": "🗺️ Idź do próby", "btn-gps-definir": "📍 Ustaw pozycję tutaj", "gps-status-none": "Brak pozycji GPS.", "gps-status-ok": "Pozycja: ", "alert-gps-updated": "Zaktualizowano GPS dla próby!",
-    "mode-sombre": "Tryb Ciemny:", "btn-multi-select": "🔲 Wprowadzanie Grupowe", "alert-multi-empty": "Wprowadź wartość przed wejściem w wprowadzanie grupowe.", "h2-multi-plan": "Wprowadzanie Grupowe: ",
-    "btn-appliquer-groupe": "Zastosuj do wyboru", "alert-multi-success": "Adnotacja zastosowana do {n} poletek!", "h3-statistiques": "Szybkie Statystyki", "stat-source": "Źródło danych:",
-    "stat-source-local": "Sesja (oczekujące notatki)", "stat-source-histo": "Historia (Overlay CSV)", "stat-donnee": "Dane do analizy:", "stat-no-data": "Brak danych do wyświetlenia."
-},
-ro: {
-    "title": "Notații", "choix-essai": "Alegere test:", "notateur": "Numele Tău:", "notateur-placeholder": "Nume...", "confirmer": "Confirmă",
-    "tab-Note": "Notă", "tab-Stats": "Statistici", "tab-Configuration": "Configurare", "num-parcelle": "Număr parcelă", "mode": "Mod:", "prec": "← Prec.", "valider": "Validează parcela",
-    "suiv": "Urm. →", "lignee": "Nume / Soi:", "plan-semis": "Plan semănat", "rep": "Repetiție:", "menus": "► MENIURI (Deschide/Închide)", "menus-close": "▼ MENIURI (Închide)", "menus-open": "► MENIURI (Deschide)",
-    "not-stade": "Stadiu", "not-flo": "Înflorire", "not-receptivite": "Recept.", "receptivite-label": "Receptivitate (Nb):", "not-prlvmt": "Prelevare", "not-visuelle": "Vizuală", "not-phyto": "Fito", "not-diverses": "Diverse",
-    "stade-bbch": "Stadiu (BBCH):", "taux-flo": "Rata de înflorire (%)", "prelevements": "Prelevări / Probe", "code": "Cod:", "impact-phyto": "Impact Fito (1-9)",
-    "ajouter-ligne": "+ Adaugă linie", "observations": "Observații:", "enregistrer": "Salvează", "enregistrer-suivant": "Salv. Urm. →", "enregistrer-prec": "← Salv. Prec.",
-    "derniers-enregistrements": "Ultimele înregistrări", "th-essai": "Test", "th-parc": "Parc.", "th-rep": "Rep.", "th-code": "Cod probă", "th-stade": "Stadiu", "th-flo": "Înfl.%", "th-phyto": "Fito", "th-act": "Act.",
-    "choix-langue": "Limbă:", "changer-essai": "Înapoi la Meniu", "reset-donnees": "⚠️ Reset Note (Date locale)", "date-obs": "Data:", "heure-obs": "Ora:",
-    "meteo": "Meteo:", "meteo-soleil": "Soare", "meteo-eclaircies": "Senin cu nori", "meteo-nuageux": "Noros", "meteo-couvert": "Acoperit", "meteo-vent": "Vânt", "meteo-pluie": "Ploaie",
-    "telecharger-donnees": "📥 Descărcați CSV Note", "partager-donnees": "📤 Partajează CSV (Email, Drive...)", "alert-share-notsupported": "Partajarea directă nu este suportată. Descărcarea a început.",
-    "h2-bbch": "Stadii BBCH", "h2-plan": "Plan semănat", "valider-parcelle-plan": "Validează", "prompt-title-simple": "Titlu notație:",
-    "alert-choix-essai": "Vă rugăm să alegeți un test", "alert-valider-parcelle": "Vă rugăm să validați parcela mai întâi", "alert-select-parcelle": "Selectați o parcelă",
-    "alert-reset": "SECURITATE: Se va descărca un fișier CSV. Ștergeți apoi toate datele locale?", 
-    "alert-reset-notes-safe": "SECURITATE: Se va genera un export al notelor. Confirmați ștergerea notelor de pe dispozitiv?",
-    "alert-no-data": "Nu există date de șters.", "alert-no-plan": "Nu există plan definit pentru acest test",
-    "alert-delete-line": "Ștergeți această linie?", "alert-suppr-config": "Ștergeți acest tip?", "alert-rien": "Nu există date de exportat", "btn-info": "Info", "btn-cancel": "Anulează", "label-trial-select": "-- Alege --", "placeholder-aaa": "ABC", "unknown-variety": "NECUNOSCUTĂ",
-    "Mais": "Porumb", "Tournesol": "Floarea-soarelui", "Colza": "Rapiță", "Soja": "Soia", "Sorgho": "Sorg",
-    "label-import": "Strat interactiv (Doar sesiune):", "desc-import": "Suprapune datele. Nu modifică baza de teste.",
-    "avancement-hachure": "Progres (Hașurat):", "deplacement-fleches": "Deplasare (Săgeți):", "interactif": "INTERACTIV", "donnee": "Date:", "filter-notateur": "Evaluator:", "jours-max": "Zile max (Ieri: 1):", "option-tous": "Toți",
-    "alert-import-success": "Date încărcate cu succes! ({n} linii).", "alert-import-empty": "Eroare: Nu s-au găsit date.", "alert-import-error": "Eroare citire CSV.", "alert-voice-error": "Recunoașterea vocală nu este suportată.",
-    "btn-choice-num": "123 (Num)", "btn-choice-text": "ABC (Txt)", "btn-choice-percent": "% (5-100)", "btn-choice-date": "📅 Data (ZZ/LL)", "btn-choice-scale": "1-9 (Scară)", "btn-choice-photo": "📷 Foto",
-    "btn-quitter": "❌ Ieșire", "suiv-valider": "⏭ Următorul",
-    "not-param": "Param. Parc.", "h4-param-parc": "Parametri Parcelă", "param-nom-var": "Nume / Soi:", "param-type": "Tip parcelă:",
-    "h3-noter-existant": "Evaluează test existent", "confirmer-noter": "Confirmă și Evaluează", "h3-importer-essai": "Import Test (CSV Bază)", "desc-import-base": "Încarcă un CSV cu structura testului în baza locală.",
-    "h3-creer-essai": "Creează test nou", "nom-essai": "Nume test:", "ph-nom-essai": "Ex: Test_2026", "espece": "Specie:", "colonnes-x": "Coloane (X):", "lignes-y": "Linii (Y):", "btn-creer-essai": "Creează Plan și Începe",
-    "telecharger-plan": "📥 Descărcați Plan CSV", "reset-base": "⚠️ Reset Bază Teste", 
-    "alert-reset-base": "Ești sigur că vrei să ștergi TOATE testele din baza locală?",
-    "alert-reset-base-safe": "SECURITATE: Se va descărca o copie a TUTUROR planurilor. Confirmați ștergerea lor de pe dispozitiv?",
-    "h3-gps-options": "Opțiuni GPS", "btn-gps-aller": "🗺️ Mergi la test", "btn-gps-definir": "📍 Definește poziția aici", "gps-status-none": "Fără poziție GPS.", "gps-status-ok": "Poziție salvată: ", "alert-gps-updated": "Poziție GPS actualizată!",
-    "mode-sombre": "Mod Întunecat:", "btn-multi-select": "🔲 Intrare în Grup", "alert-multi-empty": "Introduceți o valoare înainte de a deschide intrarea în grup.", "h2-multi-plan": "Intrare în Grup: ",
-    "btn-appliquer-groupe": "Aplică la selecție", "alert-multi-success": "Notație aplicată la {n} parcele!", "h3-statistiques": "Statistici Rapide", "stat-source": "Sursă de date:",
-    "stat-source-local": "Sesiune (Note în așteptare)", "stat-source-histo": "Istoric (Overlay CSV)", "stat-donnee": "Date de analizat:", "stat-no-data": "Nu există date de afișat pentru această selecție."
-},
-uk: {
-    "title": "Нотатки", "choix-essai": "Вибір випробування:", "notateur": "Ваше Ім'я:", "notateur-placeholder": "Ім'я...", "confirmer": "Підтвердити",
-    "tab-Note": "Нотатка", "tab-Stats": "Статистика", "tab-Configuration": "Конфігурація", "num-parcelle": "Номер ділянки", "mode": "Режим:", "prec": "← Поп.", "valider": "Підтвердити ділянку",
-    "suiv": "Наст. →", "lignee": "Назва / Сорт:", "plan-semis": "План посіву", "rep": "Повтор:", "menus": "► МЕНЮ (Відкрити/Закрити)", "menus-close": "▼ МЕНЮ (Закрити)", "menus-open": "► МЕНЮ (Відкрити)",
-    "not-stade": "Стадія", "not-flo": "Цвітіння", "not-receptivite": "Сприйн.", "receptivite-label": "Сприйнятливість (Nb):", "not-prlvmt": "Відбір", "not-visuelle": "Візуальна", "not-phyto": "Фіто", "not-diverses": "Різне",
-    "stade-bbch": "Стадія (BBCH):", "taux-flo": "Рівень цвітіння (%)", "prelevements": "Зразки / Проби", "code": "Код:", "impact-phyto": "Фіто вплив (1-9)",
-    "ajouter-ligne": "+ Додати рядок", "observations": "Примітки:", "enregistrer": "Зберегти", "enregistrer-suivant": "Збер. Далі →", "enregistrer-prec": "← Збер. Поп.",
-    "derniers-enregistrements": "Останні записи", "th-essai": "Випроб.", "th-parc": "Діл.", "th-rep": "Повт.", "th-code": "Код зразка", "th-stade": "Стадія", "th-flo": "Цвіт%", "th-phyto": "Фіто", "th-act": "Дія",
-    "choix-langue": "Мова:", "changer-essai": "Повернутися до меню", "reset-donnees": "⚠️ Скинути Нотатки", "date-obs": "Дата:", "heure-obs": "Час:",
-    "meteo": "Погода:", "meteo-soleil": "Сонце", "meteo-eclaircies": "Мінлива хмарність", "meteo-nuageux": "Хмарно", "meteo-couvert": "Похмуро", "meteo-vent": "Вітер", "meteo-pluie": "Дощ",
-    "telecharger-donnees": "📥 Завантажити CSV Нотатки", "partager-donnees": "📤 Поділитися CSV (Email, Drive...)", "alert-share-notsupported": "Обмін не підтримується на цьому пристрої. Розпочато завантаження.",
-    "h2-bbch": "Стадії BBCH", "h2-plan": "План посіву", "valider-parcelle-plan": "Підтвердити", "prompt-title-simple": "Заголовок оцінки:",
-    "alert-choix-essai": "Будь ласка, виберіть випробування", "alert-valider-parcelle": "Будь ласка, спочатку підтвердіть ділянку", "alert-select-parcelle": "Виберіть ділянку",
-    "alert-reset": "БЕЗПЕКА: Буде завантажено CSV-файл. Очистити всі локальні дані?",
-    "alert-reset-notes-safe": "БЕЗПЕКА: Буде згенеровано експорт нотаток. Підтвердити видалення всіх нотаток з пристрою?",
-    "alert-no-data": "Немає даних для очищення.", "alert-no-plan": "План для цього випробування не визначений",
-    "alert-delete-line": "Видалити цей запис?", "alert-suppr-config": "Видалити цей тип?", "alert-rien": "Немає даних для експорту", "btn-info": "Інфо", "btn-cancel": "Скасувати", "label-trial-select": "-- Вибрати --", "placeholder-aaa": "ABC", "unknown-variety": "НЕВІДОМО",
-    "Mais": "Кукурудза", "Tournesol": "Соняшник", "Colza": "Ріпак", "Soja": "Соя", "Sorgho": "Сорго",
-    "label-import": "Інтерактивний шар (Сесія):", "desc-import": "Накладає дані на план. Не змінює базу випробувань.",
-    "avancement-hachure": "Прогрес (Заштриховано):", "deplacement-fleches": "Рух (Стрілки):", "interactif": "ІНТЕРАКТИВ", "donnee": "Дані:", "filter-notateur": "Оцінювач:", "jours-max": "Макс днів (Вчора: 1):", "option-tous": "Всі",
-    "alert-import-success": "Дані завантажено! ({n} рядків).", "alert-import-empty": "Помилка: Дані не знайдено.", "alert-import-error": "Помилка читання CSV.", "alert-voice-error": "Розпізнавання голосу не підтримується.",
-    "btn-choice-num": "123 (Число)", "btn-choice-text": "ABC (Текст)", "btn-choice-percent": "% (5-100)", "btn-choice-date": "📅 Дата (ДД/ММ)", "btn-choice-scale": "1-9 (Шкала)", "btn-choice-photo": "📷 Фото",
-    "btn-quitter": "❌ Вийти", "suiv-valider": "⏭ Наступний",
-    "not-param": "Парам. діл.", "h4-param-parc": "Параметри ділянки", "param-nom-var": "Назва / Сорт:", "param-type": "Тип ділянки:",
-    "h3-noter-existant": "Оцінити існуюче випробування", "confirmer-noter": "Підтвердити", "h3-importer-essai": "Імпорт випробування (База CSV)", "desc-import-base": "Завантажує структуру випробування в локальну базу.",
-    "h3-creer-essai": "Створити нове випробування", "nom-essai": "Назва випроб:", "ph-nom-essai": "Напр: Дослід_2026", "espece": "Вид:", "colonnes-x": "Колонки (X):", "lignes-y": "Рядки (Y):", "btn-creer-essai": "Створити план і почати",
-    "telecharger-plan": "📥 Завантажити план CSV", "reset-base": "⚠️ Очистити базу випробувань", 
-    "alert-reset-base": "Ви впевнені, що хочете видалити ВСІ випробування з локальної бази?",
-    "alert-reset-base-safe": "БЕЗПЕКА: Буде завантажено резервну копію ВСІХ планів. Підтвердити видалення ВСІХ випробувань?",
-    "h3-gps-options": "Опції GPS", "btn-gps-aller": "🗺️ Перейти до випробування", "btn-gps-definir": "📍 Встановити позицію тут", "gps-status-none": "Немає GPS.", "gps-status-ok": "Позиція: ", "alert-gps-updated": "GPS-позицію оновлено!",
-    "mode-sombre": "Темний режим:", "btn-multi-select": "🔲 Групове введення", "alert-multi-empty": "Будь ласка, введіть значення перед відкриттям групового введення.", "h2-multi-plan": "Групове введення: ",
-    "btn-appliquer-groupe": "Застосувати до виділеного", "alert-multi-success": "Оцінка застосована до {n} ділянок!", "h3-statistiques": "Швидка статистика", "stat-source": "Джерело даних:",
-    "stat-source-local": "Сесія (очікуючі нотатки)", "stat-source-histo": "Історія (Overlay CSV)", "stat-donnee": "Дані для аналізу:", "stat-no-data": "Немає даних для відображення."
-}
-};
+<script src="translations.js"></script>
 
+<script>
 function applyTranslations(lang) {
     if(!translations[lang]) lang = 'fr';
     document.querySelectorAll("[data-i18n]").forEach(el => {
@@ -970,51 +751,6 @@ function applyTranslations(lang) {
     });
     localStorage.setItem('selected_lang', lang);
 }
-
-const bbchInfoData = {
-fr: {
-    "Maïs": [{ code: "00-09", desc: "Germination & Levée" }, { code: "10-19", desc: "Développement des feuilles" }, { code: "30-39", desc: "Élongation de la tige" }, { code: "51-59", desc: "Apparition de l'inflorescence" }, { code: "61-69", desc: "Floraison" }, { code: "71-79", desc: "Développement des grains" }, { code: "81-89", desc: "Maturation" }, { code: "91-99", desc: "Sénescence" }],
-    "Tournesol": [{ code: "00-09", desc: "Germination & Levée" }, { code: "10-19", desc: "Développement des feuilles" }, { code: "30-39", desc: "Élongation de la tige" }, { code: "51-59", desc: "Apparition du bouton floral" }, { code: "61-69", desc: "Floraison" }, { code: "71-79", desc: "Développement des fruits" }, { code: "81-89", desc: "Maturation" }],
-    "Colza": [{ code: "00-09", desc: "Germination & Levée" }, { code: "10-19", desc: "Développement des feuilles" }, { code: "20-29", desc: "Formation des pousses latérales" }, { code: "30-39", desc: "Montaison" }, { code: "50-59", desc: "Apparition des boutons" }, { code: "60-69", desc: "Floraison" }, { code: "71-79", desc: "Développement des siliques" }, { code: "81-89", desc: "Maturation" }],
-    "Soja": [{ code: "00-09", desc: "Germination & Levée" }, { code: "10-19", desc: "Développement des feuilles" }, { code: "30-39", desc: "Ramification" }, { code: "51-59", desc: "Inflorescence" }, { code: "60-69", desc: "Floraison" }, { code: "71-79", desc: "Formation des gousses" }, { code: "81-89", desc: "Maturation" }],
-    "Sorgho": [{ code: "00-09", desc: "Germination & Levée" }, { code: "10-19", desc: "Développement des feuilles" }, { code: "20-29", desc: "Tallage" }, { code: "30-39", desc: "Élongation de la tige" }, { code: "51-59", desc: "Épiaison" }, { code: "61-69", desc: "Floraison" }, { code: "71-79", desc: "Développement des grains" }, { code: "81-89", desc: "Maturation" }]
-},
-en: {
-    "Maïs": [{ code: "00-09", desc: "Germination & Emergence" }, { code: "10-19", desc: "Leaf development" }, { code: "30-39", desc: "Stem elongation" }, { code: "51-59", desc: "Inflorescence emergence" }, { code: "61-69", desc: "Flowering" }, { code: "71-79", desc: "Grain development" }, { code: "81-89", desc: "Ripening" }, { code: "91-99", desc: "Senescence" }],
-    "Tournesol": [{ code: "00-09", desc: "Germination & Emergence" }, { code: "10-19", desc: "Leaf development" }, { code: "30-39", desc: "Stem elongation" }, { code: "51-59", desc: "Bud development" }, { code: "61-69", desc: "Flowering" }, { code: "71-79", desc: "Fruit development" }, { code: "81-89", desc: "Ripening" }],
-    "Colza": [{ code: "00-09", desc: "Germination & Emergence" }, { code: "10-19", desc: "Leaf development" }, { code: "20-29", desc: "Side shoot formation" }, { code: "30-39", desc: "Stem elongation" }, { code: "50-59", desc: "Budding" }, { code: "60-69", desc: "Flowering" }, { code: "71-79", desc: "Pod development" }, { code: "81-89", desc: "Ripening" }],
-    "Soja": [{ code: "00-09", desc: "Germination & Emergence" }, { code: "10-19", desc: "Leaf development" }, { code: "30-39", desc: "Branching" }, { code: "51-59", desc: "Inflorescence emergence" }, { code: "60-69", desc: "Flowering" }, { code: "71-79", desc: "Pod formation" }, { code: "81-89", desc: "Ripening" }],
-    "Sorgho": [{ code: "00-09", desc: "Germination & Emergence" }, { code: "10-19", desc: "Leaf development" }, { code: "20-29", desc: "Tillering" }, { code: "30-39", desc: "Stem elongation" }, { code: "51-59", desc: "Heading" }, { code: "61-69", desc: "Flowering" }, { code: "71-79", desc: "Grain development" }, { code: "81-89", desc: "Ripening" }]
-},
-es: {
-    "Maïs": [{ code: "00-09", desc: "Germinación y Emergencia" }, { code: "10-19", desc: "Desarrollo de hojas" }, { code: "30-39", desc: "Alargamiento del tallo" }, { code: "51-59", desc: "Aparición de inflorescencia" }, { code: "61-69", desc: "Floración" }, { code: "71-79", desc: "Desarrollo de granos" }, { code: "81-89", desc: "Maduración" }, { code: "91-99", desc: "Senescencia" }],
-    "Tournesol": [{ code: "00-09", desc: "Germinación y Emergencia" }, { code: "10-19", desc: "Desarrollo de hojas" }, { code: "30-39", desc: "Alargamiento del tallo" }, { code: "51-59", desc: "Aparición del botón" }, { code: "61-69", desc: "Floración" }, { code: "71-79", desc: "Desarrollo de frutos" }, { code: "81-89", desc: "Maduración" }],
-    "Colza": [{ code: "00-09", desc: "Germinación y Emergencia" }, { code: "10-19", desc: "Desarrollo de hojas" }, { code: "20-29", desc: "Brotes laterales" }, { code: "30-39", desc: "Alargamiento del tallo" }, { code: "50-59", desc: "Aparición de botones" }, { code: "60-69", desc: "Floración" }, { code: "71-79", desc: "Desarrollo de vainas" }, { code: "81-89", desc: "Maduración" }],
-    "Soja": [{ code: "00-09", desc: "Germinación y Emergencia" }, { code: "10-19", desc: "Desarrollo de hojas" }, { code: "30-39", desc: "Ramificación" }, { code: "51-59", desc: "Inflorescencia" }, { code: "60-69", desc: "Floración" }, { code: "71-79", desc: "Formación de vainas" }, { code: "81-89", desc: "Maduración" }],
-    "Sorgho": [{ code: "00-09", desc: "Germinación y Emergencia" }, { code: "10-19", desc: "Desarrollo de hojas" }, { code: "20-29", desc: "Ahijamiento" }, { code: "30-39", desc: "Alargamiento del tallo" }, { code: "51-59", desc: "Espigado" }, { code: "61-69", desc: "Floración" }, { code: "71-79", desc: "Desarrollo de granos" }, { code: "81-89", desc: "Maduración" }]
-},
-pl: {
-    "Maïs": [{ code: "00-09", desc: "Kiełkowanie i wschody" }, { code: "10-19", desc: "Rozwój liści" }, { code: "30-39", desc: "Wydłużanie źdźbła" }, { code: "51-59", desc: "Rozwój wiechy" }, { code: "61-69", desc: "Kwitnienie" }, { code: "71-79", desc: "Rozwój ziarna" }, { code: "81-89", desc: "Dojrzewanie" }, { code: "91-99", desc: "Zasieranie" }],
-    "Tournesol": [{ code: "00-09", desc: "Kiełkowanie" }, { code: "10-19", desc: "Rozwój liści" }, { code: "30-39", desc: "Wzrost pędu" }, { code: "51-59", desc: "Rozwój pąka" }, { code: "61-69", desc: "Kwitnienie" }, { code: "71-79", desc: "Rozwój nasion" }, { code: "81-89", desc: "Dojrzewanie" }],
-    "Colza": [{ code: "00-09", desc: "Kiełkowanie" }, { code: "10-19", desc: "Rozwój liści" }, { code: "20-29", desc: "Rozwój pędów bocznych" }, { code: "30-39", desc: "Wzrost pędu głównego" }, { code: "50-59", desc: "Pąkowanie" }, { code: "60-69", desc: "Kwitnienie" }, { code: "71-79", desc: "Rozwój łuszczyn" }, { code: "81-89", desc: "Dojrzewanie" }],
-    "Soja": [{ code: "00-09", desc: "Kiełkowanie" }, { code: "10-19", desc: "Rozwój liści" }, { code: "30-39", desc: "Rozgałęzianie" }, { code: "51-59", desc: "Rozwój kwiatostanu" }, { code: "60-69", desc: "Kwitnienie" }, { code: "71-79", desc: "Rozwój strąków" }, { code: "81-89", desc: "Dojrzewanie" }],
-    "Sorgho": [{ code: "00-09", desc: "Kiełkowanie" }, { code: "10-19", desc: "Rozwój liści" }, { code: "20-29", desc: "Krzewienie" }, { code: "30-39", desc: "Wydłużanie źdźbła" }, { code: "51-59", desc: "Kłoszenie" }, { code: "61-69", desc: "Kwitnienie" }, { code: "71-79", desc: "Rozwój ziarna" }, { code: "81-89", desc: "Dojrzewanie" }]
-},
-ro: {
-    "Maïs": [{ code: "00-09", desc: "Germinare" }, { code: "10-19", desc: "Dezvoltarea frunzelor" }, { code: "30-39", desc: "Alungirea tulpinii" }, { code: "51-59", desc: "Inflorescență" }, { code: "61-69", desc: "Înflorire" }, { code: "71-79", desc: "Dezvoltarea boabelor" }, { code: "81-89", desc: "Coacere" }, { code: "91-99", desc: "Senescență" }],
-    "Tournesol": [{ code: "00-09", desc: "Germinare" }, { code: "10-19", desc: "Dezvoltarea frunzelor" }, { code: "30-39", desc: "Alungirea tulpinii" }, { code: "51-59", desc: "Buton floral" }, { code: "61-69", desc: "Înflorire" }, { code: "71-79", desc: "Dezvoltarea fructelor" }, { code: "81-89", desc: "Coacere" }],
-    "Colza": [{ code: "00-09", desc: "Germinare" }, { code: "10-19", desc: "Dezvoltarea frunzelor" }, { code: "20-29", desc: "Lăstari laterali" }, { code: "30-39", desc: "Alungirea tulpinii" }, { code: "50-59", desc: "Butonizare" }, { code: "60-69", desc: "Înflorire" }, { code: "71-79", desc: "Formarea silicvelor" }, { code: "81-89", desc: "Coacere" }],
-    "Soja": [{ code: "00-09", desc: "Germinare" }, { code: "10-19", desc: "Dezvoltarea frunzelor" }, { code: "30-39", desc: "Ramificare" }, { code: "51-59", desc: "Inflorescență" }, { code: "60-69", desc: "Înflorire" }, { code: "71-79", desc: "Formarea păstăilor" }, { code: "81-89", desc: "Coacere" }],
-    "Sorgho": [{ code: "00-09", desc: "Germinare" }, { code: "10-19", desc: "Dezvoltarea frunzelor" }, { code: "20-29", desc: "Înfrățire" }, { code: "30-39", desc: "Alungirea tulpinii" }, { code: "51-59", desc: "Înspicare" }, { code: "61-69", desc: "Înflorire" }, { code: "71-79", desc: "Dezvoltarea boabelor" }, { code: "81-89", desc: "Coacere" }]
-},
-uk: {
-    "Maïs": [{ code: "00-09", desc: "Проростання" }, { code: "10-19", desc: "Розвиток листя" }, { code: "30-39", desc: "Стеблування" }, { code: "51-59", desc: "Викидання волоті" }, { code: "61-69", desc: "Цвітіння" }, { code: "71-79", desc: "Формування зерна" }, { code: "81-89", desc: "Дозрівання" }, { code: "91-99", desc: "Відмирання" }],
-    "Tournesol": [{ code: "00-09", desc: "Проростання" }, { code: "10-19", desc: "Розвиток листя" }, { code: "30-39", desc: "Стеблування" }, { code: "51-59", desc: "Утворення кошика" }, { code: "61-69", desc: "Цвітіння" }, { code: "71-79", desc: "Налив насіння" }, { code: "81-89", desc: "Дозрівання" }],
-    "Colza": [{ code: "00-09", desc: "Проростання" }, { code: "10-19", desc: "Розвиток листя" }, { code: "20-29", desc: "Бічні пагони" }, { code: "30-39", desc: "Стеблування" }, { code: "50-59", desc: "Бутонізація" }, { code: "60-69", desc: "Цвітіння" }, { code: "71-79", desc: "Утворення стручків" }, { code: "81-89", desc: "Дозрівання" }],
-    "Soja": [{ code: "00-09", desc: "Проростання" }, { code: "10-19", desc: "Розвиток листя" }, { code: "30-39", desc: "Гілкування" }, { code: "51-59", desc: "Бутонізація" }, { code: "60-69", desc: "Цвітіння" }, { code: "71-79", desc: "Утворення бобів" }, { code: "81-89", desc: "Дозрівання" }],
-    "Sorgho": [{ code: "00-09", desc: "Проростання" }, { code: "10-19", desc: "Розвиток листя" }, { code: "20-29", desc: "Кущення" }, { code: "30-39", desc: "Стеблування" }, { code: "51-59", desc: "Викидання волоті" }, { code: "61-69", desc: "Цвітіння" }, { code: "71-79", desc: "Налив зерна" }, { code: "81-89", desc: "Дозрівання" }]
-}
-};
 
 const rawCsvData = `Code_Essai_Parcelle,variete,Essai,Espece,Gps,Plan_X,Plan_Y,Type
 1,LID 5053L SU,Test,Tournesol,"43.69,1.27",1,1,H
@@ -1030,8 +766,6 @@ const rawCsvData = `Code_Essai_Parcelle,variete,Essai,Espece,Gps,Plan_X,Plan_Y,T
 
 let varieteData = [], appObservations = [], currentEssai = null, currentDigitCount = 3, currentParcelleArray = ['0','0','0'], selectedPlotCodeForNavigation = null, currentEspece = null, currentGps = null, parcelleValideeCode = null, currentPlotOrder = [], simpleNotationsConfig = [];
 let externalData = []; 
-
-// VARIABLES MULTI-SELECT
 let isMultiSelectMode = false;
 let multiSelectTargetKey = null;
 let multiSelectTargetValue = null;
@@ -1072,9 +806,11 @@ function loadVarieteDataLocal() {
         varieteData = JSON.parse(saved);
         if (!varieteData.some(p => p.Essai === 'Test')) {
             varieteData = defaultTestTrial.concat(varieteData);
+            saveVarieteDataLocal();
         }
     } else {
         varieteData = defaultTestTrial;
+        saveVarieteDataLocal();
     }
 }
 function saveVarieteDataLocal() {
@@ -1336,6 +1072,17 @@ function setupEventListeners() {
             document.getElementById('app-container').style.display = 'block';
             
             const plotsInTrial = varieteData.filter(p => p.Essai === currentEssai);
+            
+            const needsPlan = plotsInTrial.some(p => !p.Plan_X || !p.Plan_Y || p.Plan_X === "" || p.Plan_Y === "");
+            if (needsPlan && plotsInTrial.length > 0) {
+                const cols = Math.ceil(Math.sqrt(plotsInTrial.length));
+                plotsInTrial.forEach((p, idx) => {
+                    p.Plan_X = (idx % cols) + 1;
+                    p.Plan_Y = Math.floor(idx / cols) + 1;
+                });
+                saveVarieteDataLocal();
+            }
+
             const maxPlotNum = Math.max(0, ...plotsInTrial.map(p => parseInt(p.Code_Essai_Parcelle) || 0));
             if (maxPlotNum <= 99) currentDigitCount = 2;
             else if (maxPlotNum <= 999) currentDigitCount = 3;
@@ -1435,7 +1182,6 @@ function setupEventListeners() {
     document.getElementById('telecharger-plan-csv').onclick = telechargerPlanCSV;
     document.getElementById('changer-essai').onclick = () => location.reload();
     
-    // SAFE RESETS
     document.getElementById('reset-data-local').onclick = () => {
         if(confirm(getT("alert-reset-notes-safe"))) {
             if(appObservations.length > 0) telechargerCSV();
@@ -1714,7 +1460,6 @@ function openSowingPlan(isMulti = false) {
     }
 }
 
-// --- LOGIQUE MULTI-SELECT ---
 function openMultiSelectPlan(keyName, inputIdOrSelector) {
     let val = "";
     const el = document.getElementById(inputIdOrSelector) || document.querySelector(inputIdOrSelector);
@@ -1727,26 +1472,6 @@ function openMultiSelectPlan(keyName, inputIdOrSelector) {
     multiSelectTargetKey = keyName;
     multiSelectTargetValue = val;
     openSowingPlan(true);
-}
-
-function triggerZenMultiSelect() {
-    // Determine which notation is active in Zen Mode
-    if(!currentZenTarget) return;
-    const id = currentZenTarget.id;
-    let key, inputRef;
-    
-    if(id === 'not-stade') { key = 'Stade'; inputRef = 'stade'; }
-    else if(id === 'not-flo') { key = 'Floraison'; inputRef = '#flo-buttons .selected'; }
-    else if(id === 'not-receptivite') { key = 'Receptivite'; inputRef = 'receptivite'; }
-    else if(id.startsWith('simple-line-')) {
-        const code = id.replace('simple-line-', '');
-        const config = simpleNotationsConfig.find(c => c.code === code);
-        key = 'Not_' + (config ? config.label : code);
-        inputRef = 'not-simple-' + code;
-    } else {
-        return; 
-    }
-    openMultiSelectPlan(key, inputRef);
 }
 
 function toggleMultiCell(td, code) {
@@ -1909,13 +1634,6 @@ window.drawMovementPath = () => {
     wrapper.appendChild(svg);
 };
 
-window.selectFromPlan = (code) => { 
-    if(isMultiSelectMode) return; 
-    selectedPlotCodeForNavigation = code; 
-    updateUIForSelectedPlot(code); 
-    document.getElementById('sowingPlanModal').style.display = 'none'; 
-};
-
 window.zenNextAndValidate = () => {
     handleNavigate(1);
     parcelleValideeCode = String(selectedPlotCodeForNavigation).padStart(currentDigitCount,'0');
@@ -1986,9 +1704,13 @@ if(currentPlot) {
 const obsText = document.getElementById('obs').value;
 if(obsText) addCommentToMemory(obsText);
 
+let fallbackVariete = document.getElementById('variete-text').textContent.split(':')[1];
+if (fallbackVariete) { fallbackVariete = fallbackVariete.split('(')[0].trim(); } 
+else { fallbackVariete = "Inconnue"; }
+
 let obs = {
     id: Date.now(), Notateur: document.getElementById('type-notation-session').value, ESSAI: currentEssai, Parcelle: parcelleValideeCode,
-    Variete: paramVariete || document.getElementById('variete-text').textContent.split(':')[1].split('(')[0].trim(),
+    Variete: paramVariete || fallbackVariete,
     Date: document.getElementById('custom-date').value, Heure: document.getElementById('custom-time').value,
     Meteo: document.getElementById('meteo-select').value, Rep: document.getElementById('rep').value, Observations: obsText,
 };
@@ -2074,7 +1796,6 @@ window.openTab = (e,n) => {
 }
 function loadLocalObservations() { appObservations = JSON.parse(localStorage.getItem('observations_v12') || "[]"); simpleNotationsConfig = JSON.parse(localStorage.getItem('simpleNotationsConfig') || "[]"); renderRecapTable(); initSimpleNotationsUI(); renderFreqComments();}
 
-// STATS ENGINE
 window.renderStats = () => {
     if(!currentEssai) return;
     const source = document.getElementById('stat-source-select').value;
@@ -2100,7 +1821,6 @@ window.renderStats = () => {
         return;
     }
     
-    // Sort logic (if numerical/percentages)
     let sortedKeys = Object.keys(freqMap).sort((a,b) => {
         let numA = parseFloat(a.replace('%','')), numB = parseFloat(b.replace('%',''));
         if(!isNaN(numA) && !isNaN(numB)) return numA - numB;
@@ -2153,7 +1873,7 @@ function telechargerCSV() {
     const date = document.getElementById('custom-date').value || new Date().toISOString().split('T')[0]; 
     const notateur = document.getElementById('type-notation-session').value || "Notateur"; 
     const sanitize = (s) => s.replace(/[^a-z0-9]/gi, '_'); 
-    const filename = `Notes_${sanitize(essai)}_${sanitize(date)}_${sanitize(notateur)}.csv`;
+    const filename = `${sanitize(essai)}_${sanitize(date)}_${sanitize(notateur)}.csv`;
     
     const a = document.createElement('a'); 
     a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})); 
@@ -2169,7 +1889,7 @@ async function partagerCSV() {
     const date = document.getElementById('custom-date').value || new Date().toISOString().split('T')[0]; 
     const notateur = document.getElementById('type-notation-session').value || "Notateur"; 
     const sanitize = (s) => s.replace(/[^a-z0-9]/gi, '_'); 
-    const filename = `Notes_${sanitize(essai)}_${sanitize(date)}_${sanitize(notateur)}.csv`;
+    const filename = `${sanitize(essai)}_${sanitize(date)}_${sanitize(notateur)}.csv`;
 
     const file = new File([new Blob([csv], {type: 'text/csv;charset=utf-8'})], filename, { type: 'text/csv' });
 
@@ -2266,7 +1986,10 @@ window.handlePhotoUpload = (event, code) => {
     const numInput = document.getElementById('photo-num-' + code);
     const num = String(numInput.value).padStart(3, '0'); 
 
-    const varieteRaw = document.getElementById('variete-text').textContent.split(':')[1].split('(')[0].trim() || "Inconnue";
+    let varieteRaw = document.getElementById('variete-text').textContent.split(':')[1];
+    if (varieteRaw) { varieteRaw = varieteRaw.split('(')[0].trim(); } 
+    else { varieteRaw = "Inconnue"; }
+    
     const essaiRaw = currentEssai || "Essai";
     const sanitize = (s) => s.replace(/[^a-z0-9]/gi, '_');
 
@@ -2342,9 +2065,16 @@ function updateZenHeader() {
         
         document.getElementById('zen-title').textContent = `Parcelle ${num}`;
         
-        // Ajout YYY,XXX dans le Mode Zen
         const plot = varieteData.find(p => String(p.Code_Essai_Parcelle).padStart(currentDigitCount,'0') === String(num).padStart(currentDigitCount,'0') && p.Essai === currentEssai);
-        let varieteName = plot ? plot.variete : document.getElementById('variete-text').textContent.split(':')[1].split('(')[0].trim();
+        
+        let varieteName = "";
+        if(plot) {
+             varieteName = plot.variete;
+        } else {
+             let txt = document.getElementById('variete-text').textContent.split(':')[1];
+             varieteName = txt ? txt.split('(')[0].trim() : "";
+        }
+        
         let coordsSuffix = (plot && plot.Plan_Y && plot.Plan_X) ? ` (${String(plot.Plan_Y).padStart(3, '0')},${String(plot.Plan_X).padStart(3, '0')})` : "";
         document.getElementById('zen-subtitle').textContent = varieteName + coordsSuffix;
 
