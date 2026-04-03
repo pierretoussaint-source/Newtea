@@ -8,6 +8,7 @@ const urlsToCache = [
   './icon-192x192.png',
   './icon-512x512.png'
   './tuto.html'
+  './translations.js'
 ];
 
 // Installation du service worker et mise en cache des fichiers
