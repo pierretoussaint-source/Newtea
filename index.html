@@ -303,6 +303,10 @@
 </head>
 <body>
 
+<div style="position: absolute; top: 15px; right: 15px; z-index: 100;">
+    <a href="Newtea Tuto.html" target="_blank" style="text-decoration:none; padding: 8px 12px; border-radius: 20px; font-weight:bold; font-size: 0.9em; background-color: var(--theme-secondary-color); color: white; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">❓ Tuto</a>
+</div>
+
 <div style="text-align: center; margin-bottom: 15px;">
     <svg width="200" height="70" viewBox="0 0 200 70" xmlns="http://www.w3.org/2000/svg">
         <path class="n-stylized" d="M88 50 L88 20 M88 20 L112 50 M112 50 L112 20" stroke="var(--theme-heading-color, #227A49)" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
@@ -629,7 +633,7 @@
         <h3 data-i18n="h3-gestion-donnees" style="color:#c0392b;">Gestion des données</h3>
         <!-- Bouton global de Sauvegarde, Partage & Purge -->
         <button id="partager-csv" class="btn-primary btn-block" style="margin-bottom:10px; background-color: #2980b9;">📥/📤 Sauvegarder CSV, Partager & Purger</button>
-        <button id="telecharger-plan-csv" class="btn-accent btn-block" style="margin-bottom:10px;" data-i18n="telecharger-plan">📥 Télécharger Plan Essai CSV</button>
+        <button id="telecharger-plan-csv" class="btn-accent btn-block" style="margin-bottom:10px;">📥/📤 Sauvegarder & Partager Plan Essai</button>
         
         <button id="reset-data-local" class="btn-danger btn-block" style="margin-bottom:10px;" data-i18n="reset-donnees">⚠️ Reset Données (Purger les Notes)</button>
         <button id="reset-base-essais" class="btn-danger btn-block" style="background-color:#900;" data-i18n="reset-base">⚠️ Reset Base Essais (Purger tous les plans)</button>
@@ -754,6 +758,10 @@
 
 <script>
 function applyTranslations(lang) {
+    if (typeof translations === 'undefined') {
+        console.warn("⚠️ Le fichier 'translations.js' n'a pas été trouvé. L'application utilise les textes par défaut.");
+        return;
+    }
     if(!translations[lang]) lang = 'fr';
     document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.getAttribute("data-i18n");
@@ -765,6 +773,18 @@ function applyTranslations(lang) {
     });
     localStorage.setItem('selected_lang', lang);
 }
+
+const rawCsvData = `Code_Essai_Parcelle,variete,Essai,Espece,Gps,Plan_X,Plan_Y,Type
+1,LID 5053L SU,Test,Tournesol,"43.69,1.27",1,1,H
+2,MYLADY,Test,Mais,"43.47,-0.34",2,1,F
+3,LID PANDORE,Test,Sorgho,"41.75,-0.79",3,1,M
+4,ISIDOR,Test,Soja,"43.65,1.65",1,2,F
+5,LID TRETO,Test,Colza,"44.39,1.39",2,2,H
+6,LID 5053L SU,Test,Tournesol,"0.0,0.0",3,2,M
+7,ISIDOR,Test,Soja,"0.0,0.0",1,3,M
+8,MYLADY,Test,Mais,"0.0,0.0",2,3,F
+9,LID TRETO,Test,Colza,"0.0,0.0",3,3,H
+10,LID PANDORE,Test,Sorgho,"41.75,-0.79",5,6,M`;
 
 let varieteData = [], appObservations = [], currentEssai = null, currentDigitCount = 3, currentParcelleArray = ['0','0','0'], selectedPlotCodeForNavigation = null, currentEspece = null, currentGps = null, parcelleValideeCode = null, currentPlotOrder = [], simpleNotationsConfig = [];
 let externalData = []; 
@@ -823,8 +843,17 @@ function parseCSVToObjects(csvString, delimiter = ';') {
 
 function loadVarieteDataLocal() {
     const saved = localStorage.getItem('newtea_trials');
+    const defaultTestTrial = parseCSVToObjects(rawCsvData, ',');
+    
     if (saved) {
         varieteData = JSON.parse(saved);
+        if (!varieteData.some(p => p.Essai === 'Test')) {
+            varieteData = defaultTestTrial.concat(varieteData);
+            saveVarieteDataLocal();
+        }
+    } else {
+        varieteData = defaultTestTrial;
+        saveVarieteDataLocal();
     }
 }
 function saveVarieteDataLocal() {
@@ -1050,6 +1079,7 @@ function updateProgressBar() {
 }
 
 function getT(key) {
+    if (typeof translations === 'undefined') return key;
     const lang = document.getElementById('lang-select').value;
     return translations[lang] && translations[lang][key] ? translations[lang][key] : key;
 }
@@ -1211,6 +1241,7 @@ function setupEventListeners() {
 
     document.getElementById('bbch-info-button').onclick = () => {
         if(!currentEspece) return alert(getT("alert-select-parcelle"));
+        if (typeof bbchInfoData === 'undefined') return alert("Fichier translations.js manquant.");
         const lang = document.getElementById('lang-select').value;
         const div = document.getElementById('bbch-modal-body');
         const data = bbchInfoData[lang] || bbchInfoData['fr'];
@@ -1280,7 +1311,7 @@ function updateUIForSelectedPlot(code) {
 
     currentEspece = plot ? plot.Espece : null;
     currentGps = plot ? plot.Gps : null;
-    document.getElementById('espece-text').textContent = currentEspece ? (translations[localStorage.getItem('selected_lang') || 'fr'][currentEspece] || currentEspece).toUpperCase() : "";
+    document.getElementById('espece-text').textContent = currentEspece ? getT(currentEspece).toUpperCase() : "";
     
     // Maintien du mode sombre et application du thème des couleurs
     const themes = ['theme-mais', 'theme-tournesol', 'theme-colza', 'theme-soja', 'theme-sorgho'];
@@ -1952,7 +1983,7 @@ async function partagerCSV() {
     }, 1000); // Petit délai pour laisser le temps au téléchargement/partage de s'exécuter
 }
 
-function telechargerPlanCSV() {
+async function telechargerPlanCSV() {
     if(!currentEssai) return alert(getT("alert-choix-essai"));
     const plots = varieteData.filter(p => p.Essai === currentEssai);
     if(plots.length === 0) return alert(getT("alert-no-plan"));
@@ -1963,7 +1994,23 @@ function telechargerPlanCSV() {
     
     const sanitize = (s) => s.replace(/[^a-z0-9]/gi, '_'); 
     const filename = `Plan_${sanitize(currentEssai)}.csv`;
+    
+    // Téléchargement direct
     const a = document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})); a.download=filename; a.click();
+    
+    // Partage natif
+    const file = new File([new Blob([csv], {type: 'text/csv;charset=utf-8'})], filename, { type: 'text/csv' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+            await navigator.share({
+                files: [file],
+                title: 'Plan Essai - ' + currentEssai,
+                text: 'Voici le plan d\'essai exporté depuis Newtea.'
+            });
+        } catch (error) {
+            console.error('Erreur partage', error);
+        }
+    }
 }
 
 function telechargerSauvegardeGlobale() {
