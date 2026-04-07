@@ -115,6 +115,16 @@
             padding: 0 !important;
         }
 
+        /* MINI PLAN CSS */
+        #mini-plan-container { overflow-x: auto; margin-bottom: 15px; border-radius: 5px; border: 1px solid var(--theme-input-border-color); background: var(--theme-card-background-color); }
+        #mini-plan-table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+        #mini-plan-table th, #mini-plan-table td { border: 1px solid var(--theme-input-border-color); text-align: center; padding: 8px 4px; position: relative; }
+        #mini-plan-table th { background-color: var(--theme-secondary-color); color: white; }
+        #mini-plan-table td.mini-cell { cursor: pointer; transition: background 0.2s; }
+        #mini-plan-table td.mini-cell:hover { background-color: #e9ecef; }
+        body.dark-mode #mini-plan-table td.mini-cell:hover { background-color: #444; }
+        #mini-plan-table td.mini-selected { background-color: var(--theme-primary-color) !important; color: white !important; font-weight: bold; box-shadow: inset 0 0 0 2px #fff;}
+
         .cube-btn { width: 45px !important; height: 45px !important; padding: 0 !important; margin: 0 !important; display: inline-flex !important; align-items: center; justify-content: center; font-size: 1.8em !important; font-weight: bold !important; border-radius: 10px !important; flex-shrink: 0; line-height: 1; }
 
         .espece-gps-line { display: flex; align-items: center; justify-content: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
@@ -398,6 +408,8 @@
                     </div>
                     <!-- CONTENEUR DES BOUTONS DE CHIFFRES DYNAMIQUE -->
                     <div id="dynamic-digit-buttons"></div>
+                    <!-- CONTENEUR DU MINI-PLAN DYNAMIQUE -->
+                    <div id="mini-plan-container" style="display:none;"></div>
                 </div>
 
               <div class="parcelle-navigation" style="display: flex; gap: 5px; justify-content: space-around; margin-top: 15px;">
@@ -611,6 +623,14 @@
                 <span class="slider"></span>
             </label>
         </div>
+
+        <div style="display:flex; align-items:center; margin-top:15px; margin-bottom:15px;">
+            <label style="width:auto; margin:0 10px 0 0;">Sélection parcelle :</label>
+            <select id="selection-mode-toggle" onchange="toggleSelectionMode()" style="margin:0;">
+                <option value="digits">Blocs de numéros (1-9)</option>
+                <option value="miniplan">Mini-Plan (Aperçu)</option>
+            </select>
+        </div>
         
         <hr>
         <button id="changer-essai" class="btn-secondary btn-block" data-i18n="changer-essai">Retour Menu / Changer d'essai</button>
@@ -685,14 +705,14 @@
                 <div style="display:flex; align-items:center;">
                     <label style="font-size:0.8em; margin:0 5px 0 0; font-weight:bold; color:#333;" data-i18n="avancement-hachure">Avancement (Hachuré) :</label>
                     <label class="switch" style="transform:scale(0.8);">
-                        <input type="checkbox" id="todo-mode-toggle" onchange="openSowingPlan()">
+                        <input type="checkbox" id="todo-mode-toggle" onchange="openSowingPlan(); renderMiniPlan();" checked>
                         <span class="slider"></span>
                     </label>
                 </div>
                 <div style="display:flex; align-items:center;">
                     <label style="font-size:0.8em; margin:0 5px 0 0; font-weight:bold; color:#333;" data-i18n="deplacement-fleches">Déplacement (Flèches) :</label>
                     <label class="switch" style="transform:scale(0.8);">
-                        <input type="checkbox" id="path-mode-toggle" onchange="openSowingPlan()">
+                        <input type="checkbox" id="path-mode-toggle" onchange="openSowingPlan(); renderMiniPlan();">
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -702,7 +722,7 @@
                 <div style="display:flex; align-items:center;">
                     <span class="interactive-label" data-i18n="interactif">INTERACTIF</span>
                     <label class="switch">
-                        <input type="checkbox" id="interactive-mode-toggle" onchange="openSowingPlan()">
+                        <input type="checkbox" id="interactive-mode-toggle" onchange="openSowingPlan(); renderMiniPlan();">
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -710,17 +730,17 @@
                 <div id="interactive-filters" style="display:none; flex-grow:1; gap:10px; align-items:center; flex-wrap:wrap;">
                     <div style="flex-grow:1;">
                         <label style="font-size:0.8em; margin:0; color:#333;" data-i18n="donnee">Donnée :</label>
-                        <select id="interactive-data-select" style="margin:0; padding:4px;" onchange="openSowingPlan()"></select>
+                        <select id="interactive-data-select" style="margin:0; padding:4px;" onchange="openSowingPlan(); renderMiniPlan();"></select>
                     </div>
                     <div style="flex-grow:1;">
                         <label style="font-size:0.8em; margin:0; color:#333;" data-i18n="filter-notateur">Notateur :</label>
-                        <select id="interactive-notator-select" style="margin:0; padding:4px;" onchange="openSowingPlan()">
+                        <select id="interactive-notator-select" style="margin:0; padding:4px;" onchange="openSowingPlan(); renderMiniPlan();">
                             <option value="" data-i18n="option-tous">Tous</option>
                         </select>
                     </div>
                     <div style="width:120px;">
                         <label style="font-size:0.8em; margin:0; color:#333;" data-i18n="jours-max">Jours max (Hier: 1) :</label>
-                        <input type="number" id="interactive-days-input" value="10" min="0" style="margin:0; padding:4px;" onchange="openSowingPlan()">
+                        <input type="number" id="interactive-days-input" value="10" min="0" style="margin:0; padding:4px;" onchange="openSowingPlan(); renderMiniPlan();">
                     </div>
                 </div>
             </div>
@@ -875,6 +895,194 @@ function toggleDarkMode() {
     }
 }
 
+window.toggleSelectionMode = () => {
+    const modeSelect = document.getElementById('selection-mode-toggle');
+    if(!modeSelect) return;
+    const mode = modeSelect.value;
+    localStorage.setItem('newtea_selection_mode', mode);
+    
+    if (mode === 'miniplan') {
+        document.getElementById('dynamic-digit-buttons').style.display = 'none';
+        document.getElementById('mini-plan-container').style.display = 'block';
+        renderMiniPlan();
+    } else {
+        document.getElementById('dynamic-digit-buttons').style.display = 'block';
+        document.getElementById('mini-plan-container').style.display = 'none';
+    }
+};
+
+window.populateInteractiveFilters = () => {
+    if (!externalData || externalData.length === 0) return;
+    const dataSelect = document.getElementById('interactive-data-select');
+    const notatorSelect = document.getElementById('interactive-notator-select');
+    
+    if(dataSelect && dataSelect.options.length === 0) {
+         const fixed = ["ESSAI", "Parcelle", "Variete", "Date", "Heure", "Meteo", "Rep", "Code_Ech", "Observations"];
+         const keys = Object.keys(externalData[0]).filter(k => !fixed.includes(k) && k !== 'id');
+         keys.sort().forEach(k => {
+             const opt = document.createElement('option'); opt.value = k; opt.text = k.startsWith('Not_') ? k.substring(4) : k; dataSelect.appendChild(opt);
+         });
+    }
+    if(notatorSelect && notatorSelect.options.length <= 1) {
+        const notateurs = [...new Set(externalData.map(d => d.Notateur).filter(n => n))].sort();
+        notateurs.forEach(n => { const opt = document.createElement('option'); opt.value = n; opt.text = n; notatorSelect.appendChild(opt); });
+    }
+};
+
+window.renderMiniPlan = () => {
+    const container = document.getElementById('mini-plan-container');
+    if (!container || container.style.display === 'none') return;
+    
+    if (!currentEssai) {
+        container.innerHTML = '<p style="text-align:center; padding:10px; color:#666;">Aucun essai sélectionné.</p>';
+        return;
+    }
+    
+    const plots = varieteData.filter(p => p.Essai === currentEssai);
+    if (!plots.length || !plots[0].Plan_X) {
+        container.innerHTML = '<p style="text-align:center; padding:10px; color:#666;">Aucun plan de semis (X/Y) enregistré pour cet essai.</p>';
+        return;
+    }
+
+    const currentPadded = String(selectedPlotCodeForNavigation).padStart(currentDigitCount, '0');
+    const currentPlot = plots.find(p => String(p.Code_Essai_Parcelle).padStart(currentDigitCount, '0') === currentPadded);
+    
+    let curX = currentPlot ? parseInt(currentPlot.Plan_X) : 1;
+    let curY = currentPlot ? parseInt(currentPlot.Plan_Y) : 1;
+
+    let minX = Math.min(...plots.map(p => parseInt(p.Plan_X)));
+    let maxX = Math.max(...plots.map(p => parseInt(p.Plan_X)));
+    let minY = Math.min(...plots.map(p => parseInt(p.Plan_Y)));
+    let maxY = Math.max(...plots.map(p => parseInt(p.Plan_Y)));
+
+    // Calcul de la fenêtre 8x3
+    let startX = Math.max(minX, curX - 3);
+    let endX = Math.min(maxX, startX + 7);
+    if (endX - startX < 7) startX = Math.max(minX, endX - 7);
+
+    let startY = Math.max(minY, curY - 1);
+    let endY = Math.min(maxY, startY + 2);
+    if (endY - startY < 2) startY = Math.max(minY, endY - 2);
+
+    // Paramètres partagés entre plans
+    const isInteractive = document.getElementById('interactive-mode-toggle')?.checked;
+    const selectedDataKey = document.getElementById('interactive-data-select')?.value;
+    const notatorSelect = document.getElementById('interactive-notator-select')?.value;
+    const maxDays = parseInt(document.getElementById('interactive-days-input')?.value) || 0;
+    const today = new Date(); today.setHours(0,0,0,0);
+    const todoMode = document.getElementById('todo-mode-toggle')?.checked !== false; // Active par défaut si introuvable
+
+    let minVal = Infinity, maxVal = -Infinity;
+    if(isInteractive && selectedDataKey && externalData) {
+         externalData.forEach(d => {
+             if(d.ESSAI !== currentEssai) return;
+             let val = d[selectedDataKey];
+             if (val !== undefined && val !== null && String(val).trim() !== "") {
+                 if(!isNaN(parseFloat(val.replace('%','')))) {
+                     let num = parseFloat(val.replace('%',''));
+                     if(num < minVal) minVal = num;
+                     if(num > maxVal) maxVal = num;
+                 }
+             }
+         });
+    }
+
+    let html = `<table id="mini-plan-table"><thead><tr><th>Y\\X</th>`;
+    for(let c = startX; c <= endX; c++) html += `<th>${c}</th>`;
+    html += `</tr></thead><tbody>`;
+
+    for(let r = startY; r <= endY; r++) {
+        html += `<tr><td style="background-color: var(--theme-secondary-color); color: white; font-weight: bold;">${r}</td>`;
+        for(let c = startX; c <= endX; c++) {
+            const p = plots.find(plot => parseInt(plot.Plan_X) === c && parseInt(plot.Plan_Y) === r);
+            let classes = ["mini-cell"];
+            let onClick = "";
+            let cellContent = "";
+
+            if (p) {
+                const codeOriginal = String(p.Code_Essai_Parcelle).padStart(currentDigitCount, '0');
+                const codeAffiche = parseInt(p.Code_Essai_Parcelle);
+                let displayContent = p.Type ? p.Type : '';
+                let heatmapColor = "";
+
+                // Type M/F/H background color
+                if (p.Type === 'M') classes.push('type-M');
+                else if (p.Type === 'F') classes.push('type-F');
+                else if (p.Type === 'H') classes.push('type-H');
+
+                // Surlignage de la parcelle courante
+                if (codeOriginal === currentPadded) classes.push("mini-selected");
+
+                // Hachuré si l'avancement est activé et que la parcelle est notée
+                if (todoMode) {
+                    const isDone = appObservations.some(obs => String(obs.Parcelle).padStart(currentDigitCount,'0') === codeOriginal && obs.ESSAI === currentEssai);
+                    if(isDone) classes.push('hatched-pattern');
+                }
+
+                // Affichage interactif Overlay (si activé)
+                if (isInteractive && selectedDataKey) {
+                    let matches = externalData.filter(d => d.ESSAI === currentEssai && String(d.Parcelle).padStart(currentDigitCount,'0') === codeOriginal);
+                    if (notatorSelect && notatorSelect !== "") matches = matches.filter(d => d.Notateur === notatorSelect);
+                    
+                    const recentMatches = matches.filter(d => {
+                        if(!d.Date) return false;
+                        const obsDate = new Date(d.Date); obsDate.setHours(0,0,0,0);
+                        return Math.ceil(Math.abs(today - obsDate) / (86400000)) <= maxDays;
+                    });
+                    
+                    const validMatches = recentMatches.filter(d => {
+                        const v = d[selectedDataKey];
+                        return v !== undefined && v !== null && String(v).trim() !== "";
+                    });
+
+                    validMatches.sort((a,b) => { const dA = new Date(a.Date+(a.Heure?"T"+a.Heure:"")); const dB = new Date(b.Date+(b.Heure?"T"+b.Heure:"")); return dB - dA; });
+
+                    if(validMatches.length > 0) {
+                        let val = validMatches[0][selectedDataKey];
+                        if(val !== undefined && val !== "") {
+                             if (typeof val === 'string' && val.match(/^\d{4}-\d{2}-\d{2}$/)) { val = val.split('-')[2]+"/"+val.split('-')[1]; }
+                             
+                             if(!isNaN(parseFloat(val.replace('%',''))) && maxVal > minVal) {
+                                 let num = parseFloat(val.replace('%',''));
+                                 let ratio = (num - minVal) / (maxVal - minVal);
+                                 let hue = ratio * 120; 
+                                 heatmapColor = `background-color: hsl(${hue}, 80%, 80%); border: 1px solid hsl(${hue}, 80%, 40%);`;
+                             }
+                             displayContent = `<span class="interactive-val" style="${heatmapColor} font-size:0.9em; padding:1px; line-height:1;">${val}</span>`;
+                        } else { displayContent = `<span style="opacity:0.3">-</span>`; }
+                    } else { displayContent = `<span style="opacity:0.3">-</span>`; }
+                }
+
+                cellContent = `${codeAffiche}<br><span style="font-size:0.75em; position:relative; z-index:2; display:block; margin-top:2px;">${displayContent}</span>`;
+                onClick = `onclick="selectFromPlan('${codeOriginal}')"`;
+            }
+
+            html += `<td class="${classes.join(' ')}" ${onClick}>${cellContent}</td>`;
+        }
+        html += `</tr>`;
+    }
+    html += `</tbody></table>`;
+    container.innerHTML = html;
+};
+
+// Nouvelle fonction globale pour sélectionner une parcelle depuis les plans (grand ou mini)
+window.selectFromPlan = (code) => {
+    selectedPlotCodeForNavigation = String(code).padStart(currentDigitCount, '0');
+    updateUIForSelectedPlot(selectedPlotCodeForNavigation);
+    parcelleValideeCode = null;
+    document.getElementById('valider-parcelle').style.display = 'block';
+    
+    const notationArea = document.getElementById('central-notations-container');
+    const obsArea = document.getElementById('obs').parentNode;
+    const saveArea = document.getElementById('save-buttons-placeholder');
+    [notationArea, obsArea, saveArea].forEach(el => {
+        if(el) { el.style.opacity = '0.4'; el.style.pointerEvents = 'none'; }
+    });
+    
+    const modal = document.getElementById('sowingPlanModal');
+    if(modal) modal.style.display = 'none';
+};
+
 function checkUnsavedReminder() {
     if (appObservations.length > 100) {
         let latest = 0;
@@ -902,6 +1110,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('dark-mode-toggle').checked = true;
         document.body.classList.add('dark-mode');
     }
+
+    const savedSelectionMode = localStorage.getItem('newtea_selection_mode') || 'digits';
+    const modeSelect = document.getElementById('selection-mode-toggle');
+    if (modeSelect) modeSelect.value = savedSelectionMode;
+    toggleSelectionMode();
     
     loadVarieteDataLocal();
     initEssaiSelector();
@@ -933,8 +1146,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 let sep = ';';
                 if (content.split('\n')[0].indexOf(';') === -1 && content.split('\n')[0].indexOf(',') > -1) sep = ',';
                 externalData = parseCSVToObjects(content, sep);
-                if (externalData.length > 0) alert(getT('alert-import-success').replace('{n}', externalData.length));
-                else alert(getT('alert-import-empty'));
+                if (externalData.length > 0) {
+                    populateInteractiveFilters();
+                    renderMiniPlan();
+                    alert(getT('alert-import-success').replace('{n}', externalData.length));
+                } else alert(getT('alert-import-empty'));
             } catch (err) { alert(getT('alert-import-error')); console.error(err); }
         };
         reader.readAsText(file);
@@ -1346,6 +1562,7 @@ function updateUIForSelectedPlot(code) {
     });
     
     updateZenHeader();
+    renderMiniPlan(); // Met à jour le mini plan en fonction de la sélection
 }
 
 function openSowingPlan(isMulti = false) {
@@ -1375,19 +1592,9 @@ function openSowingPlan(isMulti = false) {
     const pathToggle = document.getElementById('path-mode-toggle');
     
     if(hasExternalData) {
+        populateInteractiveFilters();
         controlsDiv.classList.add('active');
         filtersDiv.style.display = toggle.checked ? 'flex' : 'none';
-        if(dataSelect.options.length === 0) {
-             const fixed = ["ESSAI", "Parcelle", "Variete", "Date", "Heure", "Meteo", "Rep", "Code_Ech", "Observations"];
-             const keys = Object.keys(externalData[0]).filter(k => !fixed.includes(k) && k !== 'id');
-             keys.sort().forEach(k => {
-                 const opt = document.createElement('option'); opt.value = k; opt.text = k.startsWith('Not_') ? k.substring(4) : k; dataSelect.appendChild(opt);
-             });
-        }
-        if(notatorSelect.options.length <= 1) {
-            const notateurs = [...new Set(externalData.map(d => d.Notateur).filter(n => n))].sort();
-            notateurs.forEach(n => { const opt = document.createElement('option'); opt.value = n; opt.text = n; notatorSelect.appendChild(opt); });
-        }
     } else {
         controlsDiv.classList.remove('active');
         toggle.checked = false; 
@@ -1793,6 +2000,7 @@ function enregistrerObservation(moveDir) {
     updateProgressBar();
     updateZenHeader();
     renderStats();
+    renderMiniPlan(); // Rafraîchit visuellement les parcelles "faites" (hachurées)
 }
 
 function renderRecapTable() {
