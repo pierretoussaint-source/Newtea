@@ -1136,6 +1136,25 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-choice-photo').onclick = () => addSimpleLine('photo');
     document.getElementById('custom-time').value = now.toTimeString().substring(0,5);
 
+    // Événement clic pour le bouton d'installation PWA
+    const btnInstallPwa = document.getElementById('btn-install-pwa');
+    if (btnInstallPwa) {
+        btnInstallPwa.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                // Affiche la popup d'installation native du système
+                deferredPrompt.prompt();
+                // Attend que l'utilisateur réponde
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('App installée');
+                }
+                // On ne peut utiliser le prompt qu'une seule fois
+                deferredPrompt = null;
+                btnInstallPwa.style.display = 'none';
+            }
+        });
+    }
+
     document.getElementById('import-external-csv').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
