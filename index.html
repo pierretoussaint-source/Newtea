@@ -61,7 +61,7 @@
         body.dark-mode .modal-content { background-color: #1e1e1e; color: #e0e0e0; }
         body.dark-mode .interactive-controls { background-color: #2c3e2c; border-color: #3d5a3d;}
         body.dark-mode .interactive-val { background: rgba(0,0,0,0.6); color: #fff; text-shadow:none; border-color:#555;}
-        body.dark-mode .sticky-x, body.dark-mode .sticky-y, body.dark-mode .sticky-corner { background-color: #333 !important; color:#fff;}
+        body.dark-mode .sticky-x, body.dark-mode .sticky-y, body.dark-mode .sticky-corner { border-color:#999 !important; }
         body.dark-mode .notation-group-container { background-color: #242424; border-color:#444;}
         body.dark-mode .not-btn-choix { background-color: #333; color: #ddd; border-color: #555;}
         body.dark-mode .not-btn-choix.active { background-color: var(--theme-secondary-color); color: white; }
@@ -188,9 +188,9 @@
 
         #sowing-plan-grid-container { max-height: 60vh; overflow: auto; border: 1px solid var(--theme-input-border-color); position: relative; }
         #sowing-plan-grid-container table { border-collapse: separate; border-spacing: 0; }
-        .sticky-x { position: sticky; top: 0; background: #eee; z-index: 10; font-weight: bold; border-bottom: 2px solid #999 !important; }
-        .sticky-y { position: sticky; left: 0; background: #eee; z-index: 9; font-weight: bold; border-right: 2px solid #999 !important; }
-        .sticky-corner { position: sticky; top: 0; left: 0; z-index: 11; background: #ddd; }
+        .sticky-x { position: sticky; bottom: 0; background-color: var(--theme-secondary-color) !important; color: white; z-index: 10; font-weight: bold; border-top: 2px solid #999 !important; }
+        .sticky-y { position: sticky; left: 0; background-color: var(--theme-secondary-color) !important; color: white; z-index: 9; font-weight: bold; border-right: 2px solid #999 !important; }
+        .sticky-corner { position: sticky; bottom: 0; left: 0; background-color: var(--theme-secondary-color) !important; color: white; z-index: 11; border-top: 2px solid #999 !important; border-right: 2px solid #999 !important; }
         
         .type-M { background-color: #e3f2fd; color:#333; } 
         .type-F { background-color: #e8f5e9; color:#333; } 
@@ -329,7 +329,6 @@
 
 <h1 style="text-align:center; margin-top:0;">Newtea</h1>
 
-<!-- ÉCRAN D'ACCUEIL : SÉLECTION / CRÉATION / IMPORT -->
 <div id="session-setup">
     <label for="type-notation-session" data-i18n="notateur">Votre Nom / Notateur :</label>
     <input type="text" id="type-notation-session" data-i18n-placeholder="notateur-placeholder" placeholder="Nom du notateur...">
@@ -375,15 +374,12 @@
     </div>
 </div>
 
-<!-- APPLICATION PRINCIPALE -->
 <div id="app-container" style="display:none;">
     <div class="tabs">
         <button class="tablink active" onclick="openTab(event, 'Note')" id="defaultOpen" data-i18n="tab-Note">Note</button>
-        <button class="tablink" onclick="openTab(event, 'Stats')" data-i18n="tab-Stats">Statistiques</button>
         <button class="tablink" onclick="openTab(event, 'Configuration')" data-i18n="tab-Configuration">Config</button>
     </div>
 
-    <!-- ONGLET NOTE -->
     <div id="Note" class="tabcontent" style="display:block;">
         <div id="app-content">
             <div class="sidebar">
@@ -406,9 +402,7 @@
                             </select>
                         </div>
                     </div>
-                    <!-- CONTENEUR DES BOUTONS DE CHIFFRES DYNAMIQUE -->
                     <div id="dynamic-digit-buttons"></div>
-                    <!-- CONTENEUR DU MINI-PLAN DYNAMIQUE -->
                     <div id="mini-plan-container" style="display:none;"></div>
                 </div>
 
@@ -449,7 +443,6 @@
                         <button type="button" class="not-btn-choix" data-target="not-prlvmt" data-i18n="not-prlvmt">Prlvmt</button>
                     </div>
 
-                    <!-- MENU : PARAMETRES PARCELLE -->
                     <div id="not-param" class="notation-group-container hidden-section" style="border-left: 4px solid #d35400;">
                         <div class="zen-title-wrapper">
                             <h4 data-i18n="h4-param-parc">Paramètres de la Parcelle</h4>
@@ -553,7 +546,6 @@
                     <span id="clear-obs" style="position: absolute; right: 10px; top: 35px; cursor: pointer; color: #e74c3c; font-weight: bold; font-size: 1.2em; display: none;">×</span>
                     <div id="mic-btn" class="mic-btn" style="bottom: auto; top:35px;" onclick="toggleDictation()">🎤</div>
                     
-                    <!-- FRÉQUENTS COMMENTAIRES -->
                     <div id="freq-comments-container" class="chip-container"></div>
                 </div>
 
@@ -579,32 +571,7 @@
         </div>
     </div>
 
-    <!-- ONGLET STATS -->
-    <div id="Stats" class="tabcontent">
-        <div class="setup-section">
-            <h3 data-i18n="h3-statistiques">Statistiques Rapides</h3>
-            
-            <label data-i18n="stat-source">Source de données :</label>
-            <select id="stat-source-select" onchange="renderStats()">
-                <option value="local" data-i18n="stat-source-local">Session (Notes en attente)</option>
-                <option value="histo" data-i18n="stat-source-histo">Historique (Overlay CSV)</option>
-            </select>
-            
-            <label data-i18n="stat-donnee">Donnée à analyser :</label>
-            <select id="stat-data-select" onchange="renderStats()">
-                <option value="Stade">Stade BBCH</option>
-                <option value="Floraison">Floraison (%)</option>
-                <option value="Receptivite">Réceptivité</option>
-            </select>
 
-            <hr>
-            <div id="stat-chart-container" style="margin-top: 20px; min-height: 150px;">
-                <p style="text-align:center; color:#888;" data-i18n="stat-no-data">Aucune donnée à afficher pour cette sélection.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- ONGLET CONFIGURATION -->
     <div id="Configuration" class="tabcontent">
         <label data-i18n="choix-langue">Langue :</label>
         <select id="lang-select">
@@ -655,7 +622,6 @@
         
         <hr>
         <h3 data-i18n="h3-gestion-donnees" style="color:#c0392b;">Gestion des données</h3>
-        <!-- Bouton global de Sauvegarde, Partage & Purge -->
         <button id="partager-csv" class="btn-primary btn-block" style="margin-bottom:10px; background-color: #2980b9;">📥/📤 Sauvegarder CSV, Partager & Purger</button>
         <button id="telecharger-plan-csv" class="btn-accent btn-block" style="margin-bottom:10px;">📥/📤 Sauvegarder & Partager Plan Essai</button>
         
@@ -664,7 +630,6 @@
     </div>
 </div>
 
-<!-- MODAL GPS -->
 <div id="gpsChoiceModal" class="modal">
     <div class="modal-content" style="max-width: 400px; text-align: center;">
         <h3 data-i18n="h3-gps-options">Options GPS</h3>
@@ -675,7 +640,6 @@
     </div>
 </div>
 
-<!-- MODAL TYPE SIMPLE -->
 <div id="choiceSimpleNotModal" class="modal">
 <div class="modal-content" style="max-width: 400px; text-align: center;">
     <h3 data-i18n="prompt-title-simple">Type de notation</h3>
@@ -694,7 +658,6 @@
 
 <div id="bbchModal" class="modal"><div class="modal-content"><span class="close-button" id="closeBbchModal" style="float:right; font-size:24px; cursor:pointer;">×</span><h2 data-i18n="h2-bbch">Stades BBCH</h2><div id="bbch-modal-body"></div></div></div>
 
-<!-- SOWING PLAN MODAL -->
 <div id="sowingPlanModal" class="modal" style="z-index: 100000;">
     <div class="modal-content"> 
         <span class="close-button" id="closeSowingPlanModal" style="float:right; font-size:24px; cursor:pointer;">×</span>
@@ -749,7 +712,6 @@
         <hr>
         <div id="sowing-plan-grid-container"></div>
         
-        <!-- Action Bar Multi-Select -->
         <div id="multi-select-action-bar" style="display:none; padding:15px; margin-top:15px; background:var(--theme-secondary-color); border-radius:8px; text-align:center;">
             <p id="multi-select-status" style="color:white; font-weight:bold; margin-top:0;">0 parcelle(s) sélectionnée(s)</p>
             <button onclick="applyMultiSelect()" style="background-color:white; color:var(--theme-secondary-color); padding:10px 20px; font-weight:bold; width:100%; border-radius:5px;" data-i18n="btn-appliquer-groupe">Appliquer à la sélection</button>
@@ -757,7 +719,6 @@
     </div>
 </div>
 
-<!-- ZEN MODE / FOCUS OVERLAY -->
 <div id="zen-overlay" style="display:none; position:fixed; z-index:99999; top:0; left:0; width:100%; height:100%; background:var(--theme-background-color); flex-direction:column; padding:15px; box-sizing:border-box;">
     <div style="display:flex; justify-content:space-between; align-items:flex-start;">
         <div>
@@ -777,7 +738,6 @@
     <div id="zen-save-buttons-container" style="padding-bottom: 20px;"></div>
 </div>
 
-<!-- Script de traductions externe -->
 <script src="translations.js"></script>
 
 <script>
@@ -970,7 +930,7 @@ window.renderMiniPlan = () => {
     const notatorSelect = document.getElementById('interactive-notator-select')?.value;
     const maxDays = parseInt(document.getElementById('interactive-days-input')?.value) || 0;
     const today = new Date(); today.setHours(0,0,0,0);
-    const todoMode = document.getElementById('todo-mode-toggle')?.checked !== false; // Active par défaut si introuvable
+    const todoMode = document.getElementById('todo-mode-toggle')?.checked !== false;
 
     let minVal = Infinity, maxVal = -Infinity;
     if(isInteractive && selectedDataKey && externalData) {
@@ -987,12 +947,10 @@ window.renderMiniPlan = () => {
          });
     }
 
-    let html = `<table id="mini-plan-table"><thead><tr><th>Y\\X</th>`;
-    for(let c = startX; c <= endX; c++) html += `<th>${c}</th>`;
-    html += `</tr></thead><tbody>`;
+    let html = `<table id="mini-plan-table"><tbody>`;
 
-    for(let r = startY; r <= endY; r++) {
-        html += `<tr><td style="background-color: var(--theme-secondary-color); color: white; font-weight: bold;">${r}</td>`;
+    for(let r = endY; r >= startY; r--) {
+        html += `<tr><td style="background-color: var(--theme-secondary-color); color: white; font-weight: bold; position: sticky; left: 0; z-index: 5;">${r}</td>`;
         for(let c = startX; c <= endX; c++) {
             const p = plots.find(plot => parseInt(plot.Plan_X) === c && parseInt(plot.Plan_Y) === r);
             let classes = ["mini-cell"];
@@ -1005,21 +963,17 @@ window.renderMiniPlan = () => {
                 let displayContent = p.Type ? p.Type : '';
                 let heatmapColor = "";
 
-                // Type M/F/H background color
                 if (p.Type === 'M') classes.push('type-M');
                 else if (p.Type === 'F') classes.push('type-F');
                 else if (p.Type === 'H') classes.push('type-H');
 
-                // Surlignage de la parcelle courante
                 if (codeOriginal === currentPadded) classes.push("mini-selected");
 
-                // Hachuré si l'avancement est activé et que la parcelle est notée
                 if (todoMode) {
                     const isDone = appObservations.some(obs => String(obs.Parcelle).padStart(currentDigitCount,'0') === codeOriginal && obs.ESSAI === currentEssai);
                     if(isDone) classes.push('hatched-pattern');
                 }
 
-                // Affichage interactif Overlay (si activé)
                 if (isInteractive && selectedDataKey) {
                     let matches = externalData.filter(d => d.ESSAI === currentEssai && String(d.Parcelle).padStart(currentDigitCount,'0') === codeOriginal);
                     if (notatorSelect && notatorSelect !== "") matches = matches.filter(d => d.Notateur === notatorSelect);
@@ -1061,6 +1015,14 @@ window.renderMiniPlan = () => {
         }
         html += `</tr>`;
     }
+    
+    // Entêtes X en bas
+    html += `<tr><th style="background-color: var(--theme-secondary-color); color: white; font-weight: bold; position: sticky; bottom: 0; left: 0; z-index: 6;">Y\\X</th>`;
+    for(let c = startX; c <= endX; c++) {
+        html += `<th style="background-color: var(--theme-secondary-color); color: white; font-weight: bold; position: sticky; bottom: 0; z-index: 4;">${c}</th>`;
+    }
+    html += `</tr>`;
+    
     html += `</tbody></table>`;
     container.innerHTML = html;
 };
@@ -1375,7 +1337,6 @@ function setupEventListeners() {
             generatePlotOrder();
             selectedPlotCodeForNavigation = currentPlotOrder[0] || "0".repeat(currentDigitCount);
             updateUIForSelectedPlot(selectedPlotCodeForNavigation);
-            renderStats();
         } else {
             alert(getT("alert-choix-essai"));
         }
@@ -1646,21 +1607,15 @@ function openSowingPlan(isMulti = false) {
 
     let html = `<div id="sowing-plan-inner-wrapper" style="position:relative; display:inline-block; min-width:100%;">
     <style>
-        #sowing-plan-inner-wrapper table { border: 1px solid #444; width: 100%; border-collapse: collapse; }
-        #sowing-plan-inner-wrapper th, #sowing-plan-inner-wrapper td { border: 1px solid var(--theme-input-border-color); text-align: center; padding: 8px; font-size: 0.9em; position:relative; }
+        #sowing-plan-inner-wrapper table { border-top: 1px solid var(--theme-input-border-color); border-left: 1px solid var(--theme-input-border-color); width: 100%; border-collapse: separate; border-spacing: 0; }
+        #sowing-plan-inner-wrapper th, #sowing-plan-inner-wrapper td { border-bottom: 1px solid var(--theme-input-border-color); border-right: 1px solid var(--theme-input-border-color); text-align: center; padding: 8px; font-size: 0.9em; position:relative; }
         #sowing-plan-inner-wrapper th { background-color: var(--theme-secondary-color); color: white; cursor: ${isMultiSelectMode ? 'pointer' : 'default'}; }
         .current-plot-cell { background-color: var(--theme-primary-color) !important; color: white !important; font-weight: bold; box-shadow: inset 0 0 0 2px #fff; }
-    </style><table><thead><tr><th class="sticky-corner">Y\\X</th>`;
-    
-    for(let c=minX; c<=maxX; c++) {
-        const clickAction = isMultiSelectMode ? `onclick="toggleMultiCol(${c})"` : '';
-        html += `<th class="sticky-x" ${clickAction}>${c}</th>`;
-    }
-    html += '</tr></thead><tbody>';
+    </style><table><tbody>`;
 
-    for(let r=minY; r<=maxY; r++) {
+    for(let r=maxY; r>=minY; r--) {
         const rowClickAction = isMultiSelectMode ? `onclick="toggleMultiRow(${r})"` : '';
-        html += `<tr><td class="sticky-y" style="background-color: var(--theme-secondary-color); color:white; font-weight:bold; cursor: ${isMultiSelectMode ? 'pointer' : 'default'};" ${rowClickAction}>${r}</td>`;
+        html += `<tr><td class="sticky-y" style="cursor: ${isMultiSelectMode ? 'pointer' : 'default'};" ${rowClickAction}>${r}</td>`;
         for(let c=minX; c<=maxX; c++) {
             const p = plots.find(plot => parseInt(plot.Plan_X) === c && parseInt(plot.Plan_Y) === r);
             
@@ -1728,6 +1683,15 @@ function openSowingPlan(isMulti = false) {
         }
         html += '</tr>';
     }
+    
+    // Entête X en bas
+    html += `<tr><th class="sticky-corner">Y\\X</th>`;
+    for(let c=minX; c<=maxX; c++) {
+        const clickAction = isMultiSelectMode ? `onclick="toggleMultiCol(${c})"` : '';
+        html += `<th class="sticky-x" ${clickAction}>${c}</th>`;
+    }
+    html += '</tr>';
+
     html += '</tbody></table></div>';
     
     document.getElementById('sowing-plan-grid-container').innerHTML = html;
@@ -2018,7 +1982,6 @@ function enregistrerObservation(moveDir) {
     } else { let r = document.getElementById('rep'); r.value = String.fromCharCode(r.value.toUpperCase().charCodeAt(0)+1); }
     updateProgressBar();
     updateZenHeader();
-    renderStats();
     renderMiniPlan(); // Rafraîchit visuellement les parcelles "faites" (hachurées)
 }
 
@@ -2027,7 +1990,7 @@ function renderRecapTable() {
     tbody.innerHTML = appObservations.map(o => `<tr><td>${o.ESSAI}</td><td>${o.Parcelle}</td><td>${o.Rep}</td><td>${o.Code_Ech||'-'}</td><td>${o.Stade||'-'}</td><td>${o.Floraison||'-'}</td><td><button onclick="delObs(${o.id})" class="btn-danger" style="margin:0;padding:2px;">X</button></td></tr>`).join('');
 }
 
-window.delObs = (id) => { if(confirm(getT("alert-delete-line"))) { appObservations = appObservations.filter(o => o.id !== id); localStorage.setItem('observations_v12', JSON.stringify(appObservations)); renderRecapTable(); updateProgressBar(); renderStats();} };
+window.delObs = (id) => { if(confirm(getT("alert-delete-line"))) { appObservations = appObservations.filter(o => o.id !== id); localStorage.setItem('observations_v12', JSON.stringify(appObservations)); renderRecapTable(); updateProgressBar(); } };
 
 function initSimpleNotationsUI() {        
     const div = document.getElementById('simple-notations-list'); div.innerHTML='';
@@ -2083,58 +2046,8 @@ window.openTab = (e,n) => {
     document.querySelectorAll('.tablink').forEach(x=>x.classList.remove('active')); 
     document.getElementById(n).style.display='block'; 
     if(e) e.currentTarget.classList.add('active'); 
-    if(n === 'Stats') renderStats();
 }
 function loadLocalObservations() { appObservations = JSON.parse(localStorage.getItem('observations_v12') || "[]"); simpleNotationsConfig = JSON.parse(localStorage.getItem('simpleNotationsConfig') || "[]"); renderRecapTable(); initSimpleNotationsUI(); renderFreqComments();}
-
-window.renderStats = () => {
-    if(!currentEssai) return;
-    const source = document.getElementById('stat-source-select').value;
-    const dataKey = document.getElementById('stat-data-select').value;
-    const container = document.getElementById('stat-chart-container');
-    
-    let sourceData = source === 'local' ? appObservations.filter(o => o.ESSAI === currentEssai) : externalData.filter(d => d.ESSAI === currentEssai);
-    
-    let freqMap = {};
-    let total = 0;
-    
-    sourceData.forEach(d => {
-        let val = d[dataKey];
-        if(val !== undefined && val !== null && String(val).trim() !== "") {
-            let cleanVal = String(val).trim();
-            freqMap[cleanVal] = (freqMap[cleanVal] || 0) + 1;
-            total++;
-        }
-    });
-    
-    if(total === 0) {
-        container.innerHTML = `<p style="text-align:center; color:#888;">${getT("stat-no-data")}</p>`;
-        return;
-    }
-    
-    let sortedKeys = Object.keys(freqMap).sort((a,b) => {
-        let numA = parseFloat(a.replace('%','')), numB = parseFloat(b.replace('%',''));
-        if(!isNaN(numA) && !isNaN(numB)) return numA - numB;
-        return a.localeCompare(b);
-    });
-    
-    let html = `<div>`;
-    sortedKeys.forEach(k => {
-        let percent = Math.round((freqMap[k] / total) * 100);
-        html += `
-            <div class="stat-bar-wrapper">
-                <div class="stat-bar-label" title="${k}">${k}</div>
-                <div class="stat-bar-bg">
-                    <div class="stat-bar-fill" style="width:${percent}%"></div>
-                </div>
-                <div class="stat-bar-val">${freqMap[k]}</div>
-            </div>
-        `;
-    });
-    html += `</div><p style="text-align:right; font-size:0.8em; margin-top:5px; color:#666;">Total: ${total} parcelles</p>`;
-    
-    container.innerHTML = html;
-};
 
 function generateNotesCSVString() {
     if(!appObservations.length) return null;
@@ -2208,7 +2121,6 @@ async function partagerCSV() {
             localStorage.removeItem('observations_v12');
             renderRecapTable();
             updateProgressBar();
-            renderStats();
             alert("Les données ont été purgées avec succès.");
         }
     }, 1000); // Petit délai pour laisser le temps au téléchargement/partage de s'exécuter
